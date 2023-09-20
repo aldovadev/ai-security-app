@@ -1,18 +1,17 @@
-# Stage 1: Build
+#BUILD APP STAGE USING NODE
 
-FROM node:latest as build
+FROM node:18 as build
+WORKDIR /app
+COPY ./package*.json ./
 
-# Set working directory in the container
-WORKDIR /
-RUN npm install
+RUN npm ci
+
+COPY ./ ./
 RUN npm run build
 
-# Stage 2: Run
-FROM nginx:latest
+#RUN APP STAGE USING NGINX
+
+FROM nginx
+EXPOSE 8080
 COPY nginx.conf /etc/nginx/nginx.conf
-
-# Copy the built Angular application to the Nginx root directory
-COPY --from=build /dist/ai-security-app /usr/share/nginx/html
-
-# Expose port 80 for incoming connections
-EXPOSE 80
+COPY --from=build /app/dist/ngcloudrundemo /usr/share/nginx/html
