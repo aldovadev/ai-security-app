@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "aldova-movies-app": {
+    "ai-security-app": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/aldova-movies-app",
+            "outputPath": "dist/ai-security-app",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -68,10 +68,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "aldova-movies-app:build:production"
+              "browserTarget": "ai-security-app:build:production"
             },
             "development": {
-              "browserTarget": "aldova-movies-app:build:development"
+              "browserTarget": "ai-security-app:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -79,7 +79,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "aldova-movies-app:build"
+            "browserTarget": "ai-security-app:build"
           }
         },
         "test": {
