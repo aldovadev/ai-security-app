@@ -1,0 +1,95 @@
+$color-black: #000;
+$color-white: #fff;
+$color-gray: #333;
+$color-pink: #d90166;
+$color-yellow: yellow;
+$color-background: #00000033;
+
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.carousel-inner {
+  height: 700px;
+
+  .carousel-item {
+    .carousel-caption {
+      h2 {
+        width: 100%;
+        color: $color-pink;
+        font-weight: normal;
+        font-size: 30px;
+        text-shadow: 0 0 1px $color-white;
+      }
+
+      p {
+        width: 100%;
+        color: $color-white;
+        text-shadow: 0 0 1px $color-gray;
+      }
+    }
+
+    img {
+      height: 700px;
+      object-fit: cover;
+      background-color: $color-background;
+    }
+
+    .carousel span {
+      color: $color-gray;
+    }
+  }
+}
+
+.contain {
+  padding: 8% 30px;
+
+  .row-input {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+    padding: 10px 5%;
+
+    .input {
+      width: 100%;
+    }
+
+    .search-button {
+      height: 40px;
+      width: 80px;
+      background-color: $color-pink;
+      border: none;
+      color: white;
+    }
+  }
+
+  .row {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+
+    .desc-container {
+      @include flex-center;
+      h3 {
+        color: $color-gray;
+        margin: 0;
+      }
+      h4 {
+        color: $color-pink;
+        margin: 0;
+        margin-left: 10px;
+      }
+    }
+
+    .rowposter {
+      @include flex-center;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-around;
+    }
+  }
+}

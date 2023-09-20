@@ -1,0 +1,69 @@
+<nav *ngIf="genres.length > 0" class="navbar navbar-expand-lg fixed-top" [ngStyle]="navbg">
+  <div class="container-fluid">
+    <a class="navbar-brand" routerLink="">
+      <img src="../assets/logo.png" alt="logo">
+      <p>Aldova-dev</p>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" routerLink="">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="category/favorites" routerLinkActive="active">Favorites</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="category/popular" routerLinkActive="active">Popular</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="category/top_rated" routerLinkActive="active">Top Rated</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="category/upcoming" routerLinkActive="active">Upcoming</a>
+        </li>
+        <li class="nav-item" ngbDropdown>
+          <a class="nav-link" ngbDropdownToggle>
+            Genre
+          </a>
+          <ul class="dropdown-menu" ngbDropdownMenu>
+            <div class="row">
+              <div class="col">
+                <ul class="list-unstyled">
+                  <li *ngFor="let genre of genres.slice(0, genres.length / 2 + 1)">
+                    <a class="dropdown-item" [routerLink]="'genre/' + genre.id" routerLinkActive="active">{{
+                      genre.name
+                      }}</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="col">
+                <ul class="list-unstyled">
+                  <li *ngFor="let genre of genres.slice(genres.length / 2)">
+                    <a *ngIf="genre.name!=='History'" class="dropdown-item" [routerLink]="'genre/' + genre.id"
+                      routerLinkActive="active">{{
+                      genre.name }}</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </ul>
+        </li>
+        <div class="wrap">
+          <div class="search">
+            <input type="text" class="searchTerm" placeholder="Search movies?" [(ngModel)]="inputValue"
+              (keyup.enter)="search()" />
+            <button type="submit" class="searchButton" (click)="search()">
+              <i class="fa fa-search"></i>
+            </button>
+          </div>
+        </div>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<router-outlet></router-outlet>

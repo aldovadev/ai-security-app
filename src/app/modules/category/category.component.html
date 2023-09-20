@@ -1,0 +1,34 @@
+<div class="contain">
+  <div class="row">
+    <div class="desc-container">
+      <h3>CATEGORY :</h3>
+      <h4 *ngIf="!isVisible"> {{getParamId.replace('_',' ') | capitalizeWords}}</h4>
+      <h4 *ngIf=" isVisible"> Not Found!</h4>
+    </div>
+
+    <div class="rowposter">
+      <ng-container *ngFor="let item of movieResult">
+        <app-movie-card [movie]="item" [param]="getParamId"></app-movie-card>
+      </ng-container>
+
+      <div *ngIf="hasMoreData" infinite-scroll [infiniteScrollDistance]="scrollDistance"
+        [infiniteScrollUpDistance]="scrollUpDistance" (scrolled)="loadMoreMovies()">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="contain" *ngIf="isVisible && getParamId !== 'favorites'">
+  <h1 style="width: 100%; display: grid; place-items: center;">404</h1>
+  <h2 style="width: 100%; display: grid; place-items: center;">Genre Not Found!</h2>
+</div>
+
+<div class="contain" *ngIf="isVisible && getParamId === 'favorites'">
+  <h1 style="width: 100%; display: grid; place-items: center;">404</h1>
+  <h2 style="width: 100%; display: grid; place-items: center;">Favorites Movie Empty!</h2>
+</div>
+
+<div *ngIf="!isVisible && getParamId!=='favorites'" style="width: 100%; display: grid; place-items:center;"
+  class="loading">
+  <img style="width: 100px;" src="../../../assets/animation/loading.gif" alt="">
+</div>
