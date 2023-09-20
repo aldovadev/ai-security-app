@@ -1,4 +1,5 @@
 # Stage 1: Build
+
 FROM node:latest as build
 
 # Set working directory in the container
