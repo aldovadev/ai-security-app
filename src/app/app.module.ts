@@ -10,7 +10,6 @@ import { FormsModule } from '@angular/forms';
 
 import { ReactiveFormsModule } from '@angular/forms';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { CapitalizeWordsPipe } from './shared/pipes/capitalize-word.pipe';
@@ -28,7 +27,6 @@ import { CapitalizeWordsPipe } from './shared/pipes/capitalize-word.pipe';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     InfiniteScrollModule,
-    MatTooltipModule,
     NgbModule,
     FormsModule,
 
