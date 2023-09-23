@@ -1,5 +1,4 @@
 #BUILD APP STAGE USING NODE
-
 FROM node:18.18 as build
 WORKDIR /app
 COPY ./package*.json ./
