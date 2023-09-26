@@ -25,6 +25,11 @@ import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
 import { LoginComponent } from './modules/login/login.component';
 import { ForgetPasswordComponent } from './modules/forget-password/forget-password.component';
+import { SidenavComponent } from './shared/components/sidenav/sidenav.component';
+import { DashboardComponent } from './modules/dashboard/dashboard.component';
+import { VisitorManagementComponent } from './modules/visitor-management/visitor-management.component';
+import { EmployeeManagementComponent } from './modules/employee-management/employee-management.component';
+import { CameraManagementComponent } from './modules/camera-management/camera-management.component';
 
 registerLocaleData(en);
 
@@ -35,6 +40,11 @@ registerLocaleData(en);
     CapitalizeWordsPipe,
     LoginComponent,
     ForgetPasswordComponent,
+    SidenavComponent,
+    DashboardComponent,
+    VisitorManagementComponent,
+    EmployeeManagementComponent,
+    CameraManagementComponent,
   ],
   imports: [
     BrowserModule,
