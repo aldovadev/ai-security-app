@@ -8,6 +8,7 @@ import { DashboardComponent } from './modules/dashboard/dashboard.component';
 import { VisitorManagementComponent } from './modules/visitor-management/visitor-management.component';
 import { EmployeeManagementComponent } from './modules/employee-management/employee-management.component';
 import { CameraManagementComponent } from './modules/camera-management/camera-management.component';
+import { ReportComponent } from './modules/report/report.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -32,6 +33,10 @@ const routes: Routes = [
       {
         path: 'camera-management',
         component: CameraManagementComponent,
+      },
+      {
+        path: 'report',
+        component: ReportComponent,
       },
     ],
   },

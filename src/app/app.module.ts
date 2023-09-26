@@ -41,6 +41,7 @@ import { CameraManagementComponent } from './modules/camera-management/camera-ma
 import { IncomingComponent } from './modules/visitor-management/incoming/incoming.component';
 import { AcceptedComponent } from './modules/visitor-management/accepted/accepted.component';
 import { RejectedComponent } from './modules/visitor-management/rejected/rejected.component';
+import { ReportComponent } from './modules/report/report.component';
 
 registerLocaleData(en);
 
@@ -59,6 +60,7 @@ registerLocaleData(en);
     IncomingComponent,
     AcceptedComponent,
     RejectedComponent,
+    ReportComponent,
   ],
   imports: [
     BrowserModule,
