@@ -1,1 +1,24 @@
-<p>visitor-management works!</p>
+<h1 style="margin: 10px 0 0 30px; font-weight: bold; font-size: 36px">
+  Visitor Management
+</h1>
+
+<nz-tabset style="padding: 30px" [nzTabBarExtraContent]="extra">
+  <nz-tab [nzTitle]="tab1Title"
+    ><app-incoming [dateRange]="dateRange"></app-incoming
+  ></nz-tab>
+  <ng-template #tab1Title>
+    <span>Incoming <nz-badge nzSize="small" [nzCount]="5"></nz-badge></span>
+  </ng-template>
+  <nz-tab [nzTitle]="tab2Title"><app-accepted></app-accepted></nz-tab>
+  <ng-template #tab2Title>
+    <span>Accepted <nz-badge nzSize="small" [nzCount]="2"></nz-badge></span>
+  </ng-template>
+  <nz-tab [nzTitle]="tab3Title"><app-rejected></app-rejected></nz-tab>
+  <ng-template #tab3Title>
+    <span>Rejected <nz-badge nzSize="small" [nzCount]="1"></nz-badge></span>
+  </ng-template>
+
+  <ng-template #extra>
+    <nz-range-picker [(ngModel)]="dateRange"></nz-range-picker>
+  </ng-template>
+</nz-tabset>

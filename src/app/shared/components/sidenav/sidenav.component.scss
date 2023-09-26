@@ -1,0 +1,9 @@
+.vertical-line {
+  width: 1px; /* Adjust the width as needed */
+  background-color: rgba(0, 0, 0, 0.1); /* Set the line color */
+  height: 100%; /* Make the line cover the full height of the layout */
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 256px; /* Adjust the position to match the Sider width */
+}
