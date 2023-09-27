@@ -11,9 +11,9 @@ import { CameraManagementComponent } from './modules/camera-management/camera-ma
 import { ReportComponent } from './modules/report/report.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'login/forget-password', component: ForgetPasswordComponent },
+  // { path: '', component: HomeComponent },
+  { path: '', component: LoginComponent },
+  { path: 'forget-password', component: ForgetPasswordComponent },
   {
     path: 'dashboard',
     component: SidenavComponent,
