@@ -15,27 +15,22 @@
           </button>
         </span>
       </td>
-      <td>{{ data.name }}</td>
-      <td>{{ data.email }}</td>
-      <td>{{ data.phone_number }}</td>
-      <td>{{ data.visit_date }}</td>
-      <td>{{ data.visit_reason }}</td>
     </tr>
   </tbody>
 </nz-table>
 
 <ng-template #headerTable>
   <!-- <nz-spin [nzSpinning]="isDownloading"> -->
-  <div class="row justify-content-between">
+  <div class="row justify-content-between w-100">
     <div class="col-4">
       <span
         nzTooltipPlacement="top"
         nz-tooltip
-        nzTooltipTitle="Refresh"
+        nzTooltipTitle="Add"
         style="margin-right: 8px"
       >
-        <a class="btn btn-lg btn-light mr-2" (click)="ngOnInit()">
-          <i class="fe fe-refresh-cw"></i>
+        <a class="btn btn-lg btn-light mr-2">
+          <i class="fe fe-plus"></i>
         </a>
       </span>
       <span
@@ -46,6 +41,16 @@
       >
         <a class="btn btn-lg btn-light mr-2">
           <i class="fe fe-download"></i>
+        </a>
+      </span>
+      <span
+        nzTooltipPlacement="top"
+        nz-tooltip
+        nzTooltipTitle="Refresh"
+        style="margin-right: 8px"
+      >
+        <a class="btn btn-lg btn-light mr-2" (click)="ngOnInit()">
+          <i class="fe fe-refresh-cw"></i>
         </a>
       </span>
     </div>

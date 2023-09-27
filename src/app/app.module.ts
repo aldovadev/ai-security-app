@@ -42,6 +42,7 @@ import { IncomingComponent } from './modules/visitor-management/incoming/incomin
 import { AcceptedComponent } from './modules/visitor-management/accepted/accepted.component';
 import { RejectedComponent } from './modules/visitor-management/rejected/rejected.component';
 import { ReportComponent } from './modules/report/report.component';
+import { EmployeeDataComponent } from './modules/employee-management/employee-data/employee-data.component';
 
 registerLocaleData(en);
 
@@ -61,6 +62,7 @@ registerLocaleData(en);
     AcceptedComponent,
     RejectedComponent,
     ReportComponent,
+    EmployeeDataComponent,
   ],
   imports: [
     BrowserModule,

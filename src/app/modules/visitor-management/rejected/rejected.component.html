@@ -49,6 +49,26 @@
         </a>
       </span>
     </div>
+    <div class="col">
+      <form
+        nz-form
+        [nzLayout]="'inline'"
+        style="display: flex; flex-direction: row; justify-content: flex-end"
+      >
+        <nz-input-group
+          nzSearch
+          [nzAddOnAfter]="suffixIconButton"
+          style="width: 200px"
+        >
+          <input type="text" nz-input placeholder="Search" />
+        </nz-input-group>
+        <ng-template #suffixIconButton>
+          <button nz-button nzType="primary" nzSearch>
+            <span nz-icon nzType="search"></span>
+          </button>
+        </ng-template>
+      </form>
+    </div>
   </div>
   <!-- </nz-spin> -->
 </ng-template>
