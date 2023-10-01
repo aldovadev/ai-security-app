@@ -5,7 +5,7 @@
   <div style="background-color: #ffffff">
     <div
       class="d-flex justify-content-center align-items-center flex-column"
-      style="padding: 36px"
+      style="padding: 32px"
     >
       <h3 style="font-size: 36px" class="text-center">Welcome Back</h3>
       <h5 style="font-size: 14px" class="text-center">
@@ -20,7 +20,7 @@
                 nz-input
                 type="text"
                 placeholder="Username"
-                style="width: 350px; padding: 5px"
+                style="width: 300px; padding: 5px"
                 formControlName="username"
               />
             </nz-input-group>
@@ -38,7 +38,7 @@
                 type="password"
                 nz-input
                 placeholder="Password"
-                style="width: 350px; padding: 5px"
+                style="width: 300px; padding: 5px"
                 formControlName="password"
               />
             </nz-input-group>
@@ -59,16 +59,32 @@
             >
           </div>
         </div>
-        <button
-          nz-button
-          nzType="primary"
-          style="width: 100%; padding: 5px"
-          (click)="submit()"
-        >
-          Log in
-        </button>
+        <div class="row">
+          <div class="col">
+            <button
+              nz-button
+              nzType="primary"
+              style="width: 100%; padding: 5px"
+              routerLink="/"
+              class="d-flex align-items-center justify-content-center"
+            >
+              <span nz-icon nzType="left"></span>
+              Go back
+            </button>
+          </div>
+          <div class="col">
+            <button
+              nz-button
+              nzType="primary"
+              style="width: 100%; padding: 5px"
+              (click)="submit()"
+            >
+              Log in
+            </button>
+          </div>
+        </div>
       </form>
-      <h5 style="font-size: 12px; margin: 8px">
+      <h5 class="text-center" style="font-size: 12px; margin: 8px">
         No account yet? <a style="text-decoration: underline">Join Us</a>
       </h5>
     </div>

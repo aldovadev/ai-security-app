@@ -43,6 +43,8 @@ import { AcceptedComponent } from './modules/visitor-management/accepted/accepte
 import { RejectedComponent } from './modules/visitor-management/rejected/rejected.component';
 import { ReportComponent } from './modules/report/report.component';
 import { EmployeeDataComponent } from './modules/employee-management/employee-data/employee-data.component';
+import { VisitCompanyComponent } from './modules/visit-company/visit-company.component';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 
 registerLocaleData(en);
 
@@ -63,6 +65,7 @@ registerLocaleData(en);
     RejectedComponent,
     ReportComponent,
     EmployeeDataComponent,
+    VisitCompanyComponent,
   ],
   imports: [
     BrowserModule,
@@ -86,6 +89,7 @@ registerLocaleData(en);
     NzDatePickerModule,
     NzTableModule,
     NzToolTipModule,
+    NzSelectModule,
 
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),

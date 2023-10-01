@@ -9,11 +9,13 @@ import { VisitorManagementComponent } from './modules/visitor-management/visitor
 import { EmployeeManagementComponent } from './modules/employee-management/employee-management.component';
 import { CameraManagementComponent } from './modules/camera-management/camera-management.component';
 import { ReportComponent } from './modules/report/report.component';
+import { VisitCompanyComponent } from './modules/visit-company/visit-company.component';
 
 const routes: Routes = [
   // { path: '', component: HomeComponent },
-  { path: '', component: LoginComponent },
-  { path: 'forget-password', component: ForgetPasswordComponent },
+  { path: '', component: VisitCompanyComponent },
+  { path: 'login/forget-password', component: ForgetPasswordComponent },
+  { path: 'login', component: LoginComponent },
   {
     path: 'dashboard',
     component: SidenavComponent,
