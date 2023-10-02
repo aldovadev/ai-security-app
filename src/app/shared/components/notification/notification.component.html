@@ -1,0 +1,17 @@
+<ng-template #toaster>
+  <div class="ant-notification-notice-content">
+    <div class="ant-notification-notice-with-icon">
+      <span class="ant-notification-notice-icon">
+        <span
+          nz-icon
+          [nzType]="toasterIcon"
+          [ngStyle]="{ color: toasterColor }"
+        ></span>
+      </span>
+      <div class="ant-notification-notice-message">Message :</div>
+      <div class="ant-notification-notice-description">
+        {{ toasterMessage }}
+      </div>
+    </div>
+  </div>
+</ng-template>

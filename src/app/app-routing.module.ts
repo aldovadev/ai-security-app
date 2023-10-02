@@ -10,6 +10,7 @@ import { EmployeeManagementComponent } from './modules/employee-management/emplo
 import { CameraManagementComponent } from './modules/camera-management/camera-management.component';
 import { ReportComponent } from './modules/report/report.component';
 import { VisitCompanyComponent } from './modules/visit-company/visit-company.component';
+import { AuthGuardService } from './shared/service/auth/auth-guard.service';
 
 const routes: Routes = [
   // { path: '', component: HomeComponent },
@@ -19,6 +20,7 @@ const routes: Routes = [
   {
     path: 'dashboard',
     component: SidenavComponent,
+    canActivate: [AuthGuardService],
     children: [
       {
         path: '',

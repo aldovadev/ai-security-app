@@ -8,6 +8,10 @@ import { HomeComponent } from './modules/home/home.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
+import { NgProgressModule } from 'ngx-progressbar';
+import { NgProgressHttpModule } from 'ngx-progressbar/http';
+import { NgProgressRouterModule } from 'ngx-progressbar/router';
+
 import { ReactiveFormsModule } from '@angular/forms';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -45,7 +49,12 @@ import { ReportComponent } from './modules/report/report.component';
 import { EmployeeDataComponent } from './modules/employee-management/employee-data/employee-data.component';
 import { VisitCompanyComponent } from './modules/visit-company/visit-company.component';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzNotificationModule } from 'ng-zorro-antd/notification';
 
+import { AuthGuardService } from './shared/service/auth/auth-guard.service';
+import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
+import { NotificationComponent } from './shared/components/notification/notification.component';
+import { NotificationService } from './shared/service/notification/notification.service';
 registerLocaleData(en);
 
 @NgModule({
@@ -66,6 +75,7 @@ registerLocaleData(en);
     ReportComponent,
     EmployeeDataComponent,
     VisitCompanyComponent,
+    NotificationComponent,
   ],
   imports: [
     BrowserModule,
@@ -76,6 +86,13 @@ registerLocaleData(en);
     InfiniteScrollModule,
     NgbModule,
     FormsModule,
+    NgProgressModule.withConfig({
+      thick: true,
+      spinner: false,
+      color: '#0190fe',
+    }),
+    NgProgressRouterModule,
+    NgProgressHttpModule,
     NzFormModule,
     NzInputModule,
     NzButtonModule,
@@ -90,13 +107,20 @@ registerLocaleData(en);
     NzTableModule,
     NzToolTipModule,
     NzSelectModule,
+    NzNotificationModule,
 
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
       registrationStrategy: 'registerWhenStable:30000',
     }),
   ],
-  providers: [{ provide: NZ_I18N, useValue: en_US }],
+  providers: [
+    { provide: NZ_I18N, useValue: en_US },
+    { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+    AuthGuardService,
+    JwtHelperService,
+    NotificationService,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
