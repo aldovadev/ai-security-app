@@ -31,42 +31,48 @@
         <span style="margin-left: 6px; font-size: 16px">Dashboard</span>
       </li>
       <li
+        *ngIf="userRole === 'Company'"
         nz-menu-item
-        routerLink="visitor-management"
+        routerLink="visitor"
         [routerLinkActive]="'ant-menu-item-selected'"
       >
         <span class="fe fe-users" style="font-size: 16px"></span>
         <nz-badge [nzDot]="true" [nzOffset]="[5, 1]"
           ><span style="margin-left: 6px; font-size: 16px"
-            >Visitor Management</span
+            >Visitor</span
           ></nz-badge
         >
       </li>
       <li
+        *ngIf="userRole === 'Company'"
         nz-menu-item
-        routerLink="employee-management"
+        routerLink="employee"
         [routerLinkActive]="'ant-menu-item-selected'"
       >
         <span class="fe fe-user" style="font-size: 16px"></span>
-        <span style="margin-left: 6px; font-size: 16px"
-          >Employee Management</span
-        >
+        <span style="margin-left: 6px; font-size: 16px">Employee</span>
       </li>
       <li
+        *ngIf="userRole === 'Company'"
         nz-menu-item
-        routerLink="camera-management"
+        routerLink="camera"
         [routerLinkActive]="'ant-menu-item-selected'"
       >
         <span class="fe fe-camera" style="font-size: 16px"></span>
-        <span style="margin-left: 6px; font-size: 16px">Camera Management</span>
+        <span style="margin-left: 6px; font-size: 16px">Camera</span>
       </li>
       <li
+        *ngIf="userRole === 'Company'"
         nz-menu-item
         routerLink="report"
         [routerLinkActive]="'ant-menu-item-selected'"
       >
         <span class="fe fe-clipboard" style="font-size: 16px"></span>
         <span style="margin-left: 6px; font-size: 16px">Report</span>
+      </li>
+      <li nz-menu-item (click)="logout()">
+        <span class="fe fe-log-out" style="font-size: 16px"></span>
+        <span style="margin-left: 6px; font-size: 16px">Logout</span>
       </li>
     </ul>
   </nz-sider>

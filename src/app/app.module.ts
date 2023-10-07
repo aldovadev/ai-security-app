@@ -1,6 +1,8 @@
 import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { JwtInterceptor } from '@auth0/angular-jwt';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -55,6 +57,9 @@ import { AuthGuardService } from './shared/service/auth/auth-guard.service';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { NotificationComponent } from './shared/components/notification/notification.component';
 import { NotificationService } from './shared/service/notification/notification.service';
+import { ActivatedRouteSnapshot } from '@angular/router';
+import { RoleGuardService } from './shared/service/auth/role-guard.service';
+import { AuthService } from './shared/service/auth/auth.service';
 registerLocaleData(en);
 
 @NgModule({
@@ -117,9 +122,16 @@ registerLocaleData(en);
   providers: [
     { provide: NZ_I18N, useValue: en_US },
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true,
+    },
     AuthGuardService,
     JwtHelperService,
     NotificationService,
+    RoleGuardService,
+    AuthService,
   ],
   bootstrap: [AppComponent],
 })

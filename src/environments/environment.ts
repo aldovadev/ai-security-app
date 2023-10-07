@@ -4,6 +4,8 @@
 
 export const environment = {
   production: false,
+  baseURL: 'https://ai-security-api-xqsfr2c4aq-et.a.run.app',
+  // baseURL: "http://localhost:8080",
 };
 
 /*

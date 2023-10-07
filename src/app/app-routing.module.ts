@@ -11,6 +11,7 @@ import { CameraManagementComponent } from './modules/camera-management/camera-ma
 import { ReportComponent } from './modules/report/report.component';
 import { VisitCompanyComponent } from './modules/visit-company/visit-company.component';
 import { AuthGuardService } from './shared/service/auth/auth-guard.service';
+import { RoleGuardService } from './shared/service/auth/role-guard.service';
 
 const routes: Routes = [
   // { path: '', component: HomeComponent },
@@ -27,20 +28,28 @@ const routes: Routes = [
         component: DashboardComponent,
       },
       {
-        path: 'visitor-management',
+        path: 'visitor',
         component: VisitorManagementComponent,
+        data: { role: 'Company' },
+        canActivate: [RoleGuardService],
       },
       {
-        path: 'employee-management',
+        path: 'employee',
         component: EmployeeManagementComponent,
+        data: { role: 'Company' },
+        canActivate: [RoleGuardService],
       },
       {
-        path: 'camera-management',
+        path: 'camera',
         component: CameraManagementComponent,
+        data: { role: 'Company' },
+        canActivate: [RoleGuardService],
       },
       {
         path: 'report',
         component: ReportComponent,
+        data: { role: 'Company' },
+        canActivate: [RoleGuardService],
       },
     ],
   },
