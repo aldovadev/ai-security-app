@@ -1,1 +1,2 @@
-<p>{{ role }}</p>
+<app-admin *ngIf="role === 'Admin'"></app-admin>
+<app-company *ngIf="role === 'Company'"></app-company>

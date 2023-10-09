@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit {
   remember: boolean = false;
   returnUrl: string = '';
   loading: boolean = false;
+  passwordVisible: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -37,9 +38,32 @@ export class LoginComponent implements OnInit {
     // console.log(this.returnUrl);
   }
 
+  isRemember(): void {
+    const remember = localStorage.getItem('remember');
+    if (!remember) return;
+    this.authService.refreshToken().subscribe(
+      (r) => {
+        this.route.queryParams.subscribe((queryParams) => {
+          this.returnUrl = queryParams['returnUrl'] || '/dashboard';
+        });
+        this.router.navigate([this.returnUrl]);
+      },
+      (error) => {
+        localStorage.removeItem('remember');
+        this.notification.showNotification(
+          'warning',
+          '#eb2f96',
+          'Please Sign In'
+        );
+      }
+    );
+  }
+
   isLogin(): void {
     const token = localStorage.getItem('token');
     if (!token) return;
+    this.isRemember();
+
     this.route.queryParams.subscribe((queryParams) => {
       this.returnUrl = queryParams['returnUrl'] || '/login';
     });
@@ -55,11 +79,12 @@ export class LoginComponent implements OnInit {
       email: this.loginForm.value.username,
       password: this.loginForm.value.password,
     };
-    console.log('login lai');
+    // console.log('login lai');
 
     this.authService.login(payload).subscribe(
       (r) => {
         console.log('login bisa gan');
+        localStorage.setItem('remember', this.loginForm.value.remember);
         this.notification.showNotification('check', '#52c41a', 'Login Success');
         this.returnUrl =
           this.route.snapshot.queryParams['returnUrl'] || '/dashboard';

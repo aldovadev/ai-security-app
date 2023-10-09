@@ -33,9 +33,9 @@
         <nz-form-label style="font-size: 14px">Password</nz-form-label>
         <nz-form-item>
           <nz-form-control nzErrorTip="Please input your Password!">
-            <nz-input-group nzPrefixIcon="lock">
+            <nz-input-group nzPrefixIcon="lock" [nzSuffix]="suffixTemplate">
               <input
-                type="password"
+                [type]="passwordVisible ? 'text' : 'password'"
                 nz-input
                 placeholder="Password"
                 style="width: 300px; padding: 5px"
@@ -43,6 +43,13 @@
               />
             </nz-input-group>
           </nz-form-control>
+          <ng-template #suffixTemplate>
+            <span
+              nz-icon
+              [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
+              (click)="passwordVisible = !passwordVisible"
+            ></span>
+          </ng-template>
         </nz-form-item>
 
         <div nz-row style="margin-bottom: 16px">

@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from '@auth0/angular-jwt';
+import { OnlyNumberService } from './shared/directive/only-number.service';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -52,6 +53,7 @@ import { EmployeeDataComponent } from './modules/employee-management/employee-da
 import { VisitCompanyComponent } from './modules/visit-company/visit-company.component';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzNotificationModule } from 'ng-zorro-antd/notification';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 
 import { AuthGuardService } from './shared/service/auth/auth-guard.service';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
@@ -60,6 +62,8 @@ import { NotificationService } from './shared/service/notification/notification.
 import { ActivatedRouteSnapshot } from '@angular/router';
 import { RoleGuardService } from './shared/service/auth/role-guard.service';
 import { AuthService } from './shared/service/auth/auth.service';
+import { AdminComponent } from './modules/dashboard/admin/admin.component';
+import { CompanyComponent } from './modules/dashboard/company/company.component';
 registerLocaleData(en);
 
 @NgModule({
@@ -81,6 +85,9 @@ registerLocaleData(en);
     EmployeeDataComponent,
     VisitCompanyComponent,
     NotificationComponent,
+    AdminComponent,
+    CompanyComponent,
+    OnlyNumberService,
   ],
   imports: [
     BrowserModule,
@@ -113,6 +120,7 @@ registerLocaleData(en);
     NzToolTipModule,
     NzSelectModule,
     NzNotificationModule,
+    NzModalModule,
 
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
