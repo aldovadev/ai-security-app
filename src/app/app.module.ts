@@ -64,6 +64,7 @@ import { RoleGuardService } from './shared/service/auth/role-guard.service';
 import { AuthService } from './shared/service/auth/auth.service';
 import { AdminComponent } from './modules/dashboard/admin/admin.component';
 import { CompanyComponent } from './modules/dashboard/company/company.component';
+import { DashboardService } from './shared/service/dashboard/dashboard.service';
 registerLocaleData(en);
 
 @NgModule({
@@ -140,6 +141,7 @@ registerLocaleData(en);
     NotificationService,
     RoleGuardService,
     AuthService,
+    DashboardService,
   ],
   bootstrap: [AppComponent],
 })

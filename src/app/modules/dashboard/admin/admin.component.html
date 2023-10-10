@@ -29,6 +29,12 @@
             </button>
           </span>
         </td>
+        <td>{{ data.company_name }}</td>
+        <td>{{ data.email }}</td>
+        <td>{{ data.phone_number }}</td>
+        <td>{{ data.service_id }}</td>
+        <td>{{ data.address }}</td>
+        <td>{{ data.status }}</td>
       </tr>
     </tbody>
   </nz-table>
@@ -94,23 +100,33 @@
 
 <ng-template #addModalTitle> Add Company </ng-template>
 <ng-template #addModalContent>
-  <form>
+  <form [formGroup]="addCompanyForm">
     <div class="row">
       <div class="col">
         <nz-form-item>
           <nz-form-label>Company Name</nz-form-label>
-          <input nz-input type="text" />
+          <input
+            formControlName="company_name"
+            nz-input
+            type="text"
+            nzRequired
+          />
         </nz-form-item>
 
         <nz-form-item>
           <nz-form-label>Email</nz-form-label>
-          <input nz-input type="text" />
+          <input formControlName="email" nz-input type="text" nzRequired />
         </nz-form-item>
 
         <nz-form-item>
           <nz-form-label>Password</nz-form-label>
           <nz-input-group [nzSuffix]="suffixTemplate">
-            <input nz-input [type]="passwordVisible ? 'text' : 'password'" />
+            <input
+              formControlName="password"
+              nz-input
+              [type]="passwordVisible ? 'text' : 'password'"
+              nzRequired
+            />
           </nz-input-group>
         </nz-form-item>
 
@@ -126,16 +142,22 @@
       <div class="col">
         <nz-form-item>
           <nz-form-label>Phone Number</nz-form-label>
-          <input nz-input type="text" numbersOnly />
+          <input
+            formControlName="phone_number"
+            nz-input
+            type="text"
+            numbersOnly
+            nzRequired
+          />
         </nz-form-item>
         <nz-form-item>
           <nz-form-label>Service</nz-form-label>
-          <input nz-input type="text" />
+          <input formControlName="service_id" nz-input type="text" nzRequired />
         </nz-form-item>
 
         <nz-form-item>
           <nz-form-label>Address</nz-form-label>
-          <input nz-input type="text" />
+          <input formControlName="address" nz-input type="text" nzRequired />
         </nz-form-item>
       </div>
     </div>
@@ -145,5 +167,7 @@
   <button nz-button nzType="default" (click)="addVisibility(false)">
     Cancel
   </button>
-  <button nz-button nzType="primary">Confirm</button>
+  <button nz-button nzType="primary" (click)="handleAddCompany()">
+    Confirm
+  </button>
 </ng-template>
