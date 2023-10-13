@@ -62,10 +62,10 @@ export class LoginComponent implements OnInit {
   isLogin(): void {
     const token = localStorage.getItem('token');
     if (!token) return;
-    this.isRemember();
+    // this.isRemember();
 
     this.route.queryParams.subscribe((queryParams) => {
-      this.returnUrl = queryParams['returnUrl'] || '/login';
+      this.returnUrl = queryParams['returnUrl'] || '/dashboard';
     });
     this.router.navigate([this.returnUrl]);
   }

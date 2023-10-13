@@ -12,10 +12,14 @@ import { ReportComponent } from './modules/report/report.component';
 import { VisitCompanyComponent } from './modules/visit-company/visit-company.component';
 import { AuthGuardService } from './shared/service/auth/auth-guard.service';
 import { RoleGuardService } from './shared/service/auth/role-guard.service';
+import { OtpComponent } from './modules/visit-company/otp/otp.component';
+import { UploadImagesComponent } from './modules/visit-company/upload-images/upload-images.component';
 
 const routes: Routes = [
   // { path: '', component: HomeComponent },
   { path: '', component: VisitCompanyComponent },
+  { path: 'visit-company/otp', component: OtpComponent },
+  { path: 'visit-company/uploads', component: UploadImagesComponent },
   { path: 'login/forget-password', component: ForgetPasswordComponent },
   { path: 'login', component: LoginComponent },
   {

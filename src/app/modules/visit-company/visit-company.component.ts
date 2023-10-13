@@ -49,4 +49,8 @@ export class VisitCompanyComponent implements OnInit {
       nzDisabledSeconds: () => [],
     };
   };
+
+  submit(): void {
+    this.router.navigate(['visit-company/otp']);
+  }
 }

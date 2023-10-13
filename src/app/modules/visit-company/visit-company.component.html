@@ -11,7 +11,7 @@
       <h5 style="font-size: 14px" class="text-center">
         Please Give Your Visit Details
       </h5>
-      <form nz-form [formGroup]="visitForm" class="mt-3">
+      <form nz-form [formGroup]="visitForm" (ngSubmit)="submit()" class="mt-3">
         <div class="row">
           <div class="col">
             <nz-form-label style="font-size: 14px">First Name</nz-form-label>
@@ -152,7 +152,13 @@
             </nz-form-item>
           </div>
         </div>
-        <button nz-button nzType="primary" style="width: 100%; padding: 5px">
+        <button
+          nz-button
+          nzType="primary"
+          style="width: 100%; padding: 5px"
+          type="submit"
+          (click)="submit()"
+        >
           Submit
         </button>
       </form>
