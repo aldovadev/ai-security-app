@@ -24,6 +24,7 @@ import { NZ_I18N } from 'ng-zorro-antd/i18n';
 import { en_US } from 'ng-zorro-antd/i18n';
 import { IconDefinition } from '@ant-design/icons-angular';
 import * as AllIcons from '@ant-design/icons-angular/icons';
+import { WebcamModule } from 'ngx-webcam';
 
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
@@ -118,6 +119,7 @@ import { CompanyComponent } from './modules/dashboard/company/company.component'
 import { DashboardService } from './shared/service/dashboard/dashboard.service';
 import { UploadImagesComponent } from './modules/visit-company/upload-images/upload-images.component';
 import { OtpComponent } from './modules/visit-company/otp/otp.component';
+import { VisitService } from './shared/service/visitor/visit.service';
 registerLocaleData(en);
 
 @NgModule({
@@ -225,6 +227,7 @@ registerLocaleData(en);
     NzBreadCrumbModule,
     NzDropDownModule,
     NzGridModule,
+    WebcamModule,
 
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
@@ -245,6 +248,7 @@ registerLocaleData(en);
     RoleGuardService,
     AuthService,
     DashboardService,
+    VisitService,
   ],
   bootstrap: [AppComponent],
 })

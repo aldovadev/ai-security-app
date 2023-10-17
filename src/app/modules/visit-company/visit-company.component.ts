@@ -3,6 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { differenceInCalendarDays, setHours } from 'date-fns';
 import { Router } from '@angular/router';
 import { DisabledTimeFn, DisabledTimePartial } from 'ng-zorro-antd/date-picker';
+import * as dayjs from 'dayjs';
+import { NotificationService } from 'src/app/shared/service/notification/notification.service';
+import { newVisitor } from 'src/app/models/visitor-management';
 
 @Component({
   selector: 'app-visit-company',
@@ -14,7 +17,11 @@ export class VisitCompanyComponent implements OnInit {
 
   today = new Date();
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private notification: NotificationService
+  ) {
     this.visitForm = this.fb.group({
       firstName: ['', Validators.compose([Validators.required])],
       lastName: ['', Validators.compose([])],
@@ -51,6 +58,75 @@ export class VisitCompanyComponent implements OnInit {
   };
 
   submit(): void {
+    if (!this.visitForm.valid) {
+      this.notification.showNotification(
+        'warning',
+        '#eb2f96',
+        'Please fill all field!'
+      );
+      // return;
+    }
+
+    if (!this.validateDate()) return;
+
+    const payload: newVisitor = {
+      name: `${this.visitForm.value.firstName} ${this.visitForm.value.lastName}`,
+      email: this.visitForm.value.email,
+      phone_number: this.visitForm.value.phoneNumber,
+      gender: this.visitForm.value.gender,
+      address: this.visitForm.value.address,
+      company_origin: this.visitForm.value.companyOrigin,
+      company_destination: this.visitForm.value.companyDestination,
+      start_date: this.visitForm.value.visitDate[0],
+      end_date: this.visitForm.value.visitDate[1],
+      visit_reason: this.visitForm.value.visitReason,
+    };
+
+    console.log(payload);
+
     this.router.navigate(['visit-company/otp']);
+  }
+
+  validateDate(): boolean {
+    const startDate = dayjs(this.visitForm.value.visitDate[0]);
+    const endDate = dayjs(this.visitForm.value.visitDate[1]);
+
+    if (
+      startDate.day() === 0 ||
+      startDate.day() === 6 ||
+      endDate.day() === 0 ||
+      endDate.day() === 6
+    ) {
+      this.notification.showNotification(
+        'info',
+        '#FFFF00',
+        'Please visit our company at office hour!'
+      );
+
+      return false;
+    }
+
+    const visitHour = endDate.diff(startDate, 'hour');
+    const visitMs = endDate.diff(startDate, 'millisecond');
+    if (visitMs <= 0) {
+      this.notification.showNotification(
+        'info',
+        '#FFFF00',
+        'Please input a valid hour'
+      );
+
+      return false;
+    }
+
+    if (visitHour > 12) {
+      this.notification.showNotification(
+        'info',
+        '#FFFF00',
+        `WHAT THE F*CK WHY YOU VISIT US ${visitHour} HOUR?`
+      );
+
+      return false;
+    }
+    return true;
   }
 }

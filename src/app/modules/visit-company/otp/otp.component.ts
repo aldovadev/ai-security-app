@@ -6,7 +6,7 @@ import {
   ViewChildren,
   asNativeElements,
 } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService } from 'src/app/shared/service/notification/notification.service';
 
 @Component({
@@ -19,14 +19,30 @@ export class OtpComponent implements OnInit {
 
   invalidOTP: boolean = false;
   isLoading!: boolean;
+  otp: string[] = [];
   constructor(
     private router: Router,
-    private notification: NotificationService
+    private notification: NotificationService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {}
 
-  otp: string[] = [];
+  ngAfterViewInit() {
+    this.queryParamsCheck();
+  }
+
+  queryParamsCheck(): void {
+    const otp = this.route.snapshot.queryParams['otp'];
+    if (!otp) return;
+    const splitOTP: string[] = otp.split('');
+    splitOTP.map((item, index) => {
+      this.otpInputs.toArray()[index].nativeElement.value = item;
+    });
+
+    this.otp = otp.split('');
+    this.validateOTP();
+  }
 
   onInput(event: any, index: number): void {
     const input = event.target as HTMLInputElement;
