@@ -6,6 +6,7 @@ import { DisabledTimeFn, DisabledTimePartial } from 'ng-zorro-antd/date-picker';
 import * as dayjs from 'dayjs';
 import { NotificationService } from 'src/app/shared/service/notification/notification.service';
 import { newVisitor } from 'src/app/models/visitor-management';
+import { VisitService } from 'src/app/shared/service/visitor/visit.service';
 
 @Component({
   selector: 'app-visit-company',
@@ -20,7 +21,8 @@ export class VisitCompanyComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private notification: NotificationService
+    private notification: NotificationService,
+    private visitService: VisitService
   ) {
     this.visitForm = this.fb.group({
       firstName: ['', Validators.compose([Validators.required])],
@@ -83,8 +85,22 @@ export class VisitCompanyComponent implements OnInit {
     };
 
     console.log(payload);
-
-    this.router.navigate(['visit-company/otp']);
+    this.visitService.getOTP(payload.email).subscribe(
+      (r) => {
+        this.notification.showNotification('check', '#52c41a', r.message);
+        localStorage.setItem('visit_detail', JSON.stringify(payload));
+        localStorage.setItem('expired_at', r.expired_at);
+        this.router.navigate(['visit-company/otp']);
+      },
+      (error) => {
+        console.log(error.error.message);
+        this.notification.showNotification(
+          'warning',
+          '#eb2f96',
+          error.error.message
+        );
+      }
+    );
   }
 
   validateDate(): boolean {

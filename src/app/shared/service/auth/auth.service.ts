@@ -18,11 +18,11 @@ export class AuthService {
   }
 
   login(payload: Login): Observable<any> {
-    return this.http.post(this.baseUrl + '/login', payload);
+    return this.http.post(this.baseUrl + '/auth/login', payload);
   }
 
   refreshToken(): Observable<any> {
-    return this.http.get(this.baseUrl + '/refresh', {
+    return this.http.get(this.baseUrl + '/auth/refresh', {
       headers: this.getCustomHeaders(),
     });
   }

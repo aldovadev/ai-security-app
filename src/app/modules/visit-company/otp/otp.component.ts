@@ -7,7 +7,9 @@ import {
   asNativeElements,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { newVisitor, otp } from 'src/app/models/visitor-management';
 import { NotificationService } from 'src/app/shared/service/notification/notification.service';
+import { VisitService } from 'src/app/shared/service/visitor/visit.service';
 
 @Component({
   selector: 'app-otp',
@@ -20,16 +22,65 @@ export class OtpComponent implements OnInit {
   invalidOTP: boolean = false;
   isLoading!: boolean;
   otp: string[] = [];
+  otpExpiration!: Date;
+  remainingTime: string = 'Resend OTP';
+  remaining: number = 0;
+  errorMessage!: string;
+
+  visitDetail!: newVisitor;
+
   constructor(
     private router: Router,
     private notification: NotificationService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private visitService: VisitService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getData();
+  }
 
   ngAfterViewInit() {
     this.queryParamsCheck();
+    this.timerHandler();
+  }
+
+  timerHandler(): void {
+    setInterval(() => {
+      const now = new Date();
+      const timeDifference = this.otpExpiration.getTime() - now.getTime();
+      this.remaining = timeDifference;
+      if (timeDifference > 0) {
+        const minutes = Math.floor(timeDifference / 1000 / 60);
+        const seconds = Math.floor((timeDifference / 1000) % 60);
+        this.remainingTime = `${this.formatTime(minutes)}:${this.formatTime(
+          seconds
+        )}`;
+      } else {
+        this.remainingTime = 'Resend';
+      }
+    }, 1000);
+  }
+
+  private formatTime(time: number): string {
+    return time < 10 ? `0${time}` : `${time}`;
+  }
+
+  getData(): void {
+    const visit_detail = localStorage.getItem('visit_detail');
+    if (!visit_detail) {
+      this.notification.showNotification(
+        'warning',
+        '#eb2f96',
+        'No Visit Data Provided'
+      );
+      this.router.navigateByUrl('/');
+    }
+    this.visitDetail = JSON.parse(visit_detail || '{}');
+    // console.log(this.visitDetail);
+    this.otpExpiration = new Date(localStorage.getItem('expired_at') || '');
+
+    // console.log(this.otpExpiration);
   }
 
   queryParamsCheck(): void {
@@ -74,17 +125,47 @@ export class OtpComponent implements OnInit {
     setTimeout(() => {
       this.isLoading = false;
       let otp = this.otp.join('');
-      if (otp !== '123456') {
-        this.invalidOTP = true;
+      const payload: otp = {
+        otp_code: otp,
+        email: this.visitDetail.email,
+      };
+      this.visitService.verifyOTP(payload).subscribe(
+        (r) => {
+          this.invalidOTP = false;
+          localStorage.setItem('visitToken', r.otpToken);
+          this.notification.showNotification('check', '#52c41a', r.message);
+          this.router.navigateByUrl('/visit-company/uploads');
+        },
+        (error) => {
+          this.invalidOTP = true;
+          this.errorMessage = error.error.message;
+          this.notification.showNotification(
+            'warning',
+            '#eb2f96',
+            error.error.message
+          );
+        }
+      );
+    }, 1000);
+  }
+
+  resendOTP(): void {
+    const email = this.visitDetail.email;
+    this.visitService.getOTP(email).subscribe(
+      (r) => {
+        this.notification.showNotification('check', '#52c41a', r.message);
+        localStorage.setItem('expired_at', r.expired_at);
+        this.timerHandler();
+        this.getData();
+      },
+      (error) => {
+        console.log(error.error.message);
         this.notification.showNotification(
           'warning',
           '#eb2f96',
-          'Invalid OTP!'
+          error.error.message
         );
-      } else {
-        this.invalidOTP = false;
-        this.router.navigateByUrl('/visit-company/uploads');
       }
-    }, 1000);
+    );
   }
 }

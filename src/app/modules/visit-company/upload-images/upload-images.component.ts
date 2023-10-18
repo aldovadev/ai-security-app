@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { NzUploadFile, NzUploadXHRArgs } from 'ng-zorro-antd/upload';
 import { Observable, Observer, Subscription } from 'rxjs';
+import { NotificationService } from 'src/app/shared/service/notification/notification.service';
 
 @Component({
   selector: 'app-upload-images',
@@ -10,9 +12,23 @@ import { Observable, Observer, Subscription } from 'rxjs';
 export class UploadImagesComponent implements OnInit {
   pictureList: NzUploadFile[] = [];
 
-  constructor() {}
+  constructor(
+    private router: Router,
+    private notification: NotificationService
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const visit_detail = localStorage.getItem('visit_detail');
+    const visit_otp = localStorage.getItem('visitToken');
+    if (!visit_detail || !visit_otp) {
+      this.notification.showNotification(
+        'warning',
+        '#eb2f96',
+        'Not Authorized'
+      );
+      this.router.navigateByUrl('/');
+    }
+  }
 
   handleUpload(item: NzUploadXHRArgs): Subscription {
     // Simulate a POST request to upload the file

@@ -20,14 +20,14 @@ export class VisitService {
   }
 
   getOTP(email: string): Observable<any> {
-    return this.http.get<any>(this.baseUrl + `/otp/create/${email}`);
+    return this.http.get<any>(this.baseUrl + `/auth/create/otp/${email}`);
   }
 
   verifyOTP(payload: otp): Observable<any> {
     const header = new HttpHeaders({
       'Content-Type': 'application/json',
     });
-    return this.http.post<any>(this.baseUrl + '/otp/verify', payload, {
+    return this.http.post<any>(this.baseUrl + '/auth/verify/otp', payload, {
       headers: header,
     });
   }

@@ -90,9 +90,10 @@ export class LoginComponent implements OnInit {
           this.route.snapshot.queryParams['returnUrl'] || '/dashboard';
         console.log(this.returnUrl);
         this.router.navigate([this.returnUrl]);
-        localStorage.setItem('token', r.accesToken);
+        localStorage.setItem('token', r.accessToken);
       },
       (error) => {
+        this.loading = false;
         console.error(error);
         this.notification.showNotification('warning', '#eb2f96', 'Auth error');
       }
