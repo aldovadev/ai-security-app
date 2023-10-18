@@ -37,6 +37,10 @@ export class OtpComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    const visit_otp = localStorage.getItem('visitToken');
+    if (visit_otp) {
+      this.router.navigateByUrl('/visit-company/uploads');
+    }
     this.getData();
   }
 
