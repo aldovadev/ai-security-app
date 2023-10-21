@@ -20,37 +20,8 @@
           nzTooltipTitle="View Detail"
           style="margin-right: 8px"
         >
-          <button
-            class="btn btn-sm btn-light mr-3"
-            (click)="handleViewEdit(data)"
-          >
+          <button class="btn btn-sm btn-light mr-3">
             <i class="fe fe-eye"></i>
-          </button>
-        </span>
-        <span
-          nzTooltipPlacement="top"
-          nz-tooltip
-          nzTooltipTitle="Accept"
-          style="margin-right: 8px"
-        >
-          <button
-            class="btn btn-sm btn-light mr-3"
-            (click)="handleAccept(data)"
-          >
-            <i class="fe fe-check"></i>
-          </button>
-        </span>
-        <span
-          nzTooltipPlacement="top"
-          nz-tooltip
-          nzTooltipTitle="Reject"
-          style="margin-right: 8px"
-        >
-          <button
-            class="btn btn-sm btn-light mr-3"
-            (click)="handleReject(data)"
-          >
-            <i class="fe fe-x"></i>
           </button>
         </span>
       </td>
@@ -73,8 +44,18 @@
         nzTooltipTitle="Refresh"
         style="margin-right: 8px"
       >
-        <a class="btn btn-lg btn-light mr-2" (click)="handleRefresh()">
+        <a class="btn btn-lg btn-light mr-2" (click)="handleReload()">
           <i class="fe fe-refresh-cw"></i>
+        </a>
+      </span>
+      <span
+        nzTooltipPlacement="top"
+        nz-tooltip
+        nzTooltipTitle="Download"
+        style="margin-right: 8px"
+      >
+        <a class="btn btn-lg btn-light mr-2">
+          <i class="fe fe-download"></i>
         </a>
       </span>
     </div>

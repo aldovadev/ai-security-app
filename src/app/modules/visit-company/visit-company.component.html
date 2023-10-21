@@ -105,7 +105,15 @@
                   placeholder="Company Origin"
                   style="width: 350px; padding: 5px"
                   formControlName="companyOrigin"
+                  [nzAutocomplete]="autocompleteOrigin"
                 />
+                <nz-autocomplete nzBackfill #autocompleteOrigin>
+                  <nz-auto-option
+                    *ngFor="let option of companyDestination"
+                    [nzValue]="option.company_name"
+                    >{{ option.company_name }}</nz-auto-option
+                  >
+                </nz-autocomplete>
               </nz-form-control>
             </nz-form-item>
 
@@ -116,13 +124,25 @@
               <nz-form-control
                 nzErrorTip="Please input your Company Destination!"
               >
-                <input
+                <!-- <input
                   nz-input
                   type="text"
                   placeholder="Company Destination"
                   style="width: 350px; padding: 5px"
                   formControlName="companyDestination"
-                />
+                /> -->
+                <nz-select
+                  nzShowSearch
+                  nzAllowClear
+                  nzPlaceHolder="Company Destination"
+                  formControlName="companyDestination"
+                >
+                  <nz-option
+                    *ngFor="let item of companyDestination"
+                    [nzLabel]="item.company_name"
+                    [nzValue]="item.company_name"
+                  ></nz-option>
+                </nz-select>
               </nz-form-control>
             </nz-form-item>
 
@@ -163,9 +183,9 @@
         </button>
       </form>
       <h5 class="text-center" style="font-size: 12px; margin: 8px">
-        not a visitor?
+        Not a visitor?
         <a routerLink="login" style="text-decoration: underline"
-          >Company Login</a
+          >Company login</a
         >
       </h5>
     </div>

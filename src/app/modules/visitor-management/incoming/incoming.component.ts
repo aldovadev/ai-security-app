@@ -1,5 +1,20 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { visitorInfo } from 'src/app/models/visitor-management';
+import {
+  Component,
+  Input,
+  OnInit,
+  ViewChild,
+  ViewContainerRef,
+  TemplateRef,
+} from '@angular/core';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import {
+  visitorData,
+  visitorResponse,
+  visitorStatus,
+} from 'src/app/models/visitor-management';
+import { NotificationService } from 'src/app/shared/service/notification/notification.service';
+import { VisitorModuleService } from 'src/app/shared/service/visitor/visitor-module.service';
+import { ViewVisitorComponent } from '../view-visitor/view-visitor.component';
 
 @Component({
   selector: 'app-incoming',
@@ -8,16 +23,6 @@ import { visitorInfo } from 'src/app/models/visitor-management';
 })
 export class IncomingComponent implements OnInit {
   @Input() dateRange: Date[] = [];
-
-  tableData: visitorInfo[] = [
-    {
-      name: 'uwak chan~',
-      email: 'email@email.com',
-      phone_number: '081234567890',
-      visit_date: '20/09/2023',
-      visit_reason: 'manjanguak anak',
-    },
-  ];
 
   listOfColumn = [
     {
@@ -46,5 +51,94 @@ export class IncomingComponent implements OnInit {
     },
   ];
 
-  ngOnInit(): void {}
+  tableData: visitorData[] = [];
+  incomingData: number = 0;
+  selectedVisitor!: visitorData;
+
+  isLoading!: boolean;
+  constructor(
+    private visitorModuleService: VisitorModuleService,
+    private notification: NotificationService,
+    private modal: NzModalService,
+    private viewContainerRef: ViewContainerRef
+  ) {}
+
+  ngOnInit(): void {
+    this.fetchIncoming();
+  }
+
+  fetchIncoming(): void {
+    this.isLoading = true;
+    this.visitorModuleService.getVisitor('Incoming').subscribe(
+      (res: visitorResponse) => {
+        this.tableData = res.data;
+        this.isLoading = false;
+        this.visitorModuleService.incomingData = res.data.length;
+        this.incomingData = res.data.length;
+      },
+      (err) => {
+        console.log(err.error.message);
+        this.isLoading = false;
+      }
+    );
+  }
+
+  handleRefresh(): void {
+    window.location.reload();
+  }
+  handleViewEdit(visitor: visitorData): void {
+    console.log(visitor);
+    const modal = this.modal.create({
+      nzContent: ViewVisitorComponent,
+      nzViewContainerRef: this.viewContainerRef,
+      nzTitle: 'Visitor Detail',
+      nzMaskClosable: false,
+      nzClosable: false,
+      nzWidth: '60%',
+      nzData: visitor, // Pass the data as a property in an object
+    });
+    modal.afterClose.subscribe(() => {
+      this.handleRefresh();
+    });
+  }
+
+  handleAccept(visitor: visitorData): void {
+    let payload: visitorStatus = {
+      id: visitor.id,
+      visit_status: 'Accepted',
+    };
+    this.visitorModuleService.visitorStatus(payload).subscribe(
+      (res) => {
+        this.notification.showNotification('check', '#52c41a', res.message);
+        window.location.reload();
+      },
+      (error) => {
+        this.notification.showNotification(
+          'warning',
+          '#eb2f96',
+          error.error.message
+        );
+      }
+    );
+  }
+
+  handleReject(visitor: visitorData): void {
+    let payload: visitorStatus = {
+      id: visitor.id,
+      visit_status: 'Rejected',
+    };
+    this.visitorModuleService.visitorStatus(payload).subscribe(
+      (res) => {
+        this.notification.showNotification('check', '#52c41a', res.message);
+        this.handleRefresh();
+      },
+      (error) => {
+        this.notification.showNotification(
+          'warning',
+          '#eb2f96',
+          error.error.message
+        );
+      }
+    );
+  }
 }

@@ -34,7 +34,7 @@ import { NzSpaceModule } from 'ng-zorro-antd/space';
 import { NzAffixModule } from 'ng-zorro-antd/affix';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
-import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { MenuService, NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { NzStepsModule } from 'ng-zorro-antd/steps';
@@ -120,6 +120,12 @@ import { DashboardService } from './shared/service/dashboard/dashboard.service';
 import { UploadImagesComponent } from './modules/visit-company/upload-images/upload-images.component';
 import { OtpComponent } from './modules/visit-company/otp/otp.component';
 import { VisitService } from './shared/service/visitor/visit.service';
+import { VisitorModuleService } from './shared/service/visitor/visitor-module.service';
+import { OptionService } from './shared/service/option/option.service';
+import { FinishedComponent } from './modules/visitor-management/finished/finished.component';
+import { ViewVisitorComponent } from './modules/visitor-management/view-visitor/view-visitor.component';
+import * as ApexCharts from 'apexcharts';
+import { NgApexchartsModule } from 'ng-apexcharts';
 registerLocaleData(en);
 
 @NgModule({
@@ -146,6 +152,8 @@ registerLocaleData(en);
     OnlyNumberService,
     UploadImagesComponent,
     OtpComponent,
+    FinishedComponent,
+    ViewVisitorComponent,
   ],
   imports: [
     BrowserModule,
@@ -228,6 +236,7 @@ registerLocaleData(en);
     NzDropDownModule,
     NzGridModule,
     WebcamModule,
+    NgApexchartsModule,
 
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
@@ -249,6 +258,8 @@ registerLocaleData(en);
     AuthService,
     DashboardService,
     VisitService,
+    VisitorModuleService,
+    OptionService,
   ],
   bootstrap: [AppComponent],
 })

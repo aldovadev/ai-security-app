@@ -1,4 +1,9 @@
-<nz-table #sortTable [nzData]="tableData" [nzTitle]="headerTable">
+<nz-table
+  [nzLoading]="isLoading"
+  #sortTable
+  [nzData]="tableData"
+  [nzTitle]="headerTable"
+>
   <thead>
     <tr>
       <th *ngFor="let col of listOfColumn" [nzWidth]="col.width">
@@ -9,16 +14,34 @@
   <tbody>
     <tr *ngFor="let data of sortTable.data">
       <td>
-        <span nzTooltipPlacement="top" nz-tooltip nzTooltipTitle="View Detail">
+        <span
+          nzTooltipPlacement="top"
+          nz-tooltip
+          nzTooltipTitle="View Detail"
+          style="margin-right: 8px"
+        >
           <button class="btn btn-sm btn-light mr-3">
             <i class="fe fe-eye"></i>
+          </button>
+        </span>
+        <span
+          nzTooltipPlacement="top"
+          nz-tooltip
+          nzTooltipTitle="Finish"
+          style="margin-right: 8px"
+        >
+          <button
+            class="btn btn-sm btn-light mr-3"
+            (click)="handleFinish(data)"
+          >
+            <i class="fe fe-check"></i>
           </button>
         </span>
       </td>
       <td>{{ data.name }}</td>
       <td>{{ data.email }}</td>
       <td>{{ data.phone_number }}</td>
-      <td>{{ data.visit_date }}</td>
+      <td>{{ data.start_date | date : "yyyy-MM-dd HH:mm:ss" }}</td>
       <td>{{ data.visit_reason }}</td>
     </tr>
   </tbody>
@@ -34,7 +57,7 @@
         nzTooltipTitle="Refresh"
         style="margin-right: 8px"
       >
-        <a class="btn btn-lg btn-light mr-2" (click)="ngOnInit()">
+        <a class="btn btn-lg btn-light mr-2" (click)="handleReload()">
           <i class="fe fe-refresh-cw"></i>
         </a>
       </span>

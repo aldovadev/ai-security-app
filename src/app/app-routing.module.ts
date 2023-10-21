@@ -49,12 +49,12 @@ const routes: Routes = [
         data: { role: 'Company' },
         canActivate: [RoleGuardService],
       },
-      {
-        path: 'report',
-        component: ReportComponent,
-        data: { role: 'Company' },
-        canActivate: [RoleGuardService],
-      },
+      // {
+      //   path: 'report',
+      //   component: ReportComponent,
+      //   data: { role: 'Company' },
+      //   canActivate: [RoleGuardService],
+      // },
     ],
   },
   { path: '**', redirectTo: '/' },

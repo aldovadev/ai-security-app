@@ -7,6 +7,17 @@ import * as dayjs from 'dayjs';
 import { NotificationService } from 'src/app/shared/service/notification/notification.service';
 import { newVisitor } from 'src/app/models/visitor-management';
 import { VisitService } from 'src/app/shared/service/visitor/visit.service';
+import { OptionService } from 'src/app/shared/service/option/option.service';
+
+type response = {
+  message: string;
+  data: companyOption[];
+};
+
+type companyOption = {
+  id: number;
+  company_name: string;
+};
 
 @Component({
   selector: 'app-visit-company',
@@ -15,6 +26,7 @@ import { VisitService } from 'src/app/shared/service/visitor/visit.service';
 })
 export class VisitCompanyComponent implements OnInit {
   visitForm: FormGroup;
+  companyDestination: companyOption[] = [];
 
   today = new Date();
 
@@ -22,7 +34,8 @@ export class VisitCompanyComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private notification: NotificationService,
-    private visitService: VisitService
+    private visitService: VisitService,
+    private optionService: OptionService
   ) {
     this.visitForm = this.fb.group({
       firstName: ['', Validators.compose([Validators.required])],
@@ -38,7 +51,20 @@ export class VisitCompanyComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.fetchCompanyDestination();
+  }
+
+  fetchCompanyDestination(): void {
+    this.optionService.companyOption().subscribe(
+      (res: response) => {
+        this.companyDestination = res.data;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
 
   disabledDate = (current: Date): boolean =>
     // Can not select days before today and today

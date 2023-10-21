@@ -1,22 +1,19 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   visitorData,
   visitorResponse,
-  visitorStatus,
 } from 'src/app/models/visitor-management';
 import { NotificationService } from 'src/app/shared/service/notification/notification.service';
 import { VisitorModuleService } from 'src/app/shared/service/visitor/visitor-module.service';
 
 @Component({
-  selector: 'app-accepted',
-  templateUrl: './accepted.component.html',
-  styleUrls: ['./accepted.component.scss'],
+  selector: 'app-finished',
+  templateUrl: './finished.component.html',
+  styleUrls: ['./finished.component.scss'],
 })
-export class AcceptedComponent implements OnInit {
-  @Input() dateRange: Date[] = [];
-
+export class FinishedComponent implements OnInit {
   tableData: visitorData[] = [];
-  acceptedData: number = 0;
+  finishedData: number = 0;
 
   listOfColumn = [
     {
@@ -53,21 +50,16 @@ export class AcceptedComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.fetchAccepted();
+    this.fetchFinished();
   }
 
-  handleReload(): void {
-    window.location.reload();
-  }
-
-  fetchAccepted(): void {
+  fetchFinished(): void {
     this.isLoading = true;
-    this.visitorModuleService.getVisitor('Accepted').subscribe(
+    this.visitorModuleService.getVisitor('Finished').subscribe(
       (res: visitorResponse) => {
         this.tableData = res.data;
         this.isLoading = false;
-        this.visitorModuleService.acceptedData = res.data.length;
-        this.acceptedData = res.data.length;
+        this.finishedData = res.data.length;
       },
       (err) => {
         console.log(err.error.message);
@@ -76,23 +68,7 @@ export class AcceptedComponent implements OnInit {
     );
   }
 
-  handleFinish(visitor: visitorData): void {
-    let payload: visitorStatus = {
-      id: visitor.id,
-      visit_status: 'Finished',
-    };
-    this.visitorModuleService.visitorStatus(payload).subscribe(
-      (res) => {
-        this.notification.showNotification('check', '#52c41a', res.message);
-        this.handleReload();
-      },
-      (error) => {
-        this.notification.showNotification(
-          'warning',
-          '#eb2f96',
-          error.error.message
-        );
-      }
-    );
+  handleReload(): void {
+    window.location.reload();
   }
 }

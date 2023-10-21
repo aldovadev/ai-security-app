@@ -1,11 +1,24 @@
-<nz-layout style="height: 100vh">
-  <nz-sider nzWidth="256px" nzTheme="light">
-    <div class="logo" style="margin: 10px auto">Logo Company</div>
+<nz-layout style="min-height: 100vh">
+  <nz-sider nzWidth="256px" style="height: 100vh" nzTheme="dark">
+    <div class="logo d-flex justify-content-center" style="margin: 10px auto">
+      <img
+        src="../../../../assets/MT.png"
+        alt="companyLogo"
+        height="40"
+        style="margin-top: 15px"
+      />
+    </div>
     <div class="d-flex justify-content-center align-items-center gap-3 py-3">
       <nz-avatar [nzSize]="38" nzIcon="user"></nz-avatar>
-      <span class="fe fe-settings" style="font-size: 22px"></span>
+      <span
+        class="fe fe-settings"
+        style="font-size: 22px; color: #ffffffa6"
+      ></span>
       <nz-badge nzSize="small" [nzCount]="5"
-        ><span class="fe fe-bell" style="font-size: 18px"></span
+        ><span
+          class="fe fe-bell"
+          style="font-size: 18px; color: #ffffffa6"
+        ></span
       ></nz-badge>
     </div>
     <div class="d-flex justify-content-center align-items-center py-3">
@@ -25,43 +38,48 @@
       <span nz-icon nzType="search"></span>
     </ng-template>
 
-    <ul nz-menu nzTheme="light" nzMode="inline">
-      <li nz-menu-item routerLink="/dashboard">
-        <span class="fe fe-home" style="font-size: 16px"></span>
-        <span style="margin-left: 6px; font-size: 16px">Dashboard</span>
-      </li>
-      <li
-        *ngIf="userRole === 'Company'"
-        nz-menu-item
-        routerLink="visitor"
-        [routerLinkActive]="'ant-menu-item-selected'"
+    <ul nz-menu nzTheme="dark" nzMode="inline" style="height: 69%">
+      <div
+        class="d-flex flex-column justify-content-between"
+        style="height: 100%"
       >
-        <span class="fe fe-users" style="font-size: 16px"></span>
-        <nz-badge [nzDot]="true" [nzOffset]="[5, 1]"
-          ><span style="margin-left: 6px; font-size: 16px"
-            >Visitor</span
-          ></nz-badge
-        >
-      </li>
-      <li
-        *ngIf="userRole === 'Company'"
-        nz-menu-item
-        routerLink="employee"
-        [routerLinkActive]="'ant-menu-item-selected'"
-      >
-        <span class="fe fe-user" style="font-size: 16px"></span>
-        <span style="margin-left: 6px; font-size: 16px">Employee</span>
-      </li>
-      <li
-        *ngIf="userRole === 'Company'"
-        nz-menu-item
-        routerLink="camera"
-        [routerLinkActive]="'ant-menu-item-selected'"
-      >
-        <span class="fe fe-camera" style="font-size: 16px"></span>
-        <span style="margin-left: 6px; font-size: 16px">Camera</span>
-      </li>
-      <li
+        <div>
+          <li nz-menu-item routerLink="/dashboard">
+            <span class="fe fe-home" style="font-size: 16px"></span>
+            <span style="margin-left: 6px; font-size: 16px">Dashboard</span>
+          </li>
+          <li
+            *ngIf="userRole === 'Company'"
+            nz-menu-item
+            routerLink="visitor"
+            [routerLinkActive]="'ant-menu-item-selected'"
+          >
+            <span class="fe fe-users" style="font-size: 16px"></span>
+            <nz-badge [nzDot]="incomingData > 0" [nzOffset]="[5, 1]"
+              ><span style="margin-left: 6px; font-size: 16px; color: #ffffffa6"
+                >Visitor</span
+              ></nz-badge
+            >
+          </li>
+          <li
+            *ngIf="userRole === 'Company'"
+            nz-menu-item
+            routerLink="employee"
+            [routerLinkActive]="'ant-menu-item-selected'"
+          >
+            <span class="fe fe-user" style="font-size: 16px"></span>
+            <span style="margin-left: 6px; font-size: 16px">Employee</span>
+          </li>
+          <li
+            *ngIf="userRole === 'Company'"
+            nz-menu-item
+            routerLink="camera"
+            [routerLinkActive]="'ant-menu-item-selected'"
+          >
+            <span class="fe fe-camera" style="font-size: 16px"></span>
+            <span style="margin-left: 6px; font-size: 16px">Camera</span>
+          </li>
+          <!-- <li
         *ngIf="userRole === 'Company'"
         nz-menu-item
         routerLink="report"
@@ -69,11 +87,15 @@
       >
         <span class="fe fe-clipboard" style="font-size: 16px"></span>
         <span style="margin-left: 6px; font-size: 16px">Report</span>
-      </li>
-      <li nz-menu-item (click)="logout()">
-        <span class="fe fe-log-out" style="font-size: 16px"></span>
-        <span style="margin-left: 6px; font-size: 16px">Logout</span>
-      </li>
+      </li> -->
+        </div>
+        <div>
+          <li nz-menu-item (click)="logout()">
+            <span class="fe fe-log-out" style="font-size: 16px"></span>
+            <span style="margin-left: 6px; font-size: 16px">Logout</span>
+          </li>
+        </div>
+      </div>
     </ul>
   </nz-sider>
   <div class="vertical-line"></div>
