@@ -29,11 +29,7 @@ export class VisitorModuleService {
 
   getVisitor(status: string): Observable<any> {
     return this.http.get(
-      this.baseUrl +
-        '/visitor?status=' +
-        status +
-        '&email=' +
-        this.roleGuardService.getDecodedJWT().userInfo.email,
+      this.baseUrl + '/visitor?status=' + status,
 
       { headers: this.getCustomHeaders() }
     );

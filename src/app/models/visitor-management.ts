@@ -1,14 +1,14 @@
 export interface newVisitor {
   name: string;
   email: string;
-  phone_number: string;
+  phoneNumber: string;
   gender: string;
   address: string;
-  company_origin?: string;
-  company_destination: string;
-  start_date: Date;
-  end_date: Date;
-  visit_reason: string;
+  originId?: string;
+  destinationId: string;
+  startDate: string;
+  endDate: string;
+  visitReason: string;
 }
 
 export interface otp {

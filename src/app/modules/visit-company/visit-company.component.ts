@@ -100,14 +100,14 @@ export class VisitCompanyComponent implements OnInit {
     const payload: newVisitor = {
       name: `${this.visitForm.value.firstName} ${this.visitForm.value.lastName}`,
       email: this.visitForm.value.email,
-      phone_number: this.visitForm.value.phoneNumber,
+      phoneNumber: this.visitForm.value.phoneNumber,
       gender: this.visitForm.value.gender,
       address: this.visitForm.value.address,
-      company_origin: this.visitForm.value.companyOrigin,
-      company_destination: this.visitForm.value.companyDestination,
-      start_date: this.visitForm.value.visitDate[0],
-      end_date: this.visitForm.value.visitDate[1],
-      visit_reason: this.visitForm.value.visitReason,
+      originId: this.visitForm.value.companyOrigin,
+      destinationId: this.visitForm.value.companyDestination,
+      startDate: this.visitForm.value.visitDate[0],
+      endDate: this.visitForm.value.visitDate[1],
+      visitReason: this.visitForm.value.visitReason,
     };
 
     console.log(payload);
