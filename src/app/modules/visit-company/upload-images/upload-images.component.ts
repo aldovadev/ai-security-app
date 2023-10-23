@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { NzUploadFile, NzUploadXHRArgs } from 'ng-zorro-antd/upload';
 import { Observable, Observer, Subscription } from 'rxjs';
 import { NotificationService } from 'src/app/shared/service/notification/notification.service';
+import { VisitService } from 'src/app/shared/service/visitor/visit.service';
 
 @Component({
   selector: 'app-upload-images',
@@ -14,13 +15,14 @@ export class UploadImagesComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private notification: NotificationService
+    private notification: NotificationService,
+    private visitService: VisitService
   ) {}
 
   ngOnInit(): void {
-    const visit_detail = localStorage.getItem('visit_detail');
     const visit_otp = localStorage.getItem('visitToken');
-    if (!visit_detail || !visit_otp) {
+    const visitorId = localStorage.getItem('visitId');
+    if (!visit_otp || !visitorId) {
       this.notification.showNotification(
         'warning',
         '#eb2f96',
@@ -30,60 +32,93 @@ export class UploadImagesComponent implements OnInit {
     }
   }
 
-  handleUpload(item: NzUploadXHRArgs): Subscription {
-    // Simulate a POST request to upload the file
+  handleUpload = (item: NzUploadXHRArgs): Subscription => {
     const formData = new FormData();
-    formData.append('file', item.file as any);
+    formData.append('image', item.file as any);
 
-    // Simulate an HTTP POST request with a delay
-    const uploadObservable: Observable<any> = new Observable((observer) => {
-      // Simulate an HTTP POST request delay (2 seconds)
-      const delayMs = 2000;
+    // Call your service's uploadPicture method
+    const visitId = localStorage.getItem('visitId') || '';
 
-      // Simulate a successful response
-      setTimeout(() => {
-        observer.next({ success: true, message: 'File uploaded successfully' });
-        observer.complete();
-      }, delayMs);
-    });
+    const uploadObservable: Observable<any> = this.visitService.uploadPicture(
+      formData,
+      visitId
+    );
 
     // Subscribe to the observable and return the subscription
     return uploadObservable.subscribe(
       (response) => {
+        this.notification.showNotification(
+          'check',
+          '#52c41a',
+          response.message
+        );
         // Handle the response here (e.g., show success message)
         console.log(response.message);
       },
       (error) => {
         // Handle errors here (e.g., show error message)
+        this.notification.showNotification(
+          'warning',
+          '#eb2f96',
+          error.error.message
+        );
         console.error('Error uploading file:', error);
+      }
+    );
+  };
+
+  startUpload() {
+    const formData = new FormData();
+    formData.append('image', this.pictureList[0] as any);
+
+    // Call your service's uploadPicture method
+    const visitId = localStorage.getItem('visitId');
+    if (!visitId) {
+      this.notification.showNotification(
+        'warning',
+        '#eb2f96',
+        'No Visitor Id Provided'
+      );
+      this.router.navigateByUrl('/');
+      return;
+    }
+    this.visitService.uploadPicture(formData, visitId).subscribe(
+      (r) => {
+        this.notification.showNotification('check', '#52c41a', r.message);
+        this.router.navigateByUrl('/');
+      },
+      (error) => {
+        this.notification.showNotification(
+          'warning',
+          '#eb2f96',
+          error.error.message
+        );
       }
     );
   }
 
-  startUpload() {}
-
-  beforeUpload = (
-    file: NzUploadFile,
-    _fileList: NzUploadFile[]
-  ): Observable<boolean> =>
+  beforeUpload = (file: NzUploadFile): Observable<boolean> =>
     new Observable((observer: Observer<boolean>) => {
       const maxSize =
         file.type === 'application/pdf' ? 50 * 1024 * 1024 : 2 * 1024 * 1024;
       const isLt2M = file.size! < maxSize;
       console.log(file.size);
       if (!isLt2M) {
+        this.notification.showNotification(
+          'warning',
+          '#eb2f96',
+          'File too large'
+        );
         observer.complete();
         return;
       }
+      this.pictureList.push(file);
       observer.next(isLt2M);
       observer.complete();
     });
 
   handleChange(info: { file: NzUploadFile }): void {
     switch (info.file.status) {
-      case 'uploading':
-        // this.loading = true;
-        break;
       case 'done':
         console.log(info.file.response);
 

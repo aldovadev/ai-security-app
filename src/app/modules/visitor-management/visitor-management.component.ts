@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { statusId } from 'src/app/models/visitor-management';
 import { VisitorModuleService } from 'src/app/shared/service/visitor/visitor-module.service';
+
+type response = {
+  message: string;
+  data: statusId[];
+};
 
 @Component({
   selector: 'app-visitor-management',
@@ -24,7 +30,21 @@ export class VisitorManagementComponent implements OnInit {
       // Example: set this.activeTabIndex based on activeTab value
       // this.activeTabIndex = determineTabIndex(activeTab);
     });
+    this.fetchStatusId();
     this.fetchData();
+  }
+
+  fetchStatusId(): void {
+    this.visitorModuleService.getStatusId().subscribe(
+      (res: response) => {
+        res.data.forEach((item) => {
+          this.visitorModuleService.status[item.statusName] = item.statusId;
+        });
+      },
+      (error) => {
+        console.log(error.error.message);
+      }
+    );
   }
 
   fetchData(): void {

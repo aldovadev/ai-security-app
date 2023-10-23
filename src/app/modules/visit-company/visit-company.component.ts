@@ -16,7 +16,26 @@ type response = {
 
 type companyOption = {
   id: number;
-  company_name: string;
+  companyName: string;
+};
+
+type Data = {
+  id: string;
+  name: string;
+  email: string;
+  phoneNumber: string;
+  gender: string;
+  address: string;
+  startDate: string;
+  endDate: string;
+  visitReason: string;
+  visitNumber: string;
+  originId: string;
+  destinationId: string;
+  statusId: number;
+  photoPath: string;
+  updatedAt: string;
+  createdAt: string;
 };
 
 @Component({
@@ -44,7 +63,7 @@ export class VisitCompanyComponent implements OnInit {
       email: ['', Validators.compose([Validators.required])],
       address: ['', Validators.compose([Validators.required])],
       gender: ['', Validators.compose([Validators.required])],
-      companyOrigin: ['', Validators.compose([])],
+      companyOrigin: [null, Validators.compose([])],
       companyDestination: ['', Validators.compose([Validators.required])],
       visitReason: ['', Validators.compose([Validators.required])],
       visitDate: ['', Validators.compose([Validators.required])],
@@ -110,20 +129,57 @@ export class VisitCompanyComponent implements OnInit {
       visitReason: this.visitForm.value.visitReason,
     };
 
-    console.log(payload);
-    this.visitService.getOTP(payload.email).subscribe(
-      (r) => {
+    if (!localStorage.getItem('visitToken')) {
+      this.visitService.getOTP(payload.email).subscribe(
+        (r) => {
+          this.notification.showNotification('check', '#52c41a', r.message);
+          localStorage.setItem('visit_detail', JSON.stringify(payload));
+          localStorage.setItem('expired_at', r.expired_at);
+          this.router.navigate(['visit-company/otp']);
+        },
+        (error) => {
+          console.log(error.error.message);
+          this.notification.showNotification(
+            'warning',
+            '#eb2f96',
+            error.error.message
+          );
+        }
+      );
+    }
+
+    this.visitService.createVisitor(payload).subscribe(
+      (r: { message: string; status: string; data: Data }) => {
         this.notification.showNotification('check', '#52c41a', r.message);
-        localStorage.setItem('visit_detail', JSON.stringify(payload));
-        localStorage.setItem('expired_at', r.expired_at);
-        this.router.navigate(['visit-company/otp']);
+        localStorage.setItem('visitId', r.data.id);
+        this.router.navigate(['visit-company/uploads']);
       },
       (error) => {
         console.log(error.error.message);
-        this.notification.showNotification(
-          'warning',
-          '#eb2f96',
-          error.error.message
+        if (error.error.message === 'You already make a visit request today') {
+          this.notification.showNotification(
+            'warning',
+            '#eb2f96',
+            error.error.message
+          );
+          return;
+        }
+        localStorage.setItem('visit_detail', JSON.stringify(payload));
+        this.visitService.getOTP(payload.email).subscribe(
+          (r) => {
+            this.notification.showNotification('check', '#52c41a', r.message);
+
+            localStorage.setItem('expired_at', r.expired_at);
+            this.router.navigate(['visit-company/otp']);
+          },
+          (error) => {
+            console.log(error.error.message);
+            this.notification.showNotification(
+              'warning',
+              '#eb2f96',
+              error.error.message
+            );
+          }
         );
       }
     );

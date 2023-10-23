@@ -11,9 +11,9 @@ import { NotificationService } from '../notification/notification.service';
 import jwtDecode from 'jwt-decode';
 
 type userInfo = {
-  company_name: string;
+  companyName: string;
   email: string;
-  user_role: string;
+  userRole: string;
 };
 type decoded = {
   iat: number;
@@ -45,8 +45,8 @@ export class RoleGuardService {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
-    const userInfo =  this.getUserInfo()
-    const role = userInfo.user_role;
+    const userInfo = this.getUserInfo();
+    const role = userInfo.userRole;
 
     const requiredRole = next.data['role'];
 

@@ -11,6 +11,25 @@ import { newVisitor, otp } from 'src/app/models/visitor-management';
 import { NotificationService } from 'src/app/shared/service/notification/notification.service';
 import { VisitService } from 'src/app/shared/service/visitor/visit.service';
 
+type Data = {
+  id: string;
+  name: string;
+  email: string;
+  phoneNumber: string;
+  gender: string;
+  address: string;
+  startDate: string;
+  endDate: string;
+  visitReason: string;
+  visitNumber: string;
+  originId: string;
+  destinationId: string;
+  statusId: number;
+  photoPath: string;
+  updatedAt: string;
+  createdAt: string;
+};
+
 @Component({
   selector: 'app-otp',
   templateUrl: './otp.component.html',
@@ -39,6 +58,7 @@ export class OtpComponent implements OnInit {
   ngOnInit(): void {
     const visit_otp = localStorage.getItem('visitToken');
     if (visit_otp) {
+      // localStorage.removeItem('visit_detail');
       this.router.navigateByUrl('/visit-company/uploads');
     }
     this.getData();
@@ -130,7 +150,7 @@ export class OtpComponent implements OnInit {
       this.isLoading = false;
       let otp = this.otp.join('');
       const payload: otp = {
-        otp_code: otp,
+        otpCode: otp,
         email: this.visitDetail.email,
       };
       this.visitService.verifyOTP(payload).subscribe(
@@ -138,7 +158,23 @@ export class OtpComponent implements OnInit {
           this.invalidOTP = false;
           localStorage.setItem('visitToken', r.otpToken);
           this.notification.showNotification('check', '#52c41a', r.message);
-          this.router.navigateByUrl('/visit-company/uploads');
+          this.notification.showNotification('check', '#52c41a', 'Sending');
+
+          this.visitService.createVisitor(this.visitDetail).subscribe(
+            (r: { message: string; status: string; data: Data }) => {
+              this.notification.showNotification('check', '#52c41a', r.message);
+              localStorage.setItem('visitId', r.data.id);
+              localStorage.removeItem('visit_detail');
+              this.router.navigateByUrl('/visit-company/uploads');
+            },
+            (error) => {
+              this.notification.showNotification(
+                'warning',
+                '#eb2f96',
+                error.error.message
+              );
+            }
+          );
         },
         (error) => {
           this.invalidOTP = true;

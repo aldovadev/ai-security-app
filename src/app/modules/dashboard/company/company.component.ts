@@ -106,7 +106,7 @@ export class CompanyComponent implements OnInit {
     {
       icon: 'fe fe-users',
       title: 'Visitor',
-      background: 'yellow',
+      background: 'red',
       data: 3000,
     },
     {

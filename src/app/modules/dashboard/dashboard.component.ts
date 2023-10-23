@@ -10,6 +10,6 @@ export class DashboardComponent implements OnInit {
   constructor(private roleService: RoleGuardService) {}
   role: string = '';
   ngOnInit(): void {
-    this.role = this.roleService.getUserInfo().user_role;
+    this.role = this.roleService.getUserInfo().userRole;
   }
 }

@@ -1,6 +1,165 @@
-<p>view-visitor works!</p>
+<form
+  *ngIf="!isLoading; else spin"
+  [formGroup]="visitForm"
+  class="d-flex justify-content-center"
+>
+  <div class="row">
+    <div class="col">
+      <nz-form-label style="font-size: 14px">Name</nz-form-label>
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Please input your Name!">
+          <input
+            nz-input
+            type="text"
+            placeholder="Name"
+            style="width: 350px; padding: 5px"
+            formControlName="name"
+          />
+        </nz-form-control>
+      </nz-form-item>
 
+      <nz-form-label style="font-size: 14px">Gender</nz-form-label>
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Please select your Gender">
+          <nz-select
+            formControlName="gender"
+            nzPlaceHolder="Gender"
+            style="width: 350px; padding: 5px"
+          >
+            <nz-option nzValue="Male" nzLabel="Male"> </nz-option>
+            <nz-option nzValue="Female" nzLabel="Female"> </nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-label style="font-size: 14px">Phone Number</nz-form-label>
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Please input your Phone Number!">
+          <input
+            nz-input
+            type="text"
+            placeholder="Phone Number"
+            style="width: 350px; padding: 5px"
+            formControlName="phoneNumber"
+          />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-label style="font-size: 14px">Email</nz-form-label>
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Please input your Email!">
+          <input
+            nz-input
+            type="text"
+            placeholder="Email"
+            style="width: 350px; padding: 5px"
+            formControlName="email"
+          />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-label style="font-size: 14px">Address</nz-form-label>
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Please input your Address!">
+          <input
+            nz-input
+            type="text"
+            placeholder="address"
+            style="width: 350px; padding: 5px"
+            formControlName="address"
+          />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div class="col">
+      <nz-form-label style="font-size: 14px"
+        >Company Origin (optional)</nz-form-label
+      >
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Please input your Company Origin">
+          <input
+            nz-input
+            type="text"
+            placeholder="Company Origin"
+            style="width: 350px; padding: 5px"
+            formControlName="companyOrigin"
+            [nzAutocomplete]="autocompleteOrigin"
+          />
+          <nz-autocomplete nzBackfill #autocompleteOrigin>
+            <nz-auto-option
+              *ngFor="let option of companyList"
+              [nzValue]="option.id"
+              >{{ option.companyName }}</nz-auto-option
+            >
+          </nz-autocomplete>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-label style="font-size: 14px">Company Destination</nz-form-label>
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Please input your Company Destination!">
+          <!-- <input
+                  nz-input
+                  type="text"
+                  placeholder="Company Destination"
+                  style="width: 350px; padding: 5px"
+                  formControlName="companyDestination"
+                /> -->
+          <nz-select
+            nzShowSearch
+            nzAllowClear
+            nzPlaceHolder="Company Destination"
+            formControlName="companyDestination"
+            style="width: 350px"
+          >
+            <nz-option
+              *ngFor="let item of companyList"
+              [nzLabel]="item.companyName"
+              [nzValue]="item.id"
+            ></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-label style="font-size: 14px">Visit Date</nz-form-label>
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Please select your Visit Date!">
+          <nz-range-picker
+            nzFormat="yyyy-MM-dd HH:mm"
+            formControlName="visitDate"
+            [nzShowTime]="{ nzFormat: 'HH:mm' }"
+          ></nz-range-picker>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-label style="font-size: 14px">Visit Reason</nz-form-label>
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Please input your Visit Reason!">
+          <textarea
+            nz-input
+            placeholder="Visit Reason"
+            style="width: 350px; padding: 5px; height: 130px"
+            formControlName="visitReason"
+          ></textarea>
+        </nz-form-control>
+      </nz-form-item>
+
+      <img
+        nz-image
+        width="150px"
+        height="150px"
+        [nzSrc]="photoURL"
+        alt="visitor image"
+      />
+    </div>
+  </div>
+</form>
+
+<ng-template #spin>
+  <nz-spin nzSimple></nz-spin>
+</ng-template>
 <div *nzModalFooter>
   <button nz-button nzType="default" (click)="onCancel()">Cancel</button>
-  <button nz-button nzType="primary">Update</button>
+  <button *ngIf="data.tab === 'incoming'" nz-button nzType="primary">
+    Update
+  </button>
 </div>

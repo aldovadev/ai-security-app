@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewContainerRef } from '@angular/core';
+import { NzModalService } from 'ng-zorro-antd/modal';
 import {
   visitorData,
   visitorResponse,
@@ -6,6 +7,7 @@ import {
 } from 'src/app/models/visitor-management';
 import { NotificationService } from 'src/app/shared/service/notification/notification.service';
 import { VisitorModuleService } from 'src/app/shared/service/visitor/visitor-module.service';
+import { ViewVisitorComponent } from '../view-visitor/view-visitor.component';
 
 @Component({
   selector: 'app-accepted',
@@ -49,7 +51,9 @@ export class AcceptedComponent implements OnInit {
 
   constructor(
     private visitorModuleService: VisitorModuleService,
-    private notification: NotificationService
+    private notification: NotificationService,
+    private modal: NzModalService,
+    private viewContainerRef: ViewContainerRef
   ) {}
 
   ngOnInit(): void {
@@ -76,10 +80,26 @@ export class AcceptedComponent implements OnInit {
     );
   }
 
+  handleViewEdit(visitor: visitorData): void {
+    console.log(visitor);
+    const modal = this.modal.create({
+      nzContent: ViewVisitorComponent,
+      nzViewContainerRef: this.viewContainerRef,
+      nzTitle: 'Visitor Detail',
+      nzMaskClosable: false,
+      nzClosable: false,
+      nzWidth: '55%',
+      nzData: { tab: 'accepted', visitId: visitor.id }, // Pass the data as a property in an object
+    });
+    modal.afterClose.subscribe(() => {
+      this.handleReload();
+    });
+  }
+
   handleFinish(visitor: visitorData): void {
     let payload: visitorStatus = {
       id: visitor.id,
-      visit_status: 'Finished',
+      statusId: this.visitorModuleService.status['Finished'],
     };
     this.visitorModuleService.visitorStatus(payload).subscribe(
       (res) => {

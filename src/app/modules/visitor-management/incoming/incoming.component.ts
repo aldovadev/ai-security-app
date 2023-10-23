@@ -65,6 +65,13 @@ export class IncomingComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchIncoming();
+    this.autoUpdate();
+  }
+
+  autoUpdate(): void {
+    setInterval(() => {
+      this.fetchIncoming();
+    }, 20000);
   }
 
   fetchIncoming(): void {
@@ -86,6 +93,7 @@ export class IncomingComponent implements OnInit {
   handleRefresh(): void {
     window.location.reload();
   }
+
   handleViewEdit(visitor: visitorData): void {
     console.log(visitor);
     const modal = this.modal.create({
@@ -94,8 +102,8 @@ export class IncomingComponent implements OnInit {
       nzTitle: 'Visitor Detail',
       nzMaskClosable: false,
       nzClosable: false,
-      nzWidth: '60%',
-      nzData: visitor, // Pass the data as a property in an object
+      nzWidth: '55%',
+      nzData: { tab: 'incoming', visitId: visitor.id }, // Pass the data as a property in an object
     });
     modal.afterClose.subscribe(() => {
       this.handleRefresh();
@@ -105,7 +113,7 @@ export class IncomingComponent implements OnInit {
   handleAccept(visitor: visitorData): void {
     let payload: visitorStatus = {
       id: visitor.id,
-      visit_status: 'Accepted',
+      statusId: this.visitorModuleService.status['Accepted'],
     };
     this.visitorModuleService.visitorStatus(payload).subscribe(
       (res) => {
@@ -125,7 +133,7 @@ export class IncomingComponent implements OnInit {
   handleReject(visitor: visitorData): void {
     let payload: visitorStatus = {
       id: visitor.id,
-      visit_status: 'Rejected',
+      statusId: this.visitorModuleService.status['Rejected'],
     };
     this.visitorModuleService.visitorStatus(payload).subscribe(
       (res) => {

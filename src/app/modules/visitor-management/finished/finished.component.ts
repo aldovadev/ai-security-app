@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
+import { NzModalService } from 'ng-zorro-antd/modal';
 import {
   visitorData,
   visitorResponse,
 } from 'src/app/models/visitor-management';
 import { NotificationService } from 'src/app/shared/service/notification/notification.service';
 import { VisitorModuleService } from 'src/app/shared/service/visitor/visitor-module.service';
+import { ViewVisitorComponent } from '../view-visitor/view-visitor.component';
 
 @Component({
   selector: 'app-finished',
@@ -46,11 +48,29 @@ export class FinishedComponent implements OnInit {
 
   constructor(
     private visitorModuleService: VisitorModuleService,
-    private notification: NotificationService
+    private notification: NotificationService,
+    private modal: NzModalService,
+    private viewContainerRef: ViewContainerRef
   ) {}
 
   ngOnInit(): void {
     this.fetchFinished();
+  }
+
+  handleViewEdit(visitor: visitorData): void {
+    console.log(visitor);
+    const modal = this.modal.create({
+      nzContent: ViewVisitorComponent,
+      nzViewContainerRef: this.viewContainerRef,
+      nzTitle: 'Visitor Detail',
+      nzMaskClosable: false,
+      nzClosable: false,
+      nzWidth: '55%',
+      nzData: { tab: 'funished', visitId: visitor.id }, // Pass the data as a property in an object
+    });
+    modal.afterClose.subscribe(() => {
+      this.handleReload();
+    });
   }
 
   fetchFinished(): void {

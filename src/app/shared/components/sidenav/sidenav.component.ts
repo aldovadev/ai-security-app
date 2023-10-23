@@ -21,7 +21,7 @@ export class SidenavComponent implements OnInit {
     private visitorModuleService: VisitorModuleService
   ) {}
   ngOnInit(): void {
-    this.userRole = this.roleService.getUserInfo().user_role;
+    this.userRole = this.roleService.getUserInfo().userRole;
     this.checkVisitor();
   }
 
@@ -36,7 +36,7 @@ export class SidenavComponent implements OnInit {
           console.log(err);
         }
       );
-    }, 60000);
+    }, 20000);
   }
 
   logout(): void {

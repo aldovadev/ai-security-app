@@ -13,6 +13,7 @@ export class VisitService {
   createVisitor(payload: newVisitor): Observable<any> {
     const header = new HttpHeaders({
       'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('visitToken')}`,
     });
     return this.http.post<any>(this.baseUrl + '/visitor/detail', payload, {
       headers: header,
@@ -34,8 +35,8 @@ export class VisitService {
 
   uploadPicture(payload: FormData, visit_id: string): Observable<any> {
     const header = new HttpHeaders({
-      'Content-Type': 'application/json',
-      // 'Authorization':`Bearer ${localStorage.getItem('visittoken')}`
+      // 'Content-Type': 'multipart/form-data',
+      Authorization: `Bearer ${localStorage.getItem('visitToken')}`,
     });
     return this.http.post(
       this.baseUrl + `/visitor/upload/${visit_id}`,

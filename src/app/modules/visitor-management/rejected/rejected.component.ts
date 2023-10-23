@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewContainerRef } from '@angular/core';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import {
   visitorData,
@@ -6,6 +6,7 @@ import {
 } from 'src/app/models/visitor-management';
 import { NotificationService } from 'src/app/shared/service/notification/notification.service';
 import { VisitorModuleService } from 'src/app/shared/service/visitor/visitor-module.service';
+import { ViewVisitorComponent } from '../view-visitor/view-visitor.component';
 
 @Component({
   selector: 'app-rejected',
@@ -50,11 +51,28 @@ export class RejectedComponent implements OnInit {
   constructor(
     private visitorModuleService: VisitorModuleService,
     private notification: NotificationService,
-    private modal: NzModalService
+    private modal: NzModalService,
+    private viewContainerRef: ViewContainerRef
   ) {}
 
   ngOnInit(): void {
     this.fetchRejected();
+  }
+
+  handleViewEdit(visitor: visitorData): void {
+    console.log(visitor);
+    const modal = this.modal.create({
+      nzContent: ViewVisitorComponent,
+      nzViewContainerRef: this.viewContainerRef,
+      nzTitle: 'Visitor Detail',
+      nzMaskClosable: false,
+      nzClosable: false,
+      nzWidth: '55%',
+      nzData: { tab: 'funished', visitId: visitor.id }, // Pass the data as a property in an object
+    });
+    modal.afterClose.subscribe(() => {
+      this.handleReload();
+    });
   }
 
   handleReload(): void {

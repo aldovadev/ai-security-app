@@ -14,25 +14,11 @@
         class="d-flex justify-content-center align-items-center flex-column gap-2 mt-4"
       >
         <!-- [nzCustomRequest]="handleUpload" -->
-        <nz-upload
-          nzName="picture"
-          nzListType="picture-card"
-          [nzLimit]="1"
-          [nzAccept]="'.png, .jpg, .jpeg'"
-          [(nzFileList)]="pictureList"
-          [nzPreview]="handlePreview"
-          [nzBeforeUpload]="beforeUpload"
-          (nzChange)="handleChange($event)"
-          [nzDownload]="handleDownload"
-          [nzRemove]="handleRemove"
-          [nzAccept]="'image/jpeg, image/jpg, image/png'"
-          [nzDisabled]="pictureList.length > 0"
-          [nzShowButton]="!(pictureList.length > 0)"
-        >
-          <div>
-            <span nz-icon nzType="plus"></span>
-            <div style="margin-top: 8px">Upload</div>
-          </div>
+        <nz-upload [(nzFileList)]="pictureList" [nzBeforeUpload]="beforeUpload">
+          <button nz-button>
+            <span nz-icon nzType="upload"></span>
+            Select File
+          </button>
         </nz-upload>
         <button
           nz-button

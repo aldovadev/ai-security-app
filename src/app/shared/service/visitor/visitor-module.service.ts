@@ -41,9 +41,30 @@ export class VisitorModuleService {
     });
   }
 
-  deleteVisitor(id: number): Observable<any> {
+  deleteVisitor(id: string): Observable<any> {
     return this.http.delete<any>(this.baseUrl + '/visitor/' + id, {
       headers: this.getCustomHeaders(),
+    });
+  }
+
+  status: { [statusName: string]: number } = {};
+
+  getStatusId(): Observable<any> {
+    return this.http.get<any>(this.baseUrl + '/option/visit-status', {
+      headers: this.getCustomHeaders(),
+    });
+  }
+
+  getVisitorProfile(visitorId: string): Observable<any> {
+    return this.http.get<any>(this.baseUrl + '/visitor/profile/' + visitorId, {
+      headers: this.getCustomHeaders(),
+    });
+  }
+
+  getVisitorImage(url: string): Observable<any> {
+    return this.http.get<any>(url, {
+      headers: this.getCustomHeaders(),
+      responseType: 'blob' as 'json',
     });
   }
 }

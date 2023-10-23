@@ -4,7 +4,7 @@ export interface newVisitor {
   phoneNumber: string;
   gender: string;
   address: string;
-  originId?: string;
+  originId?: string | number;
   destinationId: string;
   startDate: string;
   endDate: string;
@@ -13,7 +13,7 @@ export interface newVisitor {
 
 export interface otp {
   email: string;
-  otp_code: string;
+  otpCode: string;
 }
 
 export interface visitorResponse {
@@ -24,27 +24,33 @@ export interface visitorResponse {
 }
 
 export interface visitorData {
-  id: number;
+  id: string;
   name: string;
   email: string;
-  phone_number: string;
+  phoneNumber: string;
   gender: string;
   address: string;
-  company_origin: string;
-  company_destination: string;
-  start_date: string;
-  end_date: string;
-  visit_reason: string;
-  visit_number: string;
-  visit_status: string;
-  photo_path: string;
+  startDate: string;
+  endDate: string;
+  visitReason: string;
+  visitNumber: string;
+  originId: string;
+  destinationId: string;
+  statusId: number;
+  photoPath: string;
   createdAt: string;
   updatedAt: string;
 }
 
 export interface visitorStatus {
+  id: string;
+  statusId: number;
+}
+
+export interface statusId {
   id: number;
-  visit_status: string;
+  statusName: string;
+  statusId: number;
 }
 
 export interface visitorProfile {

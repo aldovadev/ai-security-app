@@ -110,8 +110,8 @@
                 <nz-autocomplete nzBackfill #autocompleteOrigin>
                   <nz-auto-option
                     *ngFor="let option of companyDestination"
-                    [nzValue]="option.company_name"
-                    >{{ option.company_name }}</nz-auto-option
+                    [nzValue]="option.id"
+                    >{{ option.companyName }}</nz-auto-option
                   >
                 </nz-autocomplete>
               </nz-form-control>
@@ -139,7 +139,7 @@
                 >
                   <nz-option
                     *ngFor="let item of companyDestination"
-                    [nzLabel]="item.company_name"
+                    [nzLabel]="item.companyName"
                     [nzValue]="item.id"
                   ></nz-option>
                 </nz-select>
