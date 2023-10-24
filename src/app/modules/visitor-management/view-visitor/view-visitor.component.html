@@ -159,7 +159,12 @@
 </ng-template>
 <div *nzModalFooter>
   <button nz-button nzType="default" (click)="onCancel()">Cancel</button>
-  <button *ngIf="data.tab === 'incoming'" nz-button nzType="primary">
+  <button
+    *ngIf="data.tab === 'incoming'"
+    nz-button
+    nzType="primary"
+    (click)="updateData()"
+  >
     Update
   </button>
 </div>

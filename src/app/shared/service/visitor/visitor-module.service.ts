@@ -3,7 +3,7 @@ import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { RoleGuardService } from '../auth/role-guard.service';
 import { Observable } from 'rxjs';
-import { visitorStatus } from 'src/app/models/visitor-management';
+import { newVisitor, visitorStatus } from 'src/app/models/visitor-management';
 
 @Injectable({
   providedIn: 'root',
@@ -66,5 +66,13 @@ export class VisitorModuleService {
       headers: this.getCustomHeaders(),
       responseType: 'blob' as 'json',
     });
+  }
+
+  updateVisitor(payload: newVisitor, visitorId: string): Observable<any> {
+    return this.http.patch<any>(
+      this.baseUrl + '/visitor/detail/' + visitorId,
+      payload,
+      { headers: this.getCustomHeaders() }
+    );
   }
 }

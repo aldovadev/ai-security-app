@@ -1,7 +1,8 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NZ_MODAL_DATA, NzModalRef } from 'ng-zorro-antd/modal';
-import { visitorData } from 'src/app/models/visitor-management';
+import { newVisitor, visitorData } from 'src/app/models/visitor-management';
+import { NotificationService } from 'src/app/shared/service/notification/notification.service';
 import { OptionService } from 'src/app/shared/service/option/option.service';
 import { VisitorModuleService } from 'src/app/shared/service/visitor/visitor-module.service';
 
@@ -38,6 +39,7 @@ export class ViewVisitorComponent implements OnInit {
     private fb: FormBuilder,
     private visitorModuleService: VisitorModuleService,
     private modal: NzModalRef,
+    private notification: NotificationService,
     private optionService: OptionService,
     @Inject(NZ_MODAL_DATA) public data: { tab: string; visitId: string }
   ) {
@@ -98,6 +100,39 @@ export class ViewVisitorComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  updateData(): void {
+    // console.log(this.visitForm);
+    const payload: newVisitor = {
+      name: this.visitForm.value.name,
+      address: this.visitForm.value.address,
+      phoneNumber: this.visitForm.value.phoneNumber,
+      email: this.visitForm.value.email,
+      gender: this.visitForm.value.gender,
+      originId: this.visitForm.value.companyOrigin,
+      destinationId: this.visitForm.value.companyDestination,
+      visitReason: this.visitForm.value.visitReason,
+      startDate: this.visitForm.value.visitDate[0],
+      endDate: this.visitForm.value.visitDate[1],
+    };
+
+    // console.log(payload);
+    this.visitorModuleService
+      .updateVisitor(payload, this.data.visitId)
+      .subscribe(
+        (r) => {
+          this.notification.showNotification('check', '#52c41a', r.message);
+          window.location.reload();
+        },
+        (error) => {
+          this.notification.showNotification(
+            'warning',
+            '#eb2f96',
+            error.error.message
+          );
+        }
+      );
   }
 
   onCancel(): void {
