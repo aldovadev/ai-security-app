@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { RoleGuardService } from '../../service/auth/role-guard.service';
 import { Router } from '@angular/router';
 import { NotificationService } from '../../service/notification/notification.service';
-import { VisitorModuleService } from '../../service/visitor/visitor-module.service';
-import { visitorResponse } from 'src/app/models/visitor-management';
+import { VisitorManagementService } from '../../service/visitor/visitor-management.service';
+import { visitorResponse } from 'src/app/models/visitor.model';
 
 @Component({
   selector: 'app-sidenav',
@@ -18,8 +18,8 @@ export class SidenavComponent implements OnInit {
     private roleService: RoleGuardService,
     private router: Router,
     private notification: NotificationService,
-    private visitorModuleService: VisitorModuleService
-  ) {}
+    private visitorManagementService: VisitorManagementService
+  ) { }
   ngOnInit(): void {
     this.userRole = this.roleService.getUserInfo().userRole;
     this.checkVisitor();
@@ -27,9 +27,9 @@ export class SidenavComponent implements OnInit {
 
   checkVisitor(): void {
     setInterval(() => {
-      this.visitorModuleService.getVisitor('Incoming').subscribe(
+      this.visitorManagementService.getVisitor('Incoming').subscribe(
         (res: visitorResponse) => {
-          this.visitorModuleService.incomingData = res.data.length;
+          this.visitorManagementService.incomingData = res.data.length;
           this.incomingData = res.data.length;
         },
         (err) => {

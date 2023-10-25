@@ -1,25 +1,25 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './modules/home/home.component';
-import { LoginComponent } from './modules/login/login.component';
-import { ForgetPasswordComponent } from './modules/forget-password/forget-password.component';
+import { LoginComponent } from './modules/user/login/login.component';
+import { ForgetPasswordComponent } from './modules/user/forget-password/forget-password.component';
 import { SidenavComponent } from './shared/components/sidenav/sidenav.component';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
-import { VisitorManagementComponent } from './modules/visitor-management/visitor-management.component';
-import { EmployeeManagementComponent } from './modules/employee-management/employee-management.component';
-import { CameraManagementComponent } from './modules/camera-management/camera-management.component';
+import { VisitorManagementComponent } from './modules/management/visitor-management/visitor-management.component';
+import { EmployeeManagementComponent } from './modules/management/employee-management/employee-management.component';
+import { CameraManagementComponent } from './modules/management/camera-management/camera-management.component';
 import { ReportComponent } from './modules/report/report.component';
-import { VisitCompanyComponent } from './modules/visit-company/visit-company.component';
+import { VisitorComponent } from './modules/visitor/visitor.component';
 import { AuthGuardService } from './shared/service/auth/auth-guard.service';
 import { RoleGuardService } from './shared/service/auth/role-guard.service';
-import { OtpComponent } from './modules/visit-company/otp/otp.component';
-import { UploadImagesComponent } from './modules/visit-company/upload-images/upload-images.component';
+import { OtpComponent } from './modules/visitor/otp/otp.component';
+import { UploadImagesComponent } from './modules/visitor/upload-images/upload-images.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'visit-company', component: VisitCompanyComponent },
-  { path: 'visit-company/otp', component: OtpComponent },
-  { path: 'visit-company/uploads', component: UploadImagesComponent },
+  { path: 'visitor', component: VisitorComponent },
+  { path: 'visitor/otp', component: OtpComponent },
+  { path: 'visitor/uploads', component: UploadImagesComponent },
   { path: 'login/forget-password', component: ForgetPasswordComponent },
   { path: 'login', component: LoginComponent },
   {
@@ -32,19 +32,19 @@ const routes: Routes = [
         component: DashboardComponent,
       },
       {
-        path: 'visitor',
+        path: 'visitor-management',
         component: VisitorManagementComponent,
         data: { role: 'Company' },
         canActivate: [RoleGuardService],
       },
       {
-        path: 'employee',
+        path: 'employee-management',
         component: EmployeeManagementComponent,
         data: { role: 'Company' },
         canActivate: [RoleGuardService],
       },
       {
-        path: 'camera',
+        path: 'camera-management',
         component: CameraManagementComponent,
         data: { role: 'Company' },
         canActivate: [RoleGuardService],
@@ -64,4 +64,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

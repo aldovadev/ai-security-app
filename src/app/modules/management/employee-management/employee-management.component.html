@@ -1,0 +1,15 @@
+<h1 style="
+    margin: 25px 0 0 30px;
+    font-weight: bold;
+    font-size: 30px;
+    text-align: center;
+  ">
+  Employee
+</h1>
+
+<nz-tabset style="padding: 30px">
+  <nz-tab [nzTitle]="tab1Title"><app-employee-data></app-employee-data></nz-tab>
+  <ng-template #tab1Title>
+    <span>Employee Data</span>
+  </ng-template>
+</nz-tabset>

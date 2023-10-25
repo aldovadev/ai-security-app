@@ -1,37 +1,17 @@
 <nz-layout style="min-height: 100vh">
   <nz-sider nzWidth="256px" style="min-height: 100vh" nzTheme="dark">
     <div class="logo d-flex justify-content-center" style="margin: 10px auto">
-      <img
-        src="../../../../assets/MT.png"
-        alt="companyLogo"
-        height="40"
-        style="margin-top: 15px"
-      />
+      <img src="../../../../assets/MT.png" alt="companyLogo" height="40" style="margin-top: 15px" />
     </div>
     <div class="d-flex justify-content-center align-items-center gap-3 py-3">
       <nz-avatar [nzSize]="38" nzIcon="user"></nz-avatar>
-      <span
-        class="fe fe-settings"
-        style="font-size: 22px; color: #ffffffa6"
-      ></span>
-      <nz-badge nzSize="small" [nzCount]="5"
-        ><span
-          class="fe fe-bell"
-          style="font-size: 18px; color: #ffffffa6"
-        ></span
-      ></nz-badge>
+      <span class="fe fe-settings" style="font-size: 22px; color: #ffffffa6"></span>
+      <nz-badge nzSize="small" [nzCount]="5"><span class="fe fe-bell"
+          style="font-size: 18px; color: #ffffffa6"></span></nz-badge>
     </div>
     <div class="d-flex justify-content-center align-items-center py-3">
-      <nz-input-group
-        [nzPrefix]="suffixIconSearch"
-        style="width: 230px; height: 40px; background-color: #f2f4f8"
-      >
-        <input
-          type="text"
-          nz-input
-          placeholder="Search"
-          style="background-color: #f2f4f8"
-        />
+      <nz-input-group [nzPrefix]="suffixIconSearch" style="width: 230px; height: 40px; background-color: #f2f4f8">
+        <input type="text" nz-input placeholder="Search" style="background-color: #f2f4f8" />
       </nz-input-group>
     </div>
     <ng-template #suffixIconSearch>
@@ -39,43 +19,25 @@
     </ng-template>
 
     <ul nz-menu nzTheme="dark" nzMode="inline" style="height: 69%">
-      <div
-        class="d-flex flex-column justify-content-between"
-        style="height: 100%"
-      >
+      <div class="d-flex flex-column justify-content-between" style="height: 100%">
         <div>
           <li nz-menu-item routerLink="/dashboard">
             <span class="fe fe-home" style="font-size: 16px"></span>
             <span style="margin-left: 6px; font-size: 16px">Dashboard</span>
           </li>
-          <li
-            *ngIf="userRole === 'Company'"
-            nz-menu-item
-            routerLink="visitor"
-            [routerLinkActive]="'ant-menu-item-selected'"
-          >
+          <li *ngIf="userRole === 'Company'" nz-menu-item routerLink="visitor-management"
+            [routerLinkActive]="'ant-menu-item-selected'">
             <span class="fe fe-users" style="font-size: 16px"></span>
-            <nz-badge [nzDot]="incomingData > 0" [nzOffset]="[5, 1]"
-              ><span style="margin-left: 6px; font-size: 16px; color: #ffffffa6"
-                >Visitor</span
-              ></nz-badge
-            >
+            <nz-badge [nzDot]="incomingData > 0" [nzOffset]="[5, 1]"><span
+                style="margin-left: 6px; font-size: 16px; color: #ffffffa6">Visitor</span></nz-badge>
           </li>
-          <li
-            *ngIf="userRole === 'Company'"
-            nz-menu-item
-            routerLink="employee"
-            [routerLinkActive]="'ant-menu-item-selected'"
-          >
+          <li *ngIf="userRole === 'Company'" nz-menu-item routerLink="employee-management"
+            [routerLinkActive]="'ant-menu-item-selected'">
             <span class="fe fe-user" style="font-size: 16px"></span>
             <span style="margin-left: 6px; font-size: 16px">Employee</span>
           </li>
-          <li
-            *ngIf="userRole === 'Company'"
-            nz-menu-item
-            routerLink="camera"
-            [routerLinkActive]="'ant-menu-item-selected'"
-          >
+          <li *ngIf="userRole === 'Company'" nz-menu-item routerLink="camera-management"
+            [routerLinkActive]="'ant-menu-item-selected'">
             <span class="fe fe-camera" style="font-size: 16px"></span>
             <span style="margin-left: 6px; font-size: 16px">Camera</span>
           </li>
@@ -99,7 +61,5 @@
     </ul>
   </nz-sider>
   <div class="vertical-line"></div>
-  <nz-content style="background-color: rgba(255, 255, 255, 0.85)"
-    ><router-outlet></router-outlet
-  ></nz-content>
+  <nz-content style="background-color: rgba(255, 255, 255, 0.85)"><router-outlet></router-outlet></nz-content>
 </nz-layout>

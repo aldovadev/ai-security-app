@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AddCompany, company } from 'src/app/models/company';
+import { AddCompany, company } from 'src/app/models/company.model';
 import { DashboardService } from 'src/app/shared/service/dashboard/dashboard.service';
 import { NotificationService } from 'src/app/shared/service/notification/notification.service';
 @Component({

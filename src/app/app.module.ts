@@ -90,19 +90,19 @@ import { NzNotificationServiceModule } from 'ng-zorro-antd/notification';
 
 import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
-import { LoginComponent } from './modules/login/login.component';
-import { ForgetPasswordComponent } from './modules/forget-password/forget-password.component';
+import { LoginComponent } from './modules/user/login/login.component';
+import { ForgetPasswordComponent } from './modules/user/forget-password/forget-password.component';
 import { SidenavComponent } from './shared/components/sidenav/sidenav.component';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
-import { VisitorManagementComponent } from './modules/visitor-management/visitor-management.component';
-import { EmployeeManagementComponent } from './modules/employee-management/employee-management.component';
-import { CameraManagementComponent } from './modules/camera-management/camera-management.component';
-import { IncomingComponent } from './modules/visitor-management/incoming/incoming.component';
-import { AcceptedComponent } from './modules/visitor-management/accepted/accepted.component';
-import { RejectedComponent } from './modules/visitor-management/rejected/rejected.component';
+import { VisitorManagementComponent } from './modules/management/visitor-management/visitor-management.component';
+import { EmployeeManagementComponent } from './modules/management/employee-management/employee-management.component';
+import { CameraManagementComponent } from './modules/management/camera-management/camera-management.component';
+import { IncomingComponent } from './modules/management/visitor-management/incoming/incoming.component';
+import { AcceptedComponent } from './modules/management/visitor-management/accepted/accepted.component';
+import { RejectedComponent } from './modules/management/visitor-management/rejected/rejected.component';
 import { ReportComponent } from './modules/report/report.component';
-import { EmployeeDataComponent } from './modules/employee-management/employee-data/employee-data.component';
-import { VisitCompanyComponent } from './modules/visit-company/visit-company.component';
+import { EmployeeDataComponent } from './modules/management/employee-management/employee-data/employee-data.component';
+import { VisitorComponent } from './modules/visitor/visitor.component';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzNotificationModule } from 'ng-zorro-antd/notification';
 import { NzModalModule } from 'ng-zorro-antd/modal';
@@ -117,13 +117,13 @@ import { AuthService } from './shared/service/auth/auth.service';
 import { AdminComponent } from './modules/dashboard/admin/admin.component';
 import { CompanyComponent } from './modules/dashboard/company/company.component';
 import { DashboardService } from './shared/service/dashboard/dashboard.service';
-import { UploadImagesComponent } from './modules/visit-company/upload-images/upload-images.component';
-import { OtpComponent } from './modules/visit-company/otp/otp.component';
-import { VisitService } from './shared/service/visitor/visit.service';
-import { VisitorModuleService } from './shared/service/visitor/visitor-module.service';
+import { UploadImagesComponent } from './modules/visitor/upload-images/upload-images.component';
+import { OtpComponent } from './modules/visitor/otp/otp.component';
+import { VisitorService } from './shared/service/visitor/visitor.service';
+import { VisitorManagementService } from './shared/service/visitor/visitor-management.service';
 import { OptionService } from './shared/service/option/option.service';
-import { FinishedComponent } from './modules/visitor-management/finished/finished.component';
-import { ViewVisitorComponent } from './modules/visitor-management/view-visitor/view-visitor.component';
+import { FinishedComponent } from './modules/management/visitor-management/finished/finished.component';
+import { ViewVisitorComponent } from './modules/management/visitor-management/view-visitor/view-visitor.component';
 import * as ApexCharts from 'apexcharts';
 import { NgApexchartsModule } from 'ng-apexcharts';
 registerLocaleData(en);
@@ -145,7 +145,7 @@ registerLocaleData(en);
     RejectedComponent,
     ReportComponent,
     EmployeeDataComponent,
-    VisitCompanyComponent,
+    VisitorComponent,
     NotificationComponent,
     AdminComponent,
     CompanyComponent,
@@ -257,10 +257,10 @@ registerLocaleData(en);
     RoleGuardService,
     AuthService,
     DashboardService,
-    VisitService,
-    VisitorModuleService,
+    VisitorService,
+    VisitorManagementService,
     OptionService,
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

@@ -1,28 +1,26 @@
-<h1 style="margin: 15px 0 0 30px; font-weight: bold; font-size: 30px">
+<h1 style="
+    margin: 25px 0 0 30px;
+    font-weight: bold;
+    font-size: 30px;
+    text-align: center;
+  ">
   Dashboard
 </h1>
 
 <div class="d-flex justify-content-evenly mt-5 border p-4">
   <div class="row" style="width: fit-content" *ngFor="let item of totalData">
-    <div
-      class="col-1"
-      [style.background-color]="item.background"
-      style="
+    <div class="col-1" [style.background-color]="item.background" style="
         width: 100px;
         height: 100px;
         display: flex;
         justify-content: center;
         align-items: center;
         font-size: 26px;
-      "
-    >
+      ">
       <i [class]="item.icon" style="color: #fff"></i>
     </div>
     <div class="col-2" style="background-color: #f0f0f0f0; width: 200px">
-      <div
-        class="row p-2"
-        style="font-size: 24px; line-height: 25px; font-weight: 700"
-      >
+      <div class="row p-2" style="font-size: 24px; line-height: 25px; font-weight: 700">
         {{ item.title }}
       </div>
       <div class="row p-2" style="font-size: 20px; line-height: 25px">
@@ -32,32 +30,17 @@
   </div>
 </div>
 
-<div
-  class="d-flex justify-content-evenly gap-3"
-  style="width: 100%; margin-bottom: 15px"
->
+<div class="d-flex justify-content-evenly gap-3" style="width: 100%; margin-bottom: 15px">
   <div style="width: 60%; margin-top: 35px">
-    <apx-chart
-      [series]="chartOptions.series"
-      [chart]="chartOptions.chart"
-      [xaxis]="chartOptions.xaxis"
-      [stroke]="chartOptions.stroke"
-      [tooltip]="chartOptions.tooltip"
-      [dataLabels]="chartOptions.dataLabels"
-    ></apx-chart>
+    <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart" [xaxis]="chartOptions.xaxis"
+      [stroke]="chartOptions.stroke" [tooltip]="chartOptions.tooltip"
+      [dataLabels]="chartOptions.dataLabels"></apx-chart>
   </div>
   <div style="width: 30%; margin-top: 35px">
-    <apx-chart
-      [series]="barOptions.series"
-      [chart]="barOptions.chart"
-      [dataLabels]="barOptions.dataLabels"
-      [plotOptions]="barOptions.plotOptions"
-      [xaxis]="barOptions.xaxis"
-    ></apx-chart>
+    <apx-chart [series]="barOptions.series" [chart]="barOptions.chart" [dataLabels]="barOptions.dataLabels"
+      [plotOptions]="barOptions.plotOptions" [xaxis]="barOptions.xaxis"></apx-chart>
   </div>
 </div>
-<footer
-  style="padding: 10px; width: 100%; background: #f0f0f0f0; font-size: 12px"
->
+<footer style="padding: 10px; width: 100%; background: #f0f0f0f0; font-size: 12px">
   Copyright &copy; Minang Techno 2023 all right reserved
 </footer>

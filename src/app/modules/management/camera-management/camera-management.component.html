@@ -1,0 +1,110 @@
+<h1 style="
+    margin: 25px 0 0 30px;
+    font-weight: bold;
+    font-size: 30px;
+    text-align: center;
+  ">
+  Camera Module
+</h1>
+<nz-tabset style="padding: 0px 30px 0 30px">
+  <nz-tab [nzTitle]="tab1Title">
+    <nz-card style="width: 100%; padding: 0 20px 0 20px">
+      <div style="padding: 0 20px 0 20px">
+        <div class="row justify-content-between" style="margin-bottom: 10px">
+          <div class="col-4">
+            <span nzTooltipPlacement="top" nz-tooltip nzTooltipTitle="Refresh" style="margin-right: 8px">
+              <a class="btn btn-lg btn-light mr-2" (click)="handleRefresh()">
+                <i class="fe fe-refresh-cw"></i>
+              </a>
+            </span>
+            <span nzTooltipPlacement="top" nz-tooltip [nzTooltipTitle]="showCamera ? 'Stop Camera' : 'Start Camera'"
+              style="margin-right: 8px">
+              <a class="btn btn-lg btn-light mr-2" (click)="handleShow()">
+                <i [class]="showCamera ? 'fe fe-pause' : 'fe fe-play'"></i>
+              </a>
+            </span>
+          </div>
+          <div class="col d-flex justify-content-end">
+          </div>
+        </div>
+        <div class="d-flex justify-content-between">
+          <div class="rounded overflow-hidden d-flex justify-content-center" style="
+              height: 480px;
+              width: 640px;
+              box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            ">
+            <webcam [height]="480" [width]="640" mirrorImage="always" (imageCapture)="handleCapture($event)"
+              *ngIf="showCamera; else cameraOff"></webcam>
+
+            <ng-template #cameraOff>
+              <div class="d-flex justify-content-center align-items-center" style="
+                  font-size: 24px;
+                  width: 680px;
+                  height: 480px;
+                  background: rgba(0, 0, 0, 0.14);
+                ">
+                <i class="fe fe-video-off"></i>
+              </div>
+            </ng-template>
+          </div>
+
+          <div style="height: 480px; width: 380px">
+            <nz-card style="
+                width: 100%;
+                height: 100%;
+                box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+              ">
+              <div class="d-flex align-items-center flex-column">
+                <div class="border rounded d-flex align-items-center flex-column" style="width: 100%; padding: 20px">
+                  <nz-avatar [nzShape]="'square'" [nzSize]="75" [nzIcon]="'user'" class="rounded"></nz-avatar>
+                  <h5 style="font-size: 20px; margin-top: 8px">
+                    {{ visitorProfile.name }}
+                  </h5>
+                  <h6 style="font-size: 16px; line-height: 5px">Visitor</h6>
+                </div>
+
+                <div class="row mt-2 rounded border overflow-hidden" style="width: 100%">
+                  <div class="text-center col-4 border p-2">
+                    <h5 style="font-size: 16px; line-height: 10px">Date</h5>
+                    <h6 class="text-muted" style="font-size: 14px">
+                      {{ visitorProfile.start_date | date : "dd / MM / yy" }}
+                    </h6>
+                  </div>
+                  <div class="text-center col-4 border p-2">
+                    <h5 style="font-size: 16px; line-height: 10px">Hour</h5>
+                    <h6 class="text-muted" style="font-size: 14px">
+                      {{
+                      visitorProfile.start_date
+                      | date : "HH:mm:ss" : "Etc/UTC"
+                      }}
+                    </h6>
+                  </div>
+                  <div class="text-center col-4 border p-2">
+                    <h5 style="font-size: 16px; line-height: 10px">Duration</h5>
+                    <h6 class="text-muted" style="font-size: 14px">
+                      {{ calculateDuration() }}
+                    </h6>
+                  </div>
+                </div>
+                <div class="text-center mt-2 border p-2 rounded" style="font-size: 14px">
+                  {{ visitorProfile.visit_reason }}
+                </div>
+                <button nz-button nzType="default" [nzSize]="'large'" style="
+                    margin-top: 10px;
+                    background-color: #52c41a;
+                    color: white;
+                    border-radius: 5px;
+                  " class="d-flex align-items-center justify-content-center">
+                  <span nz-icon nzType="check"> </span>Check in
+                </button>
+              </div>
+            </nz-card>
+          </div>
+        </div>
+      </div>
+    </nz-card>
+  </nz-tab>
+  <ng-template #tab1Title>
+    <span>Camera</span>
+  </ng-template>
+</nz-tabset>

@@ -82,7 +82,7 @@ export class CompanyComponent implements OnInit {
     series: [
       {
         name: 'basic',
-        data: [400, 430, 448, 470],
+        data: [480, 430, 448, 470],
       },
     ],
     chart: {
@@ -106,22 +106,22 @@ export class CompanyComponent implements OnInit {
     {
       icon: 'fe fe-users',
       title: 'Visitor',
-      background: 'red',
+      background: '#dc143c',
       data: 3000,
     },
     {
       icon: 'fe fe-user',
       title: 'Employee',
-      background: 'green',
+      background: '#32cd32',
       data: 100,
     },
     {
       icon: 'fe fe-database',
       title: 'Total',
-      background: 'blue',
+      background: '#0080fe',
       data: 3100,
     },
   ];
-  constructor() {}
-  ngOnInit(): void {}
+  constructor() { }
+  ngOnInit(): void { }
 }
