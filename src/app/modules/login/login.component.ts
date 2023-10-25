@@ -79,7 +79,7 @@ export class LoginComponent implements OnInit {
       email: this.loginForm.value.username,
       password: this.loginForm.value.password,
     };
-    // console.log('login lai');
+    console.log('login lai');
 
     this.authService.login(payload).subscribe(
       (r) => {
