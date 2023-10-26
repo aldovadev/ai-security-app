@@ -1,1 +1,11 @@
+nav {
+  .btn {
+    transition: 0.2s;
 
+    &:hover {
+      color: #232d3f !important;
+      background: white !important;
+      transition: 0.3s !important;
+    }
+  }
+}

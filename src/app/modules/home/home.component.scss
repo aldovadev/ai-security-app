@@ -1,9 +1,27 @@
+nav {
+  .btn {
+    transition: 0.2s;
+
+    &:hover {
+      color: #232d3f !important;
+      background: white !important;
+      transition: 0.3s !important;
+    }
+  }
+}
+
 .home {
   background-image: url("./../../../assets/layered-waves-haikei.svg");
   background-size: cover;
   background-position: center;
 
   .home-wrapper {
+    .left {
+      img {
+        box-shadow: rgba(0, 0, 0, 0.4) 0px 3px 8px;
+      }
+    }
+
     .right-side {
       display: flex;
       width: 50%;
@@ -12,42 +30,86 @@
       gap: 10px;
 
       .card-container {
-        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        box-shadow: rgba(0, 0, 0, 0.4) 0px 3px 8px;
         border-radius: 10px;
         overflow: hidden;
+        transition: 0.2s;
+        margin-top: 20px;
+
         .logo {
-          width: 150px;
-          height: 150px;
-          background: #232d3f;
+          display: grid;
+          place-items: center;
+          width: 200px;
+          height: 200px;
+          background: white;
         }
         .description {
-          width: 150px;
+          color: white;
+          text-align: center;
+          padding: 8px;
+          width: 200px;
           height: 120px;
           background: #232d3f;
         }
+
         &:hover {
-          transform: scale(1.1);
+          transform: scale(1.05);
+          transition: 0.3s;
         }
       }
+
       button {
+        box-shadow: rgba(0, 0, 0, 0.4) 0px 3px 8px;
+        margin-top: 20px;
+        transition: 0.2s;
+
         &:hover {
-          background: #0fda15a1;
+          background: #232d3f !important;
+          border: solid 1px !important;
+          color: white !important;
+          transition: 0.3s !important;
         }
       }
     }
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 922px) {
   .home .home-wrapper {
-    margin-top: 0 !important;
-  }
-  .right-side {
     margin-top: 10px !important;
-    gap: 30px !important;
-  }
+    gap: 0px !important;
 
-  .description {
-    display: none;
+    .right-side {
+      gap: 30px !important;
+
+      .card-container {
+        border-radius: 10px;
+        margin-top: 0px;
+        .logo {
+          width: 150px;
+          height: 150px;
+        }
+        .description {
+          display: none;
+          width: 150px;
+          height: 120px;
+        }
+      }
+
+      button {
+        margin-top: 10px !important;
+        min-width: 150px !important;
+      }
+    }
+
+    margin-top: 0 !important;
+
+    .left {
+      max-width: 320px !important;
+
+      img {
+        height: 190px;
+      }
+    }
   }
 }

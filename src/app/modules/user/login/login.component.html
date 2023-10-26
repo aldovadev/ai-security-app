@@ -1,12 +1,37 @@
-<div
-  style="background-color: #f2f4f8; width: 100%; height: 100vh"
-  class="d-flex justify-content-center align-items-center"
->
+<nav class="navbar navbar-dark navbar-expand-lg bg-body-tertiary" style="background: #232d3f; height: 60px">
+  <div class="container-fluid p-0">
+    <div class="px-2 d-flex justify-content-between" style="width: 100%">
+      <a class="navbar-brand d-flex align-items-center" href="/" style="color: white; font-size: 24px">
+        <img height="25" src="../../../assets/MT.png" style="margin-left: 20px; margin-right: 10px" />
+        ASA - Minang Techno</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02"
+        aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon text-white"></span>
+      </button>
+    </div>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo02" style="background: #232d3f">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0 d-flex justify-content-end align-items-center"
+        style="background: #232d3f; margin-right: 20px">
+        <li class="nav-item mx-2 my-2">
+          <a href="https://api.whatsapp.com/send?phone=6282285106123&text=Hallo! Saya tertarik untuk menggunakan layanan anda"
+            target="_blank" class="btn" style="color: white; background: #0066ff; min-width: 120px">
+            Join Us
+          </a>
+        </li>
+        <li class="nav-item mx-2 my-2">
+          <button class="btn" style="color: white; background: #0066ff; min-width: 120px" routerLink="login">
+            Login
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div style="background-color: #f2f4f8; width: 100%; " class="d-flex justify-content-center align-items-center"
+  style="height: 80%;">
   <div style="background-color: #ffffff">
-    <div
-      class="d-flex justify-content-center align-items-center flex-column"
-      style="padding: 32px"
-    >
+    <div class="d-flex justify-content-center align-items-center flex-column" style="padding: 32px">
       <h3 style="font-size: 36px" class="text-center">Welcome Back</h3>
       <h5 style="font-size: 14px" class="text-center">
         Please log in to continue
@@ -16,39 +41,24 @@
         <nz-form-item>
           <nz-form-control nzErrorTip="Please input your Username!">
             <nz-input-group [nzPrefix]="prefixTemplateUser">
-              <input
-                nz-input
-                type="text"
-                placeholder="Username"
-                style="width: 300px; padding: 5px"
-                formControlName="username"
-              />
+              <input nz-input type="text" placeholder="Username" style="width: 300px; padding: 5px"
+                formControlName="username" />
             </nz-input-group>
           </nz-form-control>
         </nz-form-item>
-        <ng-template #prefixTemplateUser
-          ><span nz-icon nzType="user"></span
-        ></ng-template>
+        <ng-template #prefixTemplateUser><span nz-icon nzType="user"></span></ng-template>
 
         <nz-form-label style="font-size: 14px">Password</nz-form-label>
         <nz-form-item>
           <nz-form-control nzErrorTip="Please input your Password!">
             <nz-input-group nzPrefixIcon="lock" [nzSuffix]="suffixTemplate">
-              <input
-                [type]="passwordVisible ? 'text' : 'password'"
-                nz-input
-                placeholder="Password"
-                style="width: 300px; padding: 5px"
-                formControlName="password"
-              />
+              <input [type]="passwordVisible ? 'text' : 'password'" nz-input placeholder="Password"
+                style="width: 300px; padding: 5px" formControlName="password" />
             </nz-input-group>
           </nz-form-control>
           <ng-template #suffixTemplate>
-            <span
-              nz-icon
-              [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
-              (click)="passwordVisible = !passwordVisible"
-            ></span>
+            <span nz-icon [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
+              (click)="passwordVisible = !passwordVisible"></span>
           </ng-template>
         </nz-form-item>
 
@@ -59,33 +69,18 @@
             </span>
           </div>
           <div nz-col nz-col [nzSpan]="12">
-            <a
-              routerLink="forget-password"
-              style="float: right; font-size: 14px; color: black"
-              >Forgot password?</a
-            >
+            <a routerLink="forget-password" style="float: right; font-size: 14px; color: black">Forgot password?</a>
           </div>
         </div>
         <div class="row">
           <div class="col">
-            <button
-              nz-button
-              nzType="primary"
-              style="width: 100%; padding: 5px"
-              type="submit"
-              [nzLoading]="loading"
-            >
+            <button nz-button nzType="primary" style="width: 100%; padding: 5px" type="submit" [nzLoading]="loading">
               Log in
             </button>
           </div>
           <div class="col">
-            <button
-              nz-button
-              nzType="primary"
-              style="width: 100%; padding: 5px"
-              routerLink="/"
-              class="d-flex align-items-center justify-content-center"
-            >
+            <button nz-button nzType="primary" style="width: 100%; padding: 5px" routerLink="/"
+              class="d-flex align-items-center justify-content-center">
               <span nz-icon nzType="left"></span>
               Go back
             </button>
@@ -93,8 +88,21 @@
         </div>
       </form>
       <h5 class="text-center" style="font-size: 12px; margin: 8px">
-        No account yet? <a style="text-decoration: underline">Join Us</a>
+        No account yet? <a
+          href="https://api.whatsapp.com/send?phone=6282285106123&text=Hallo! Saya tertarik untuk menggunakan layanan anda"
+          style="text-decoration: underline">Join Us</a>
       </h5>
     </div>
   </div>
 </div>
+
+<footer style="
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        background-color: #232d3f;
+      ">
+  <p style="font-size: 12px; color: white; text-align: center; margin-top: 8px">
+    Copyright © Minang Techno 2023 all right reserved
+  </p>
+</footer>

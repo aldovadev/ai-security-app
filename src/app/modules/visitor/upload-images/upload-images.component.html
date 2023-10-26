@@ -1,35 +1,67 @@
-<div
-  style="background-color: #f2f4f8; width: 100%; height: 100vh"
-  class="d-flex justify-content-center align-items-center"
->
-  <div style="background-color: #ffffff; border-radius: 8px">
-    <div
-      class="d-flex justify-content-center align-items-center flex-column"
-      style="padding: 32px"
-    >
-      <h3 style="font-size: 28px" class="text-center">Face Registration</h3>
-      <h5 style="font-size: 14px" class="text-center">Please upload !</h5>
-
-      <div
-        class="d-flex justify-content-center align-items-center flex-column gap-2 mt-4"
-      >
-        <!-- [nzCustomRequest]="handleUpload" -->
-        <nz-upload [(nzFileList)]="pictureList" [nzBeforeUpload]="beforeUpload">
-          <button nz-button>
-            <span nz-icon nzType="upload"></span>
-            Select File
+<nav class="navbar navbar-dark navbar-expand-lg bg-body-tertiary" style="background: #232d3f; height: 60px">
+  <div class="container-fluid p-0">
+    <div class="px-2 d-flex justify-content-between" style="width: 100%">
+      <a class="navbar-brand d-flex align-items-center" href="/" style="color: white; font-size: 24px">
+        <img height="25" src="../../../assets/MT.png" style="margin-left: 20px; margin-right: 10px" />
+        ASA - Minang Techno</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02"
+        aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon text-white"></span>
+      </button>
+    </div>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo02" style="background: #232d3f">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0 d-flex justify-content-end align-items-center"
+        style="background: #232d3f; margin-right: 20px">
+        <li class="nav-item mx-2 my-2">
+          <a href="https://api.whatsapp.com/send?phone=6282285106123&text=Hallo! Saya tertarik untuk menggunakan layanan anda"
+            target="_blank" class="btn" style="color: white; background: #0066ff; min-width: 120px">
+            Join Us
+          </a>
+        </li>
+        <li class="nav-item mx-2 my-2">
+          <button class="btn" style="color: white; background: #0066ff; min-width: 120px" routerLink="login">
+            Login
           </button>
-        </nz-upload>
-        <button
-          nz-button
-          [nzType]="'primary'"
-          (click)="startUpload()"
-          [disabled]="pictureList.length === 0"
-          style="margin-top: 16px"
-        >
-          {{ "Start Upload" }}
-        </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div style="background-color: #f2f4f8; width: 100%; height: 80%"
+  class="d-flex justify-content-center align-items-center">
+  <div style="background-color: #ffffff; border-radius: 8px">
+    <div class="d-flex justify-content-center align-items-center flex-column" style="padding: 32px">
+      <h3 style="font-size: 28px" class="text-center">Take a Selfie for Recognition</h3>
+      <h5 style="font-size: 14px" class="text-center">Make sure your selfie not blurred or tilted</h5>
+      <div class="d-flex flex-column">
+        <div class="d-flex justify-content-center align-items-center flex-column gap-2 mt-4">
+          <!-- [nzCustomRequest]="handleUpload" -->
+          <nz-upload [(nzFileList)]="pictureList" [nzBeforeUpload]="beforeUpload">
+            <button nz-button>
+              <span nz-icon nzType="upload"></span>
+              Select File
+            </button>
+          </nz-upload>
+          <button nz-button [nzType]="'primary'" (click)="startUpload()" [disabled]="pictureList.length === 0"
+            style="margin-top: 16px">
+            {{ "Start Upload" }}
+          </button>
+        </div>
+        <h5 style="font-size: 14px" class="text-center" style="margin-top: 10px;">Example : </h5>
+        <img src="../../../../assets/mock.png" alt="mock selfie" style="height: 150px; margin-top: 10px;">
       </div>
     </div>
   </div>
 </div>
+
+<footer style="
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        background-color: #232d3f;
+      ">
+  <p style="font-size: 12px; color: white; text-align: center; margin-top: 8px">
+    Copyright © Minang Techno 2023 all right reserved
+  </p>
+</footer>
