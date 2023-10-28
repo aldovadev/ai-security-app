@@ -126,6 +126,7 @@ import { FinishedComponent } from './modules/management/visitor-management/finis
 import { ViewVisitorComponent } from './modules/management/visitor-management/view-visitor/view-visitor.component';
 import * as ApexCharts from 'apexcharts';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { TrackVisitComponent } from './modules/visitor/track-visit/track-visit.component';
 registerLocaleData(en);
 
 @NgModule({
@@ -154,6 +155,7 @@ registerLocaleData(en);
     OtpComponent,
     FinishedComponent,
     ViewVisitorComponent,
+    TrackVisitComponent,
   ],
   imports: [
     BrowserModule,

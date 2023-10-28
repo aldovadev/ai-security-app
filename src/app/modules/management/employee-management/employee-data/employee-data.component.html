@@ -29,7 +29,7 @@
         nzTooltipTitle="Add"
         style="margin-right: 8px"
       >
-        <a class="btn btn-lg btn-light mr-2">
+        <a class="btn btn-lg btn-light mr-2" (click)="modalVisible = true">
           <i class="fe fe-plus"></i>
         </a>
       </span>
@@ -77,3 +77,73 @@
   </div>
   <!-- </nz-spin> -->
 </ng-template>
+
+<nz-modal
+  [(nzVisible)]="modalVisible"
+  [nzTitle]="modalTitle"
+  [nzContent]="modalContent"
+  (nzOnCancel)="modalVisible = false"
+  [nzWidth]="'50%'"
+>
+  <ng-template #modalTitle>Add Employee</ng-template>
+  <ng-template #modalContent>
+    <form>
+      <div class="row">
+        <div class="col">
+          <nz-form-item>
+            <nz-form-label>Name</nz-form-label>
+            <input nz-input type="text" nzRequired />
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label>Email</nz-form-label>
+            <input nz-input type="text" email nzRequired />
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label>Phone Number</nz-form-label>
+            <input nz-input type="text" numbersOnly nzRequired />
+          </nz-form-item>
+          <nz-form-label style="font-size: 14px">Gender</nz-form-label>
+
+          <nz-form-item>
+            <nz-select
+              nzPlaceHolder="Gender"
+              style="width: 350px; padding: 5px"
+            >
+              <nz-option nzValue="Male" nzLabel="Male"> </nz-option>
+              <nz-option nzValue="Female" nzLabel="Female"> </nz-option>
+            </nz-select>
+          </nz-form-item>
+        </div>
+        <div class="col">
+          <nz-form-item>
+            <nz-form-label>Position</nz-form-label>
+            <input nz-input type="text" nzRequired />
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label>Address</nz-form-label>
+            <input nz-input type="text" nzRequired />
+          </nz-form-item>
+          <nz-form-label style="font-size: 14px">Company</nz-form-label>
+          <nz-form-item>
+            <nz-select
+              nzShowSearch
+              nzAllowClear
+              nzPlaceHolder="Company"
+              style="width: 100%"
+            >
+              <nz-option
+                *ngFor="let item of companyList"
+                [nzLabel]="item.companyName"
+                [nzValue]="item.id"
+              ></nz-option>
+            </nz-select>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label>Employee Id</nz-form-label>
+            <input nz-input type="text" nzRequired />
+          </nz-form-item>
+        </div>
+      </div>
+    </form>
+  </ng-template>
+</nz-modal>

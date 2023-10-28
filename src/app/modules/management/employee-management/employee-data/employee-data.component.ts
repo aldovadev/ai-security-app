@@ -1,4 +1,15 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { OptionService } from 'src/app/shared/service/option/option.service';
+
+type response = {
+  message: string;
+  data: companyOption[];
+};
+
+type companyOption = {
+  id: number;
+  companyName: string;
+};
 
 @Component({
   selector: 'app-employee-data',
@@ -6,10 +17,8 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./employee-data.component.scss'],
 })
 export class EmployeeDataComponent implements OnInit {
-  @Input() dateRange: Date[] = [];
-
   tableData: any[] = [];
-
+  companyList: companyOption[] = [];
   listOfColumn = [
     {
       name: 'Action',
@@ -37,5 +46,21 @@ export class EmployeeDataComponent implements OnInit {
     },
   ];
 
-  ngOnInit(): void {}
+  modalVisible!: boolean;
+  constructor(private optionService: OptionService) {}
+
+  ngOnInit(): void {
+    this.fetchCompanyDestination();
+  }
+
+  fetchCompanyDestination(): void {
+    this.optionService.companyOption().subscribe(
+      (res: response) => {
+        this.companyList = res.data;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
 }

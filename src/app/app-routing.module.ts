@@ -14,6 +14,7 @@ import { AuthGuardService } from './shared/service/auth/auth-guard.service';
 import { RoleGuardService } from './shared/service/auth/role-guard.service';
 import { OtpComponent } from './modules/visitor/otp/otp.component';
 import { UploadImagesComponent } from './modules/visitor/upload-images/upload-images.component';
+import { TrackVisitComponent } from './modules/visitor/track-visit/track-visit.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -22,6 +23,7 @@ const routes: Routes = [
   { path: 'visitor/uploads', component: UploadImagesComponent },
   { path: 'login/forget-password', component: ForgetPasswordComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'tracking', component: TrackVisitComponent },
   {
     path: 'dashboard',
     component: SidenavComponent,
@@ -64,4 +66,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

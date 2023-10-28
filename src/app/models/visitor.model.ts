@@ -71,3 +71,49 @@ export interface visitorProfile {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface trackingVisit {
+  message: string;
+  status: string;
+  data: {
+    id: string;
+    name: string;
+    email: string;
+    phoneNumber: string;
+    gender: string;
+    address: string;
+    startDate: string;
+    endDate: string;
+    visitReason: string;
+    visitNumber: string;
+    originId: string;
+    destinationId: string;
+    statusId: number;
+    photoPath: string;
+    createdAt: string;
+    updatedAt: string;
+    origin: {
+      companyName: string;
+    };
+    destination: {
+      companyName: string;
+    };
+    status: {
+      statusName: string;
+    };
+  };
+  url: string;
+  tracking: {
+    visitorId: string;
+    visitNumber: string;
+    statusFrom: number;
+    statusTo: number;
+    updatedAt: string;
+    from: {
+      statusName: string;
+    };
+    to: {
+      statusName: string;
+    };
+  }[];
+}
