@@ -19,7 +19,11 @@ export class EmployeeService {
     });
   }
 
+<<<<<<< HEAD
   getEmployee(companyId: string): Observable<any> {
+=======
+  getEmployee(companyId: string): Observable<any>{
+>>>>>>> 15816ad (add(module):add tracking visitation)
     return this.http.get<any>(this.baseUrl + '/employee/' + companyId, {
       headers: this.getCustomHeaders(),
     });
