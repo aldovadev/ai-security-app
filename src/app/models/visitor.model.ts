@@ -43,6 +43,9 @@ export interface visitorData {
   origin: object;
   destination: object;
   status: object;
+  origin: object;
+  destination: object;
+  status: object;
 }
 
 export interface visitorStatus {
