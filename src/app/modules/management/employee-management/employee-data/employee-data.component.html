@@ -9,9 +9,14 @@
   <tbody>
     <tr *ngFor="let data of sortTable.data">
       <td>
-        <span nzTooltipPlacement="top" nz-tooltip nzTooltipTitle="View Detail">
+        <span nzTooltipPlacement="top" nz-tooltip nzTooltipTitle="View Detail" style="margin-right: 8px">
           <button class="btn btn-sm btn-light mr-3">
             <i class="fe fe-eye"></i>
+          </button>
+        </span>
+         <span nzTooltipPlacement="top" nz-tooltip nzTooltipTitle="Delete" >
+          <button class="btn btn-sm btn-light mr-3" (click)="handleDelete(data)">
+            <i class="fe fe-trash"></i>
           </button>
         </span>
       </td>
@@ -108,12 +113,13 @@
               <nz-option nzValue="Female" nzLabel="Female"> </nz-option>
             </nz-select>
           </nz-form-item>
-          <nz-form-item>
+         
+        </div>
+        <div class="col">
+           <nz-form-item>
             <nz-form-label>Address</nz-form-label>
             <input nz-input type="text" formControlName="address" nzRequired />
           </nz-form-item>
-        </div>
-        <div class="col">
           <nz-form-item>
             <nz-form-label>Position</nz-form-label>
             <input nz-input type="text" formControlName="position" nzRequired />
@@ -128,9 +134,17 @@
               nzRequired
             />
           </nz-form-item>
+          <nz-form-label>Picture</nz-form-label>
           <nz-form-item>
-            <nz-form-label>Employee Photo</nz-form-label>
-            <!-- <input nz-input type="text" nzRequired /> -->
+             <div class="d-flex justify-content-start align-items-start gap-2">
+          <!-- [nzCustomRequest]="handleUpload" -->
+          <nz-upload [(nzFileList)]="pictureList" [nzBeforeUpload]="beforeUpload">
+            <button nz-button>
+              <span nz-icon nzType="upload"></span>
+              Select File
+            </button>
+          </nz-upload>
+        </div>
           </nz-form-item>
         </div>
       </div>
@@ -140,7 +154,7 @@
     <button nz-button nzType="default" (click)="modalVisible = false">
       Cancel
     </button>
-    <button nz-button nzType="primary" (click)="confirmAddEmployee()">
+    <button nz-button nzType="primary" [nzLoading]="isAddLoading" (click)="confirmAddEmployee()">
       Confirm
     </button>
   </ng-template>
