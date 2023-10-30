@@ -1,15 +1,11 @@
-<h1 style="
-    margin: 25px 0 0 30px;
-    font-weight: bold;
-    font-size: 30px;
-    text-align: center;
-  ">
-  Employee
-</h1>
-
-<nz-tabset style="padding: 30px">
-  <nz-tab [nzTitle]="tab1Title"><app-employee-data></app-employee-data></nz-tab>
-  <ng-template #tab1Title>
-    <span>Employee Data</span>
-  </ng-template>
-</nz-tabset>
+<div class="d-flex flex-column h-100 justify-content-between">
+  <nz-tabset style="padding: 0px 30px 0 30px">
+    <nz-tab [nzTitle]="tab1Title"><app-employee-data></app-employee-data></nz-tab>
+    <ng-template #tab1Title>
+      <span>All Employee</span>
+    </ng-template>
+  </nz-tabset>
+  <footer style="padding: 10px; width: 100%; background: #f0f0f0f0; font-size: 12px; text-align: center;">
+    Copyright &copy; Minang Techno 2023 all right reserved
+  </footer>
+</div>

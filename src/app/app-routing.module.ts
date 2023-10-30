@@ -14,6 +14,7 @@ import { AuthGuardService } from './shared/service/auth/auth-guard.service';
 import { RoleGuardService } from './shared/service/auth/role-guard.service';
 import { OtpComponent } from './modules/visitor/otp/otp.component';
 import { UploadImagesComponent } from './modules/visitor/upload-images/upload-images.component';
+import { UserManagementComponent } from './modules/management/user-management/user-management.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -47,6 +48,12 @@ const routes: Routes = [
         path: 'camera-management',
         component: CameraManagementComponent,
         data: { role: 'Company' },
+        canActivate: [RoleGuardService],
+      },
+      {
+        path: 'user-management',
+        component: UserManagementComponent,
+        data: { role: 'Admin' },
         canActivate: [RoleGuardService],
       },
       // {

@@ -12,7 +12,9 @@ import { visitorResponse } from 'src/app/models/visitor.model';
 })
 export class SidenavComponent implements OnInit {
   userRole: string = '';
+  email: string = '';
   incomingData!: number;
+  isCollapsed = false;
 
   constructor(
     private roleService: RoleGuardService,
@@ -22,6 +24,7 @@ export class SidenavComponent implements OnInit {
   ) { }
   ngOnInit(): void {
     this.userRole = this.roleService.getUserInfo().userRole;
+    this.email = this.roleService.getUserInfo().email;
     this.checkVisitor();
   }
 

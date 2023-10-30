@@ -1,0 +1,125 @@
+<div class="d-flex flex-column h-100 justify-content-between">
+  <div>
+    <div class="p-3">
+      <nz-table style="margin-top: 20px" #sortTable [nzData]="tableData" [nzTitle]="headerTable" [nzPageSize]="5">
+        <thead>
+          <tr>
+            <th *ngFor="let col of listOfColumn" [nzWidth]="col.width">
+              {{ col.name }}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of sortTable.data">
+            <td>
+              <span nzTooltipPlacement="top" nz-tooltip nzTooltipTitle="View Detail">
+                <button class="btn btn-sm btn-light mr-3">
+                  <i class="fe fe-eye"></i>
+                </button>
+              </span>
+            </td>
+            <td>{{ data.companyName }}</td>
+            <td>{{ data.email }}</td>
+            <td>{{ data.phoneNumber }}</td>
+            <td>{{ data.serviceId }}</td>
+            <td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{
+              data.address
+              }}</td>
+            <td>{{ data.status }}</td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+    <ng-template #headerTable>
+      <div class="row justify-content-between w-100">
+        <div class="col-4">
+          <span nzTooltipPlacement="top" nz-tooltip nzTooltipTitle="Add" style="margin-right: 8px">
+            <a class="btn btn-lg btn-light mr-2" (click)="addVisibility(true)">
+              <i class="fe fe-plus"></i>
+            </a>
+          </span>
+          <span nzTooltipPlacement="top" nz-tooltip nzTooltipTitle="Refresh" style="margin-right: 8px">
+            <a class="btn btn-lg btn-light mr-2" (click)="ngOnInit()">
+              <i class="fe fe-refresh-cw"></i>
+            </a>
+          </span>
+        </div>
+        <div class="col">
+          <form nz-form [nzLayout]="'inline'" style="display: flex; flex-direction: row; justify-content: flex-end">
+            <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton" style="width: 200px">
+              <input type="text" nz-input placeholder="Search" />
+            </nz-input-group>
+            <ng-template #suffixIconButton>
+              <button nz-button nzType="primary" nzSearch>
+                <span nz-icon nzType="search"></span>
+              </button>
+            </ng-template>
+          </form>
+        </div>
+      </div>
+    </ng-template>
+
+    <nz-modal [nzVisible]="addVisible" [nzTitle]="addModalTitle" [nzContent]="addModalContent"
+      [nzFooter]="addModalFooter" (nzOnCancel)="addVisibility(false)" [nzWidth]="'50%'">
+    </nz-modal>
+
+    <ng-template #addModalTitle> Add Company </ng-template>
+    <ng-template #addModalContent>
+      <form [formGroup]="addCompanyForm">
+        <div class="row">
+          <div class="col">
+            <nz-form-item>
+              <nz-form-label>Company Name</nz-form-label>
+              <input formControlName="companyName" nz-input type="text" nzRequired />
+            </nz-form-item>
+
+            <nz-form-item>
+              <nz-form-label>Email</nz-form-label>
+              <input formControlName="email" nz-input type="text" nzRequired />
+            </nz-form-item>
+
+            <nz-form-item>
+              <nz-form-label>Password</nz-form-label>
+              <nz-input-group [nzSuffix]="suffixTemplate">
+                <input formControlName="password" nz-input [type]="passwordVisible ? 'text' : 'password'" nzRequired />
+              </nz-input-group>
+            </nz-form-item>
+
+            <ng-template #suffixTemplate>
+              <span nz-icon [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
+                (click)="passwordVisible = !passwordVisible"></span>
+            </ng-template>
+          </div>
+
+          <div class="col">
+            <nz-form-item>
+              <nz-form-label>Phone Number</nz-form-label>
+              <input formControlName="phoneNumber" nz-input type="text" numbersOnly nzRequired />
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-label>Service</nz-form-label>
+              <input formControlName="serviceId" nz-input type="text" nzRequired />
+            </nz-form-item>
+
+            <nz-form-item>
+              <nz-form-label>Address</nz-form-label>
+              <input formControlName="address" nz-input type="text" nzRequired />
+            </nz-form-item>
+          </div>
+        </div>
+      </form>
+    </ng-template>
+    <ng-template #addModalFooter>
+      <button nz-button nzType="default" (click)="addVisibility(false)">
+        Cancel
+      </button>
+      <button nz-button nzType="primary" (click)="handleAddCompany()">
+        Confirm
+      </button>
+    </ng-template>
+  </div>
+
+  <footer style=" padding: 10px; width: 100%; background: #f0f0f0f0; font-size: 12px; text-align: center;">
+    Copyright &copy; Minang Techno 2023 all right reserved
+  </footer>
+</div>
