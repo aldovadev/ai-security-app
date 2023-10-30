@@ -127,6 +127,7 @@ import { ViewVisitorComponent } from './modules/management/visitor-management/vi
 import * as ApexCharts from 'apexcharts';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { TrackVisitComponent } from './modules/visitor/track-visit/track-visit.component';
+import { EmployeeService } from './shared/service/employee/employee.service';
 registerLocaleData(en);
 
 @NgModule({
@@ -262,7 +263,8 @@ registerLocaleData(en);
     VisitorService,
     VisitorManagementService,
     OptionService,
+    EmployeeService,
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

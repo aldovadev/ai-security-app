@@ -14,6 +14,7 @@ type userInfo = {
   companyName: string;
   email: string;
   userRole: string;
+  id: string;
 };
 type decoded = {
   iat: number;

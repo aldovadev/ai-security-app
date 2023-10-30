@@ -1,4 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NewEmployee, employeeList } from 'src/app/models/employee.model';
+import { RoleGuardService } from 'src/app/shared/service/auth/role-guard.service';
+import { EmployeeService } from 'src/app/shared/service/employee/employee.service';
 import { OptionService } from 'src/app/shared/service/option/option.service';
 
 type response = {
@@ -17,8 +21,7 @@ type companyOption = {
   styleUrls: ['./employee-data.component.scss'],
 })
 export class EmployeeDataComponent implements OnInit {
-  tableData: any[] = [];
-  companyList: companyOption[] = [];
+  tableData: employeeList[] = [];
   listOfColumn = [
     {
       name: 'Action',
@@ -37,7 +40,7 @@ export class EmployeeDataComponent implements OnInit {
       width: '200px',
     },
     {
-      name: 'ID Number',
+      name: 'Id',
       width: '200px',
     },
     {
@@ -47,20 +50,55 @@ export class EmployeeDataComponent implements OnInit {
   ];
 
   modalVisible!: boolean;
-  constructor(private optionService: OptionService) {}
-
-  ngOnInit(): void {
-    this.fetchCompanyDestination();
+  employeeForm: FormGroup;
+  constructor(
+    private employeeService: EmployeeService,
+    private roleGuardService: RoleGuardService,
+    private fb: FormBuilder
+  ) {
+    this.employeeForm = this.fb.group({
+      name: ['', Validators.compose([Validators.required])],
+      email: ['', Validators.compose([Validators.required])],
+      phoneNumber: [null, Validators.compose([Validators.required])],
+      gender: ['', Validators.compose([Validators.required])],
+      position: ['', Validators.compose([Validators.required])],
+      address: ['', Validators.compose([Validators.required])],
+      employeeId: ['', Validators.compose([Validators.required])],
+    });
   }
 
-  fetchCompanyDestination(): void {
-    this.optionService.companyOption().subscribe(
-      (res: response) => {
-        this.companyList = res.data;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+  ngOnInit(): void {
+    // console.log(this.roleGuardService.getUserInfo().id);
+    this.fetchEmployee();
+  }
+
+  fetchEmployee(): void {
+    this.employeeService
+      .getEmployee(this.roleGuardService.getUserInfo().id)
+      .subscribe(
+        (r: { message: string; company: string; data: employeeList[] }) => {
+          // console.log(r);
+          this.tableData = r.data;
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
+  }
+
+  confirmAddEmployee(): void {
+    if (!this.employeeForm.valid) return;
+    const payload: NewEmployee = {
+      name: this.employeeForm.value.name,
+      email: this.employeeForm.value.email,
+      phoneNumber: this.employeeForm.value.phoneNumber,
+      gender: this.employeeForm.value.gender,
+      position: this.employeeForm.value.position,
+      address: this.employeeForm.value.address,
+      employeeId: this.employeeForm.value.employeeId,
+      companyId: this.roleGuardService.getUserInfo().id,
+    };
+
+    console.log(payload);
   }
 }
