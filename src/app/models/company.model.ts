@@ -1,25 +1,25 @@
 export interface AddCompany {
-  company_name: string;
+  companyName: string;
   email: string;
   password: string;
-  phone_number: string;
+  phoneNumber: string;
   address: string;
-  service_id: number;
+  serviceId: number;
   status: string;
-  user_role: string;
+  userRole: string;
 }
 
 export interface company {
   id: number;
-  company_name: string;
+  companyName: string;
   email: string;
   password: string;
-  phone_number: string;
+  phoneNumber: string;
   address: string;
-  service_id: number;
-  user_role: string;
+  serviceId: number;
+  userRole: string;
   status: string;
-  refresh_token?: string;
+  refreshToken?: string;
   createdAt: string;
   updatedAt: string;
 }

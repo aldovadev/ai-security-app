@@ -3,12 +3,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AddCompany, company } from 'src/app/models/company.model';
 import { DashboardService } from 'src/app/shared/service/dashboard/dashboard.service';
 import { NotificationService } from 'src/app/shared/service/notification/notification.service';
+
 @Component({
   selector: 'app-admin',
-  templateUrl: './admin.component.html',
-  styleUrls: ['./admin.component.scss'],
+  templateUrl: './user-management.component.html',
+  styleUrls: ['./user-management.component.scss'],
 })
-export class AdminComponent implements OnInit {
+export class UserManagementComponent implements OnInit {
   tableData: company[] = [];
   passwordVisible: boolean = false;
   addVisible: boolean = false;
@@ -22,12 +23,12 @@ export class AdminComponent implements OnInit {
     private dashboardService: DashboardService
   ) {
     this.addCompanyForm = this.fb.group({
-      company_name: ['', Validators.compose([Validators.required])],
+      companyName: ['', Validators.compose([Validators.required])],
       email: ['', Validators.compose([Validators.required])],
       password: ['', Validators.compose([Validators.required])],
-      phone_number: ['', Validators.compose([Validators.required])],
+      phoneNumber: ['', Validators.compose([Validators.required])],
       address: ['', Validators.compose([Validators.required])],
-      service_id: ['', Validators.compose([Validators.required])],
+      serviceId: ['', Validators.compose([Validators.required])],
     });
   }
 
@@ -91,20 +92,21 @@ export class AdminComponent implements OnInit {
     this.isAddLoading = true;
     this.addVisible = false;
     const payload: AddCompany = {
-      company_name: this.addCompanyForm.value.company_name,
+      companyName: this.addCompanyForm.value.companyName,
       email: this.addCompanyForm.value.email,
       password: this.addCompanyForm.value.password,
-      phone_number: this.addCompanyForm.value.phone_number,
+      phoneNumber: this.addCompanyForm.value.phoneNumber,
       address: this.addCompanyForm.value.address,
-      service_id: this.addCompanyForm.value.service_id,
+      serviceId: this.addCompanyForm.value.serviceId,
       status: 'active',
-      user_role: 'Company',
+      userRole: 'Company',
     };
 
     this.dashboardService.addCompany(payload).subscribe(
       (r) => {
         this.notification.showNotification('check', '#52c41a', r.message);
         this.isAddLoading = false;
+        window.location.reload()
       },
       (error) => {
         console.log(error);

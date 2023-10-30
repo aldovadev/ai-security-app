@@ -40,6 +40,9 @@ export interface visitorData {
   photoPath: string;
   createdAt: string;
   updatedAt: string;
+  origin: object;
+  destination: object;
+  status: object;
 }
 
 export interface visitorStatus {
@@ -54,22 +57,9 @@ export interface statusId {
 }
 
 export interface visitorProfile {
-  id: number;
-  name: string;
-  email: string;
-  phone_number: string;
-  gender: string;
-  address: string;
-  company_origin: string;
-  company_destination: string;
-  start_date: string;
-  end_date: string;
-  visit_reason: string;
-  visit_number: string;
-  visit_status: string;
-  photo_path: string;
-  createdAt: string;
-  updatedAt: string;
+  message: string;
+  data: visitorData;
+  url: string;
 }
 
 export interface trackingVisit {

@@ -1,27 +1,23 @@
-<h1 style="
-    margin: 25px 0 0 30px;
-    font-weight: bold;
-    font-size: 30px;
-    text-align: center;
-  ">
-  Visitor
-</h1>
-
-<nz-tabset style="padding: 0px 30px 0 30px" [nzSelectedIndex]="activeTab">
-  <nz-tab [nzTitle]="tab1Title" (nzClick)="onTabClick(0)"><app-incoming></app-incoming></nz-tab>
-  <ng-template #tab1Title>
-    <span>Incoming <nz-badge nzSize="small" [nzCount]="incomingCount"></nz-badge></span>
-  </ng-template>
-  <nz-tab [nzTitle]="tab2Title" (nzClick)="onTabClick(1)"><app-accepted></app-accepted></nz-tab>
-  <ng-template #tab2Title>
-    <span>Accepted <nz-badge nzSize="small" [nzCount]="acceptedCount"></nz-badge></span>
-  </ng-template>
-  <nz-tab [nzTitle]="tab3Title" (nzClick)="onTabClick(2)"><app-rejected></app-rejected></nz-tab>
-  <ng-template #tab3Title>
-    <span>Rejected <nz-badge nzSize="small" [nzCount]="rejectedCount"></nz-badge></span>
-  </ng-template>
-  <nz-tab [nzTitle]="tab4Title" (nzClick)="onTabClick(3)"><app-finished></app-finished></nz-tab>
-  <ng-template #tab4Title>
-    <span>Finished</span>
-  </ng-template>
-</nz-tabset>
+<div class="d-flex flex-column h-100 justify-content-between">
+  <nz-tabset style="padding: 0px 30px 0 30px" [nzSelectedIndex]="activeTab">
+    <nz-tab [nzTitle]="tab1Title" (nzClick)="onTabClick(0)"><app-incoming></app-incoming></nz-tab>
+    <ng-template #tab1Title>
+      <span>Incoming <nz-badge nzSize="small" [nzCount]="incomingCount"></nz-badge></span>
+    </ng-template>
+    <nz-tab [nzTitle]="tab2Title" (nzClick)="onTabClick(1)"><app-accepted></app-accepted></nz-tab>
+    <ng-template #tab2Title>
+      <span>Accepted <nz-badge nzSize="small" [nzCount]="acceptedCount"></nz-badge></span>
+    </ng-template>
+    <nz-tab [nzTitle]="tab3Title" (nzClick)="onTabClick(2)"><app-rejected></app-rejected></nz-tab>
+    <ng-template #tab3Title>
+      <span>Rejected <nz-badge nzSize="small" [nzCount]="rejectedCount"></nz-badge></span>
+    </ng-template>
+    <nz-tab [nzTitle]="tab4Title" (nzClick)="onTabClick(3)"><app-finished></app-finished></nz-tab>
+    <ng-template #tab4Title>
+      <span>Finished</span>
+    </ng-template>
+  </nz-tabset>
+  <footer style=" padding: 10px; width: 100%; background: #f0f0f0f0; font-size: 12px; text-align: center;">
+    Copyright &copy; Minang Techno 2023 all right reserved
+  </footer>
+</div>

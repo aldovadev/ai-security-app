@@ -1,4 +1,4 @@
-import { NgModule, isDevMode } from '@angular/core';
+import { NgModule, isDevMode, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -87,16 +87,18 @@ import { NzResizableModule } from 'ng-zorro-antd/resizable';
 import { NzImageModule } from 'ng-zorro-antd/image';
 import { NzNoAnimationModule } from 'ng-zorro-antd/core/no-animation';
 import { NzNotificationServiceModule } from 'ng-zorro-antd/notification';
+import { DashboardComponent } from './modules/dashboard/dashboard.component';
 
 import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
 import { LoginComponent } from './modules/user/login/login.component';
 import { ForgetPasswordComponent } from './modules/user/forget-password/forget-password.component';
 import { SidenavComponent } from './shared/components/sidenav/sidenav.component';
-import { DashboardComponent } from './modules/dashboard/dashboard.component';
+
 import { VisitorManagementComponent } from './modules/management/visitor-management/visitor-management.component';
 import { EmployeeManagementComponent } from './modules/management/employee-management/employee-management.component';
 import { CameraManagementComponent } from './modules/management/camera-management/camera-management.component';
+import { UserManagementComponent } from './modules/management/user-management/user-management.component';
 import { IncomingComponent } from './modules/management/visitor-management/incoming/incoming.component';
 import { AcceptedComponent } from './modules/management/visitor-management/accepted/accepted.component';
 import { RejectedComponent } from './modules/management/visitor-management/rejected/rejected.component';
@@ -106,6 +108,7 @@ import { VisitorComponent } from './modules/visitor/visitor.component';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzNotificationModule } from 'ng-zorro-antd/notification';
 import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
 
 import { AuthGuardService } from './shared/service/auth/auth-guard.service';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
@@ -114,8 +117,6 @@ import { NotificationService } from './shared/service/notification/notification.
 import { ActivatedRouteSnapshot } from '@angular/router';
 import { RoleGuardService } from './shared/service/auth/role-guard.service';
 import { AuthService } from './shared/service/auth/auth.service';
-import { AdminComponent } from './modules/dashboard/admin/admin.component';
-import { CompanyComponent } from './modules/dashboard/company/company.component';
 import { DashboardService } from './shared/service/dashboard/dashboard.service';
 import { UploadImagesComponent } from './modules/visitor/upload-images/upload-images.component';
 import { OtpComponent } from './modules/visitor/otp/otp.component';
@@ -126,8 +127,13 @@ import { FinishedComponent } from './modules/management/visitor-management/finis
 import { ViewVisitorComponent } from './modules/management/visitor-management/view-visitor/view-visitor.component';
 import * as ApexCharts from 'apexcharts';
 import { NgApexchartsModule } from 'ng-apexcharts';
-import { TrackVisitComponent } from './modules/visitor/track-visit/track-visit.component';
-import { EmployeeService } from './shared/service/employee/employee.service';
+
+
+import { FaceAutoCaptureComponent } from './shared/components/face-auto-capture/face-auto-capture.component';
+import { FaceUiComponent } from './shared/components/face-ui/face-ui.component';
+import { FaceCameraComponent } from './shared/components/face-camera/face-camera.component';
+
+
 registerLocaleData(en);
 
 @NgModule({
@@ -138,10 +144,10 @@ registerLocaleData(en);
     LoginComponent,
     ForgetPasswordComponent,
     SidenavComponent,
-    DashboardComponent,
     VisitorManagementComponent,
     EmployeeManagementComponent,
     CameraManagementComponent,
+    UserManagementComponent,
     IncomingComponent,
     AcceptedComponent,
     RejectedComponent,
@@ -149,14 +155,15 @@ registerLocaleData(en);
     EmployeeDataComponent,
     VisitorComponent,
     NotificationComponent,
-    AdminComponent,
-    CompanyComponent,
     OnlyNumberService,
     UploadImagesComponent,
     OtpComponent,
     FinishedComponent,
     ViewVisitorComponent,
-    TrackVisitComponent,
+    FaceAutoCaptureComponent,
+    FaceUiComponent,
+    FaceCameraComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -240,6 +247,7 @@ registerLocaleData(en);
     NzGridModule,
     WebcamModule,
     NgApexchartsModule,
+    NgxScannerQrcodeModule,
 
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
@@ -263,8 +271,8 @@ registerLocaleData(en);
     VisitorService,
     VisitorManagementService,
     OptionService,
-    EmployeeService,
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

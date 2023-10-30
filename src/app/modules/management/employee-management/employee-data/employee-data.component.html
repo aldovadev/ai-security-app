@@ -1,4 +1,4 @@
-<nz-table #sortTable [nzData]="tableData" [nzTitle]="headerTable">
+<nz-table #sortTable [nzData]="tableData" [nzTitle]="headerTable" [nzPageSize]="5">
   <thead>
     <tr>
       <th *ngFor="let col of listOfColumn" [nzWidth]="col.width">
@@ -28,48 +28,25 @@
   <!-- <nz-spin [nzSpinning]="isDownloading"> -->
   <div class="row justify-content-between w-100">
     <div class="col-4">
-      <span
-        nzTooltipPlacement="top"
-        nz-tooltip
-        nzTooltipTitle="Add"
-        style="margin-right: 8px"
-      >
+      <span nzTooltipPlacement="top" nz-tooltip nzTooltipTitle="Add" style="margin-right: 8px">
         <a class="btn btn-lg btn-light mr-2" (click)="modalVisible = true">
           <i class="fe fe-plus"></i>
         </a>
       </span>
-      <span
-        nzTooltipPlacement="top"
-        nz-tooltip
-        nzTooltipTitle="Download"
-        style="margin-right: 8px"
-      >
+      <span nzTooltipPlacement="top" nz-tooltip nzTooltipTitle="Download" style="margin-right: 8px">
         <a class="btn btn-lg btn-light mr-2">
           <i class="fe fe-download"></i>
         </a>
       </span>
-      <span
-        nzTooltipPlacement="top"
-        nz-tooltip
-        nzTooltipTitle="Refresh"
-        style="margin-right: 8px"
-      >
+      <span nzTooltipPlacement="top" nz-tooltip nzTooltipTitle="Refresh" style="margin-right: 8px">
         <a class="btn btn-lg btn-light mr-2" (click)="ngOnInit()">
           <i class="fe fe-refresh-cw"></i>
         </a>
       </span>
     </div>
     <div class="col">
-      <form
-        nz-form
-        [nzLayout]="'inline'"
-        style="display: flex; flex-direction: row; justify-content: flex-end"
-      >
-        <nz-input-group
-          nzSearch
-          [nzAddOnAfter]="suffixIconButton"
-          style="width: 200px"
-        >
+      <form nz-form [nzLayout]="'inline'" style="display: flex; flex-direction: row; justify-content: flex-end">
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton" style="width: 200px">
           <input type="text" nz-input placeholder="Search" />
         </nz-input-group>
         <ng-template #suffixIconButton>
@@ -82,7 +59,6 @@
   </div>
   <!-- </nz-spin> -->
 </ng-template>
-
 <nz-modal
   [(nzVisible)]="modalVisible"
   [nzTitle]="modalTitle"

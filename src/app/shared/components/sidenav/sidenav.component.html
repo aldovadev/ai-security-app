@@ -1,15 +1,18 @@
-<nz-layout style="min-height: 100vh">
-  <nz-sider nzWidth="256px" style="min-height: 100vh" nzTheme="dark">
-    <div class="logo d-flex justify-content-center" style="margin: 10px auto">
-      <img src="../../../../assets/MT.png" alt="companyLogo" height="40" style="margin-top: 15px" />
+<nz-layout style="height: 100vh; max-height: 100vh;">
+  <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null" nzWidth="256px"
+    style="height: 100vh; max-height: 100vh;">
+    <div class="d-flex justify-content-center" style="margin: 10px auto">
+      <a href="">
+        <img routerLink="/" src="../../../../assets/MT.png" alt="companyLogo" height="25" style="margin-top: 15px;" />
+      </a>
     </div>
-    <div class="d-flex justify-content-center align-items-center gap-3 py-3">
+    <div *ngIf="!isCollapsed" class="d-flex justify-content-center align-items-center gap-3 py-3">
       <nz-avatar [nzSize]="38" nzIcon="user"></nz-avatar>
       <span class="fe fe-settings" style="font-size: 22px; color: #ffffffa6"></span>
       <nz-badge nzSize="small" [nzCount]="5"><span class="fe fe-bell"
           style="font-size: 18px; color: #ffffffa6"></span></nz-badge>
     </div>
-    <div class="d-flex justify-content-center align-items-center py-3">
+    <div *ngIf="!isCollapsed" class="d-flex justify-content-center align-items-center py-3">
       <nz-input-group [nzPrefix]="suffixIconSearch" style="width: 230px; height: 40px; background-color: #f2f4f8">
         <input type="text" nz-input placeholder="Search" style="background-color: #f2f4f8" />
       </nz-input-group>
@@ -17,49 +20,49 @@
     <ng-template #suffixIconSearch>
       <span nz-icon nzType="search"></span>
     </ng-template>
-
-    <ul nz-menu nzTheme="dark" nzMode="inline" style="height: 69%">
-      <div class="d-flex flex-column justify-content-between" style="height: 100%">
-        <div>
-          <li nz-menu-item routerLink="/dashboard">
-            <span class="fe fe-home" style="font-size: 16px"></span>
-            <span style="margin-left: 6px; font-size: 16px">Dashboard</span>
-          </li>
-          <li *ngIf="userRole === 'Company'" nz-menu-item routerLink="visitor-management"
-            [routerLinkActive]="'ant-menu-item-selected'">
-            <span class="fe fe-users" style="font-size: 16px"></span>
-            <nz-badge [nzDot]="incomingData > 0" [nzOffset]="[5, 1]"><span
-                style="margin-left: 6px; font-size: 16px; color: #ffffffa6">Visitor</span></nz-badge>
-          </li>
-          <li *ngIf="userRole === 'Company'" nz-menu-item routerLink="employee-management"
-            [routerLinkActive]="'ant-menu-item-selected'">
-            <span class="fe fe-user" style="font-size: 16px"></span>
-            <span style="margin-left: 6px; font-size: 16px">Employee</span>
-          </li>
-          <li *ngIf="userRole === 'Company'" nz-menu-item routerLink="camera-management"
-            [routerLinkActive]="'ant-menu-item-selected'">
-            <span class="fe fe-camera" style="font-size: 16px"></span>
-            <span style="margin-left: 6px; font-size: 16px">Camera</span>
-          </li>
-          <!-- <li
-        *ngIf="userRole === 'Company'"
-        nz-menu-item
-        routerLink="report"
-        [routerLinkActive]="'ant-menu-item-selected'"
-      >
-        <span class="fe fe-clipboard" style="font-size: 16px"></span>
-        <span style="margin-left: 6px; font-size: 16px">Report</span>
-      </li> -->
-        </div>
-        <div>
-          <li nz-menu-item (click)="logout()">
-            <span class="fe fe-log-out" style="font-size: 16px"></span>
-            <span style="margin-left: 6px; font-size: 16px">Logout</span>
-          </li>
-        </div>
-      </div>
+    <ul nz-menu nzTheme="dark" nzMode="inline">
+      <li nz-menu-item routerLink="/dashboard">
+        <span nz-icon nzType="home"></span>
+        <span>Dashboard</span>
+      </li>
+      <li *ngIf="userRole === 'Admin'" nz-menu-item routerLink="user-management">
+        <span nz-icon nzType="user"></span>
+        <span>User</span>
+      </li>
+      <li *ngIf="userRole === 'Company'" nz-menu-item routerLink="visitor-management">
+        <span nz-icon nzType="audit"></span>
+        <span>Visitor</span>
+      </li>
+      <li *ngIf="userRole === 'Company'" nz-menu-item routerLink="employee-management">
+        <span nz-icon nzType="team"></span>
+        <span>Employee</span>
+      </li>
+      <li *ngIf="userRole === 'Company'" nz-menu-item routerLink="camera-management">
+        <span nz-icon nzType="camera"></span>
+        <span>Camera</span>
+      </li>
+      <li nz-menu-item (click)="logout()" style="position: absolute; bottom: 0;">
+        <span nz-icon nzType="logout"></span>
+        <span>logout</span>
+      </li>
     </ul>
+
   </nz-sider>
-  <div class="vertical-line"></div>
-  <nz-content style="background-color: rgba(255, 255, 255, 0.85)"><router-outlet></router-outlet></nz-content>
+  <nz-layout style="max-height: 100vh;">
+    <nz-header class="d-flex align-items-center justify-content-between" style="background: #1890FF;">
+      <span class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+        (click)="isCollapsed = !isCollapsed" style="color: white;">
+      </span>
+      <div class="d-flex justify-content-center" style="width: 100%;">
+        <span class="trigger" style="font-weight: 600; padding-right: 30px; letter-spacing: 2px; color: white;"> AI
+          SECURITY
+          APPLICATION
+        </span>
+      </div>
+      <span style="color: white; padding-right: 20px;">
+        {{email}}
+      </span>
+    </nz-header>
+    <nz-content style="background-color: rgba(255, 255, 255, 0.85)"><router-outlet></router-outlet></nz-content>
+  </nz-layout>
 </nz-layout>
