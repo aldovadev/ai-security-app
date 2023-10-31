@@ -15,12 +15,14 @@ import { RoleGuardService } from './shared/service/auth/role-guard.service';
 import { OtpComponent } from './modules/visitor/otp/otp.component';
 import { UploadImagesComponent } from './modules/visitor/upload-images/upload-images.component';
 import { UserManagementComponent } from './modules/management/user-management/user-management.component';
+import { TrackVisitComponent } from './modules/visitor/track-visit/track-visit.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'visitor', component: VisitorComponent },
   { path: 'visitor/otp', component: OtpComponent },
   { path: 'visitor/uploads', component: UploadImagesComponent },
+  { path: 'visitor/track', component: TrackVisitComponent },
   { path: 'login/forget-password', component: ForgetPasswordComponent },
   { path: 'login', component: LoginComponent },
   {

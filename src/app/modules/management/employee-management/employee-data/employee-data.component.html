@@ -9,12 +9,22 @@
   <tbody>
     <tr *ngFor="let data of sortTable.data">
       <td>
-        <span nzTooltipPlacement="top" nz-tooltip nzTooltipTitle="View Detail">
-          <button class="btn btn-sm btn-light mr-3">
+        <span nzTooltipPlacement="top" nz-tooltip nzTooltipTitle="View Detail" style="margin-right: 8px">
+          <button class="btn btn-sm btn-light mr-3" (click)="handleEdit(data)">
             <i class="fe fe-eye"></i>
           </button>
         </span>
+        <span nzTooltipPlacement="top" nz-tooltip nzTooltipTitle="Delete">
+          <button class="btn btn-sm btn-light mr-3" (click)="handleDelete(data)">
+            <i class="fe fe-trash"></i>
+          </button>
+        </span>
       </td>
+      <td>{{ data.name }}</td>
+      <td>{{ data.email }}</td>
+      <td>{{ data.phoneNumber }}</td>
+      <td>{{ data.employeeId }}</td>
+      <td>{{ data.position }}</td>
     </tr>
   </tbody>
 </nz-table>
@@ -24,15 +34,15 @@
   <div class="row justify-content-between w-100">
     <div class="col-4">
       <span nzTooltipPlacement="top" nz-tooltip nzTooltipTitle="Add" style="margin-right: 8px">
-        <a class="btn btn-lg btn-light mr-2">
+        <a class="btn btn-lg btn-light mr-2" (click)="modalVisible = true">
           <i class="fe fe-plus"></i>
         </a>
       </span>
-      <span nzTooltipPlacement="top" nz-tooltip nzTooltipTitle="Download" style="margin-right: 8px">
+      <!-- <span nzTooltipPlacement="top" nz-tooltip nzTooltipTitle="Download" style="margin-right: 8px">
         <a class="btn btn-lg btn-light mr-2">
           <i class="fe fe-download"></i>
         </a>
-      </span>
+      </span> -->
       <span nzTooltipPlacement="top" nz-tooltip nzTooltipTitle="Refresh" style="margin-right: 8px">
         <a class="btn btn-lg btn-light mr-2" (click)="ngOnInit()">
           <i class="fe fe-refresh-cw"></i>
@@ -54,3 +64,141 @@
   </div>
   <!-- </nz-spin> -->
 </ng-template>
+
+<nz-modal [(nzVisible)]="editModalVisible" loading [nzTitle]="editModalTitle" [nzContent]="editModalContent"
+  [nzFooter]="editModalFooter" [nzWidth]="'50%'" (nzOnCancel)="editModalVisible = false">
+  <ng-template #editModalTitle>Edit Employee</ng-template>
+  <ng-template #editModalContent>
+    <nz-spin class="text-center" *ngIf="isEditLoading" nzSimple></nz-spin>
+    <form *ngIf="!isEditLoading" [formGroup]="profileForm">
+      <div class="row">
+        <div class="col">
+          <nz-form-item>
+            <nz-form-label>Name</nz-form-label>
+            <input nz-input type="text" formControlName="name" nzRequired />
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label>Email</nz-form-label>
+            <input nz-input type="text" formControlName="email" email nzRequired />
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label>Phone Number</nz-form-label>
+            <input nz-input type="text" formControlName="phoneNumber" numbersOnly nzRequired />
+          </nz-form-item>
+          <nz-form-label style="font-size: 14px">Gender</nz-form-label>
+
+          <nz-form-item>
+            <nz-select nzPlaceHolder="Gender" style="width: 350px; padding: 5px" formControlName="gender">
+              <nz-option nzValue="Male" nzLabel="Male"> </nz-option>
+              <nz-option nzValue="Female" nzLabel="Female"> </nz-option>
+            </nz-select>
+          </nz-form-item>
+        </div>
+        <div class="col">
+          <nz-form-item>
+            <nz-form-label>Address</nz-form-label>
+            <input nz-input type="text" formControlName="address" nzRequired />
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label>Position</nz-form-label>
+            <input nz-input type="text" formControlName="position" nzRequired />
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label>Employee Id</nz-form-label>
+            <input nz-input type="text" formControlName="employeeId" nzRequired />
+          </nz-form-item>
+
+          <nz-form-label>Employee Picture</nz-form-label>
+          <nz-form-item>
+            <nz-upload nzListType="picture-card" [(nzFileList)]="pictureList" [nzBeforeUpload]="beforeUpload"
+              [nzAccept]="'image/jpeg, image/jpg, image/png'" [nzCustomRequest]="customUpload"
+              [nzDisabled]="pictureList.length > 0" [nzShowButton]="!(pictureList.length > 0)">
+              <div>
+                <span nz-icon nzType="plus"></span>
+                <div style="margin-top: 8px">Upload</div>
+              </div>
+            </nz-upload>
+          </nz-form-item>
+        </div>
+      </div>
+    </form>
+  </ng-template>
+
+  <ng-template #editModalFooter>
+    <button nz-button nzType="default" (click)="editModalVisible = false">
+      Cancel
+    </button>
+    <button nz-button nzType="primary" (click)="confirmEdit()" [nzLoading]="isEditConfirm">
+      Confirm
+    </button>
+  </ng-template>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="modalVisible" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter"
+  (nzOnCancel)="modalVisible = false" [nzWidth]="'50%'">
+  <ng-template #modalTitle>Add Employee</ng-template>
+  <ng-template #modalContent>
+    <form [formGroup]="employeeForm">
+      <div class="row">
+        <div class="col">
+          <nz-form-item>
+            <nz-form-label>Name</nz-form-label>
+            <input nz-input type="text" formControlName="name" nzRequired />
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label>Email</nz-form-label>
+            <input nz-input type="text" formControlName="email" email nzRequired />
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label>Phone Number</nz-form-label>
+            <input nz-input type="text" formControlName="phoneNumber" numbersOnly nzRequired />
+          </nz-form-item>
+          <nz-form-label style="font-size: 14px">Gender</nz-form-label>
+
+          <nz-form-item>
+            <nz-select nzPlaceHolder="Gender" style="width: 350px; padding: 5px" formControlName="gender">
+              <nz-option nzValue="Male" nzLabel="Male"> </nz-option>
+              <nz-option nzValue="Female" nzLabel="Female"> </nz-option>
+            </nz-select>
+          </nz-form-item>
+        </div>
+        <div class="col">
+          <nz-form-item>
+            <nz-form-label>Address</nz-form-label>
+            <input nz-input type="text" formControlName="address" nzRequired />
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label>Position</nz-form-label>
+            <input nz-input type="text" formControlName="position" nzRequired />
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label>Employee Id</nz-form-label>
+            <input nz-input type="text" formControlName="employeeId" nzRequired />
+          </nz-form-item>
+          <nz-form-label>Picture</nz-form-label>
+          <nz-form-item>
+            <div class="d-flex justify-content-start align-items-start gap-2">
+              <!-- [nzCustomRequest]="handleUpload" -->
+              <nz-upload [(nzFileList)]="pictureList" [nzBeforeUpload]="beforeUpload">
+                <button nz-button>
+                  <span nz-icon nzType="upload"></span>
+                  Select File
+                </button>
+              </nz-upload>
+            </div>
+          </nz-form-item>
+        </div>
+      </div>
+    </form>
+  </ng-template>
+  <ng-template #modalFooter>
+    <button nz-button nzType="default" (click)="modalVisible = false">
+      Cancel
+    </button>
+    <button nz-button nzType="primary" [nzLoading]="isAddLoading" (click)="confirmAddEmployee()">
+      Confirm
+    </button>
+  </ng-template>
+</nz-modal>

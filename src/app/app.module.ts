@@ -99,6 +99,7 @@ import { VisitorManagementComponent } from './modules/management/visitor-managem
 import { EmployeeManagementComponent } from './modules/management/employee-management/employee-management.component';
 import { CameraManagementComponent } from './modules/management/camera-management/camera-management.component';
 import { UserManagementComponent } from './modules/management/user-management/user-management.component';
+import { TrackVisitComponent } from './modules/visitor/track-visit/track-visit.component';
 import { IncomingComponent } from './modules/management/visitor-management/incoming/incoming.component';
 import { AcceptedComponent } from './modules/management/visitor-management/accepted/accepted.component';
 import { RejectedComponent } from './modules/management/visitor-management/rejected/rejected.component';
@@ -163,7 +164,8 @@ registerLocaleData(en);
     FaceAutoCaptureComponent,
     FaceUiComponent,
     FaceCameraComponent,
-    DashboardComponent
+    DashboardComponent,
+    TrackVisitComponent
   ],
   imports: [
     BrowserModule,

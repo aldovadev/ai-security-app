@@ -8,7 +8,7 @@ import { newVisitor, otp } from 'src/app/models/visitor.model';
 export class VisitorService {
   private baseUrl = environment.baseURL;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   createVisitor(payload: newVisitor): Observable<any> {
     const header = new HttpHeaders({
@@ -43,5 +43,15 @@ export class VisitorService {
       payload,
       { headers: header }
     );
+  }
+
+  trackVisit(visitId: string): Observable<any> {
+    const header = new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
+
+    return this.http.get<any>(this.baseUrl + '/visitor/track/' + visitId, {
+      headers: header,
+    });
   }
 }

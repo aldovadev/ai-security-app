@@ -1,0 +1,147 @@
+<nav class="navbar navbar-dark navbar-expand-lg bg-body-tertiary"
+  style="background: #232d3f; height: 60px; z-index: 10">
+  <div class="container-fluid p-0">
+    <div class="px-2 d-flex justify-content-between" style="width: 100%">
+      <a class="navbar-brand d-flex align-items-center" href="/" style="color: white; font-size: 24px">
+        <img height="25" src="../../../assets/MT.png" style="margin-left: 20px; margin-right: 10px" />
+        ASA - Minang Techno</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02"
+        aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon text-white"></span>
+      </button>
+    </div>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo02" style="background: #232d3f">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0 d-flex justify-content-end align-items-center"
+        style="background: #232d3f; margin-right: 20px">
+        <li class="nav-item mx-2 my-2">
+          <a href="https://api.whatsapp.com/send?phone=6282285106123&text=Hallo! Saya tertarik untuk menggunakan layanan anda"
+            target="_blank" class="btn" style="color: white; background: #0066ff; min-width: 120px">
+            Join Us
+          </a>
+        </li>
+        <li class="nav-item mx-2 my-2">
+          <a class="btn" style="color: white; background: #0066ff; min-width: 120px" routerLink="/login">
+            Login
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container my-5" style="min-height: 73vh">
+  <h2 style="text-align: center">Track Visitation</h2>
+  <p style="text-align: center">
+    Track your visitation by input your visitor id below
+  </p>
+  <nz-card class="p-4 mt-3">
+    <form [formGroup]="trackingForm">
+      <textarea formControlName="id" rows="4" nz-input placeholder="Input Visitor ID"></textarea>
+      <button nz-button nzType="primary" style="
+          width: 100%;
+          height: fit-content;
+          padding: 10px;
+          font-size: 16px;
+          margin-top: 15px;
+        " [nzLoading]="isLoading" (click)="trackVisitor()">
+        Track Visitation
+      </button>
+    </form>
+  </nz-card>
+
+  <nz-card *ngIf="trackingData" class="p-4 mt-3">
+    <div class="row p-1">
+      <div style="font-size: 14px; font-weight: 700">
+        VISITOR NUMBER : {{ trackingData.data.visitNumber }}
+      </div>
+      <div style="font-size: 14px; font-weight: 700">
+        VISITOR ID : {{ trackingData.data.id }}
+      </div>
+    </div>
+    <div class="row p-1">
+      <div>
+        <hr />
+      </div>
+    </div>
+    <div class="row p-1" style="font-size: 14px; font-weight: 700">
+      <div style="font-size: 14px; font-weight: 700">VISITOR DATA</div>
+    </div>
+    <div class="row p-1">
+      <div class="col-md-2 col-sm-12" style="font-weight: 700">Name</div>
+      <div class="col-md-8 col-sm-12">{{ trackingData.data.name }}</div>
+    </div>
+    <div class="row p-1">
+      <div class="col-md-2 col-sm-12" style="font-weight: 700">Visit Date</div>
+      <div class="col-md-8 col-sm-12">
+        {{ trackingData.data.startDate | date : "dd-MM-yyyy HH:mm:ss" }}
+      </div>
+    </div>
+    <div class="row p-1">
+      <div class="col-md-2 col-sm-12" style="font-weight: 700">Origin</div>
+      <div class="col-md-8 col-sm-12">
+        {{ trackingData.data.origin.companyName }}
+      </div>
+    </div>
+    <div class="row p-1">
+      <div class="col-md-2 col-sm-12" style="font-weight: 700">Destination</div>
+      <div class="col-md-8 col-sm-12">
+        {{ trackingData.data.destination.companyName }}
+      </div>
+    </div>
+    <div class="row p-1">
+      <div>
+        <hr />
+      </div>
+    </div>
+    <div class="row p-1">
+      <div class="col-md-2 col-sm-12" style="font-weight: 700">
+        Updated Status
+      </div>
+      <div class="col-md-8 col-sm-12">
+        {{ trackingData.data.status.statusName }}
+      </div>
+    </div>
+    <div class="row p-1">
+      <div class="col-md-2 col-sm-12" style="font-weight: 700">
+        Visit Reason
+      </div>
+      <div class="col-md-10 col-sm-12">{{ trackingData.data.visitReason }}</div>
+    </div>
+  </nz-card>
+
+  <nz-card *ngIf="trackingData" class="p-4 mt-3">
+    <div class="row p-1">
+      <div style="font-size: 14px; font-weight: 700">VISITATION HISTORY</div>
+    </div>
+    <div class="row p-1">
+      <div>
+        <hr />
+      </div>
+    </div>
+    <nz-steps [nzCurrent]="trackingData.tracking.length - 1" nzDirection="vertical">
+      <nz-step *ngFor="let history of trackingData.tracking.reverse()" [nzTitle]="stepTitle"
+        [nzDescription]="stepDescription">
+        <ng-template #stepTitle>{{
+          history.updatedAt | date : "dd-MM-yyyy HH:mm:ss"
+          }}</ng-template>
+        <ng-template #stepDescription>
+          <p style="margin-bottom: 0">From : {{ history.from.statusName }}</p>
+          <p style="margin-bottom: 0">To : {{ history.to.statusName }}</p>
+        </ng-template>
+      </nz-step>
+    </nz-steps>
+  </nz-card>
+</div>
+
+<footer style="
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    height: 40px;
+    background-color: #232d3f;
+    padding: 2px;
+  ">
+  <p style="font-size: 12px; color: white; text-align: center; margin-top: 10px">
+    Copyright © Minang Techno 2023 all right reserved
+  </p>
+</footer>
