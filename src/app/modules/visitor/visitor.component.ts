@@ -45,7 +45,7 @@ type Data = {
 })
 export class VisitorComponent implements OnInit {
   visitForm: FormGroup;
-  companyDestination: companyOption[] = [];
+  companyList: companyOption[] = [];
 
   today = new Date();
 
@@ -71,13 +71,13 @@ export class VisitorComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.fetchCompanyDestination();
+    this.fetchCompanyList();
   }
 
-  fetchCompanyDestination(): void {
+  fetchCompanyList(): void {
     this.optionService.companyOption().subscribe(
       (res: response) => {
-        this.companyDestination = res.data;
+        this.companyList = res.data;
       },
       (error) => {
         console.log(error);

@@ -59,7 +59,7 @@
             <nz-form-label style="font-size: 14px">Gender</nz-form-label>
             <nz-form-item>
               <nz-form-control nzErrorTip="Please select your Gender">
-                <nz-select formControlName="gender" nzPlaceHolder="Gender" style="width: 350px; padding: 5px">
+                <nz-select formControlName="gender" nzPlaceHolder="Gender" style="width: 350px;">
                   <nz-option nzValue="Male" nzLabel="Male"> </nz-option>
                   <nz-option nzValue="Female" nzLabel="Female"> </nz-option>
                 </nz-select>
@@ -93,22 +93,21 @@
 
             <nz-form-label style="font-size: 14px">Company Origin (optional)</nz-form-label>
             <nz-form-item>
-              <nz-form-control nzErrorTip="Please input your Company Origin">
-                <input nz-input type="text" placeholder="Company Origin" style="width: 350px; padding: 5px"
-                  formControlName="companyOrigin" [nzAutocomplete]="autocompleteOrigin" />
-                <nz-autocomplete nzBackfill #autocompleteOrigin>
-                  <nz-auto-option *ngFor="let option of companyDestination" [nzLabel]="option.companyName"
-                    [nzValue]="option.id">{{ option.companyName }}</nz-auto-option>
-                </nz-autocomplete>
+              <nz-form-control nzErrorTip="Please input your Company Origin!">
+                <nz-select style="width: 350px;" nzShowSearch nzAllowClear nzPlaceHolder="Company Origin"
+                  formControlName="companyOrigin">
+                  <nz-option *ngFor="let item of companyList" [nzLabel]="item.companyName"
+                    [nzValue]="item.id"></nz-option>
+                </nz-select>
               </nz-form-control>
             </nz-form-item>
 
             <nz-form-label style="font-size: 14px">Company Destination</nz-form-label>
             <nz-form-item>
               <nz-form-control nzErrorTip="Please input your Company Destination!">
-                <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Company Destination"
+                <nz-select style="width: 350px;" nzShowSearch nzAllowClear nzPlaceHolder="Company Destination"
                   formControlName="companyDestination">
-                  <nz-option *ngFor="let item of companyDestination" [nzLabel]="item.companyName"
+                  <nz-option *ngFor="let item of companyList" [nzLabel]="item.companyName"
                     [nzValue]="item.id"></nz-option>
                 </nz-select>
               </nz-form-control>
@@ -117,7 +116,7 @@
             <nz-form-label style="font-size: 14px">Visit Date</nz-form-label>
             <nz-form-item>
               <nz-form-control nzErrorTip="Please select your Visit Date!">
-                <nz-range-picker nzFormat="yyyy-MM-dd HH:mm" formControlName="visitDate"
+                <nz-range-picker style="width: 350px;" nzFormat="yyyy-MM-dd HH:mm" formControlName="visitDate"
                   [nzShowTime]="{ nzFormat: 'HH:mm' }" [nzDisabledDate]="disabledDate"
                   [nzDisabledTime]="disabledRangeTime"></nz-range-picker>
               </nz-form-control>
