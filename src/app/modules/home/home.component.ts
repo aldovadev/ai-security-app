@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   confirmModal(): void {
     if (!this.trackingForm.valid) {
@@ -36,7 +36,7 @@ export class HomeComponent implements OnInit {
     this.confirmLoading = true;
     setTimeout(() => {
       this.confirmLoading = false;
-      this.router.navigate(['tracking'], {
+      this.router.navigate(['/visitor/track'], {
         state: { id: this.trackingForm.value.id },
       });
     }, 500);

@@ -11,7 +11,7 @@ import { VisitorService } from 'src/app/shared/service/visitor/visitor.service';
   styleUrls: ['./track-visit.component.scss'],
 })
 export class TrackVisitComponent implements OnInit {
-  visitId!: String;
+  visitId!: string;
   trackingForm: FormGroup;
   isLoading!: boolean;
 
@@ -24,6 +24,14 @@ export class TrackVisitComponent implements OnInit {
   ) {
     this.trackingForm = this.fb.group({
       id: ['', Validators.compose([Validators.required])],
+    });
+
+    this.route.queryParams.subscribe(params => {
+      const idFromRoute = params['id'];
+      if (idFromRoute) {
+        this.trackingForm.patchValue({ id: idFromRoute });
+        this.trackVisitor();
+      }
     });
   }
 
