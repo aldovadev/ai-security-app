@@ -9,7 +9,7 @@ export interface NewEmployee {
   employeeId: string;
 }
 
-export interface employeeList {
+export interface employeeProfile {
   id: string;
   name: string;
   email: string;
