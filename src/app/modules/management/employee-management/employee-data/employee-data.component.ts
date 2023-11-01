@@ -108,7 +108,6 @@ export class EmployeeDataComponent implements OnInit {
       .getEmployee(this.roleGuardService.getUserInfo().id)
       .subscribe(
         (r: { message: string; company: string; data: employeeProfile[] }) => {
-          // console.log(r);
           this.tableData = r.data;
         },
         (error) => {
@@ -168,7 +167,6 @@ export class EmployeeDataComponent implements OnInit {
           this.notification.showNotification('check', '#52c41a', res.message);
         },
         (error) => {
-          console.log(error);
           this.isEditConfirm = false;
           this.notification.showNotification(
             'warning',
@@ -227,7 +225,6 @@ export class EmployeeDataComponent implements OnInit {
       },
       (error) => {
         this.isAddLoading = false;
-        console.log(error);
         this.notification.showNotification(
           'warning',
           '#eb2f96',
