@@ -98,7 +98,6 @@ import { SidenavComponent } from './shared/components/sidenav/sidenav.component'
 import { VisitorManagementComponent } from './modules/management/visitor-management/visitor-management.component';
 import { EmployeeManagementComponent } from './modules/management/employee-management/employee-management.component';
 import { CameraManagementComponent } from './modules/management/camera-management/camera-management.component';
-import { UserManagementComponent } from './modules/management/user-management/user-management.component';
 import { TrackVisitComponent } from './modules/visitor/track-visit/track-visit.component';
 import { UserManagementComponent } from './modules/management/user-management/user-management.component';
 import { IncomingComponent } from './modules/management/visitor-management/incoming/incoming.component';
@@ -130,11 +129,9 @@ import { ViewVisitorComponent } from './modules/management/visitor-management/vi
 import * as ApexCharts from 'apexcharts';
 import { NgApexchartsModule } from 'ng-apexcharts';
 
-
 import { FaceAutoCaptureComponent } from './shared/components/face-auto-capture/face-auto-capture.component';
 import { FaceUiComponent } from './shared/components/face-ui/face-ui.component';
 import { FaceCameraComponent } from './shared/components/face-camera/face-camera.component';
-
 
 registerLocaleData(en);
 
@@ -166,11 +163,11 @@ registerLocaleData(en);
     FaceUiComponent,
     FaceCameraComponent,
     DashboardComponent,
-    TrackVisitComponent
+    TrackVisitComponent,
     FaceAutoCaptureComponent,
     FaceUiComponent,
     FaceCameraComponent,
-    DashboardComponent
+    DashboardComponent,
   ],
   imports: [
     BrowserModule,
@@ -282,4 +279,4 @@ registerLocaleData(en);
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
