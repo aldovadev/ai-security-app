@@ -1,26 +1,58 @@
-<nav class="navbar navbar-dark navbar-expand-lg bg-body-tertiary"
-  style="background: #232d3f; height: 60px; z-index: 10">
+<nav
+  class="navbar navbar-dark navbar-expand-lg bg-body-tertiary"
+  style="background: #232d3f; height: 60px; z-index: 10"
+>
   <div class="container-fluid p-0">
     <div class="px-2 d-flex justify-content-between" style="width: 100%">
-      <a class="navbar-brand d-flex align-items-center" href="/" style="color: white; font-size: 24px">
-        <img height="25" src="../../../assets/MT.png" style="margin-left: 20px; margin-right: 10px" />
-        ASA - Minang Techno</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02"
-        aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+      <a
+        class="navbar-brand d-flex align-items-center"
+        href="/"
+        style="color: white; font-size: 24px"
+      >
+        <img
+          height="25"
+          src="../../../assets/MT.png"
+          style="margin-left: 20px; margin-right: 10px"
+        />
+        ASA - Minang Techno</a
+      >
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarTogglerDemo02"
+        aria-controls="navbarTogglerDemo02"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
         <span class="navbar-toggler-icon text-white"></span>
       </button>
     </div>
-    <div class="collapse navbar-collapse" id="navbarTogglerDemo02" style="background: #232d3f">
-      <ul class="navbar-nav ms-auto mb-2 mb-lg-0 d-flex justify-content-end align-items-center"
-        style="background: #232d3f; margin-right: 20px">
+    <div
+      class="collapse navbar-collapse"
+      id="navbarTogglerDemo02"
+      style="background: #232d3f"
+    >
+      <ul
+        class="navbar-nav ms-auto mb-2 mb-lg-0 d-flex justify-content-end align-items-center"
+        style="background: #232d3f; margin-right: 20px"
+      >
         <li class="nav-item mx-2 my-2">
-          <a href="https://api.whatsapp.com/send?phone=6282285106123&text=Hallo! Saya tertarik untuk menggunakan layanan anda"
-            target="_blank" class="btn" style="color: white; background: #0066ff; min-width: 120px">
+          <a
+            href="https://api.whatsapp.com/send?phone=6282285106123&text=Hallo! Saya tertarik untuk menggunakan layanan anda"
+            target="_blank"
+            class="btn"
+            style="color: white; background: #0066ff; min-width: 120px"
+          >
             Join Us
           </a>
         </li>
         <li class="nav-item mx-2 my-2">
-          <a class="btn" style="color: white; background: #0066ff; min-width: 120px" routerLink="/login">
+          <a
+            class="btn"
+            style="color: white; background: #0066ff; min-width: 120px"
+            routerLink="/login"
+          >
             Login
           </a>
         </li>
@@ -29,8 +61,11 @@
   </div>
 </nav>
 
-<div style="background-color: #f2f4f8; width: 100%" class="d-md-flex justify-content-center align-items-center"
-  style="padding: 0 20px">
+<div
+  style="background-color: #f2f4f8; width: 100%"
+  class="d-md-flex justify-content-center align-items-center"
+  style="padding: 0 20px"
+>
   <div style="background-color: #ffffff">
     <div class="d-flex justify-content-center align-items-center flex-column">
       <h3 style="font-size: 36px" class="text-center">Welcome to ASA</h3>
@@ -43,23 +78,37 @@
             <nz-form-label style="font-size: 14px">First Name</nz-form-label>
             <nz-form-item>
               <nz-form-control nzErrorTip="Please input your First Name!">
-                <input nz-input type="text" placeholder="First Name" style="width: 350px; padding: 5px"
-                  formControlName="firstName" />
+                <input
+                  nz-input
+                  type="text"
+                  placeholder="First Name"
+                  style="width: 350px; padding: 5px"
+                  formControlName="firstName"
+                />
               </nz-form-control>
             </nz-form-item>
 
             <nz-form-label style="font-size: 14px">Last Name</nz-form-label>
             <nz-form-item>
               <nz-form-control nzErrorTip="Please input your Last Name!">
-                <input nz-input type="text" placeholder="Last Name" style="width: 350px; padding: 5px"
-                  formControlName="lastName" />
+                <input
+                  nz-input
+                  type="text"
+                  placeholder="Last Name"
+                  style="width: 350px; padding: 5px"
+                  formControlName="lastName"
+                />
               </nz-form-control>
             </nz-form-item>
 
             <nz-form-label style="font-size: 14px">Gender</nz-form-label>
             <nz-form-item>
               <nz-form-control nzErrorTip="Please select your Gender">
-                <nz-select formControlName="gender" nzPlaceHolder="Gender" style="width: 350px;">
+                <nz-select
+                  formControlName="gender"
+                  nzPlaceHolder="Gender"
+                  style="width: 350px"
+                >
                   <nz-option nzValue="Male" nzLabel="Male"> </nz-option>
                   <nz-option nzValue="Female" nzLabel="Female"> </nz-option>
                 </nz-select>
@@ -69,46 +118,85 @@
             <nz-form-label style="font-size: 14px">Phone Number</nz-form-label>
             <nz-form-item>
               <nz-form-control nzErrorTip="Please input your Phone Number!">
-                <input nz-input type="text" placeholder="Phone Number" style="width: 350px; padding: 5px"
-                  formControlName="phoneNumber" />
+                <input
+                  nz-input
+                  type="text"
+                  placeholder="Phone Number"
+                  style="width: 350px; padding: 5px"
+                  formControlName="phoneNumber"
+                />
               </nz-form-control>
             </nz-form-item>
 
             <nz-form-label style="font-size: 14px">Email</nz-form-label>
             <nz-form-item>
               <nz-form-control nzErrorTip="Please input your Email!">
-                <input nz-input type="text" placeholder="Email" style="width: 350px; padding: 5px"
-                  formControlName="email" />
+                <input
+                  nz-input
+                  type="text"
+                  placeholder="Email"
+                  style="width: 350px; padding: 5px"
+                  formControlName="email"
+                />
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-label style="font-size: 14px">Address</nz-form-label>
+            <nz-form-item>
+              <nz-form-control nzErrorTip="Please input your Address!">
+                <input
+                  nz-input
+                  type="text"
+                  placeholder="address"
+                  style="width: 350px; padding: 5px"
+                  formControlName="address"
+                />
               </nz-form-control>
             </nz-form-item>
           </div>
           <div class="col">
-            <nz-form-label style="font-size: 14px">Address</nz-form-label>
+            <nz-form-label style="font-size: 14px"
+              >Company Origin (optional)</nz-form-label
+            >
             <nz-form-item>
-              <nz-form-control nzErrorTip="Please input your Address!">
-                <input nz-input type="text" placeholder="address" style="width: 350px; padding: 5px"
-                  formControlName="address" />
+              <nz-form-control nzErrorTip="Please input your Company Origin">
+                <input
+                  nz-input
+                  type="text"
+                  placeholder="Company Origin"
+                  style="width: 350px; padding: 5px"
+                  formControlName="companyOrigin"
+                  [nzAutocomplete]="autocompleteOrigin"
+                />
+                <nz-autocomplete nzBackfill #autocompleteOrigin>
+                  <nz-auto-option
+                    *ngFor="let option of companyList"
+                    [nzLabel]="option.companyName"
+                    [nzValue]="option.id"
+                    >{{ option.companyName }}</nz-auto-option
+                  >
+                </nz-autocomplete>
               </nz-form-control>
             </nz-form-item>
 
-            <nz-form-label style="font-size: 14px">Company Origin (optional)</nz-form-label>
+            <nz-form-label style="font-size: 14px"
+              >Company Destination</nz-form-label
+            >
             <nz-form-item>
-              <nz-form-control nzErrorTip="Please input your Company Origin!">
-                <nz-select style="width: 350px;" nzShowSearch nzAllowClear nzPlaceHolder="Company Origin"
-                  formControlName="companyOrigin">
-                  <nz-option *ngFor="let item of companyList" [nzLabel]="item.companyName"
-                    [nzValue]="item.id"></nz-option>
-                </nz-select>
-              </nz-form-control>
-            </nz-form-item>
-
-            <nz-form-label style="font-size: 14px">Company Destination</nz-form-label>
-            <nz-form-item>
-              <nz-form-control nzErrorTip="Please input your Company Destination!">
-                <nz-select style="width: 350px;" nzShowSearch nzAllowClear nzPlaceHolder="Company Destination"
-                  formControlName="companyDestination">
-                  <nz-option *ngFor="let item of companyList" [nzLabel]="item.companyName"
-                    [nzValue]="item.id"></nz-option>
+              <nz-form-control
+                nzErrorTip="Please input your Company Destination!"
+              >
+                <nz-select
+                  style="width: 350px"
+                  nzShowSearch
+                  nzAllowClear
+                  nzPlaceHolder="Company Destination"
+                  formControlName="companyDestination"
+                >
+                  <nz-option
+                    *ngFor="let item of companyList"
+                    [nzLabel]="item.companyName"
+                    [nzValue]="item.id"
+                  ></nz-option>
                 </nz-select>
               </nz-form-control>
             </nz-form-item>
@@ -116,22 +204,64 @@
             <nz-form-label style="font-size: 14px">Visit Date</nz-form-label>
             <nz-form-item>
               <nz-form-control nzErrorTip="Please select your Visit Date!">
-                <nz-range-picker style="width: 350px;" nzFormat="yyyy-MM-dd HH:mm" formControlName="visitDate"
-                  [nzShowTime]="{ nzFormat: 'HH:mm' }" [nzDisabledDate]="disabledDate"
-                  [nzDisabledTime]="disabledRangeTime"></nz-range-picker>
+                <nz-date-picker
+                  nzFormat="yyyy-MM-dd"
+                  formControlName="visitDate"
+                  [nzDisabledDate]="disabledDate"
+                  style="width: 100%; margin-top: 10px"
+                ></nz-date-picker>
+              </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-label style="font-size: 14px">Visit Time</nz-form-label>
+            <nz-form-item>
+              <nz-form-control nzErrorTip="Please select your Visit Date!">
+                <div class="d-flex gap-2">
+                  <nz-select
+                    nzPlaceHolder="Start Time"
+                    formControlName="visitTime"
+                    (ngModelChange)="startDateChange($event)"
+                  >
+                    <nz-option
+                      *ngFor="let item of startTimeOptions"
+                      [nzLabel]="item"
+                      [nzValue]="item"
+                    ></nz-option>
+                  </nz-select>
+                  <nz-select
+                    nzPlaceHolder="End Time"
+                    formControlName="endvisitTime"
+                  >
+                    <nz-option
+                      *ngFor="let item of endTimeOptions"
+                      [nzLabel]="item"
+                      [nzValue]="item"
+                    ></nz-option>
+                  </nz-select>
+                </div>
               </nz-form-control>
             </nz-form-item>
 
             <nz-form-label style="font-size: 14px">Visit Reason</nz-form-label>
             <nz-form-item>
               <nz-form-control nzErrorTip="Please input your Visit Reason!">
-                <textarea nz-input placeholder="Visit Reason" style="width: 350px; padding: 5px"
-                  formControlName="visitReason"></textarea>
+                <textarea
+                  nz-input
+                  rows="4"
+                  placeholder="Visit Reason"
+                  style="width: 350px; padding: 5px"
+                  formControlName="visitReason"
+                ></textarea>
               </nz-form-control>
             </nz-form-item>
           </div>
         </div>
-        <button nz-button nzType="primary" style="width: 100%; padding: 5px" type="submit">
+        <button
+          nz-button
+          nzType="primary"
+          style="width: 100%; padding: 5px"
+          type="submit"
+        >
           Submit
         </button>
       </form>
@@ -139,7 +269,8 @@
   </div>
 </div>
 
-<footer style="
+<footer
+  style="
     position: relative;
     bottom: 0;
     width: 100%;
@@ -147,8 +278,11 @@
     background-color: #232d3f;
     padding: 2px;
     margin-top: 10px;
-  ">
-  <p style="font-size: 12px; color: white; text-align: center; margin-top: 10px">
+  "
+>
+  <p
+    style="font-size: 12px; color: white; text-align: center; margin-top: 10px"
+  >
     Copyright © Minang Techno 2023 all right reserved
   </p>
 </footer>

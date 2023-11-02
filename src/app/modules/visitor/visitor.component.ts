@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { differenceInCalendarDays, setHours } from 'date-fns';
@@ -48,13 +49,14 @@ export class VisitorComponent implements OnInit {
   companyList: companyOption[] = [];
 
   today = new Date();
-
+  startTimeOptions: string[] = [];
+  endTimeOptions: string[] = [];
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private notification: NotificationService,
     private VisitorService: VisitorService,
-    private optionService: OptionService
+    private optionService: OptionService,
   ) {
     this.visitForm = this.fb.group({
       firstName: ['', Validators.compose([Validators.required])],
@@ -67,11 +69,15 @@ export class VisitorComponent implements OnInit {
       companyDestination: ['', Validators.compose([Validators.required])],
       visitReason: ['', Validators.compose([Validators.required])],
       visitDate: ['', Validators.compose([Validators.required])],
+      visitTime: ['', Validators.compose([Validators.required])],
+      endvisitTime: ['', Validators.compose([Validators.required])],
     });
   }
 
   ngOnInit(): void {
     this.fetchCompanyList();
+    this.generateStartTimeOptions();
+    this.visitForm.get('endvisitTime')?.disable();
   }
 
   fetchCompanyList(): void {
@@ -81,27 +87,54 @@ export class VisitorComponent implements OnInit {
       },
       (error) => {
         console.log(error);
-      }
+      },
     );
   }
 
-  disabledDate = (current: Date): boolean =>
-    // Can not select days before today and today
-    differenceInCalendarDays(current, this.today) <= 0;
+  generateStartTimeOptions() {
+    const startTime = 7 * 60;
+    const endTime = 16 * 60 + 30;
+    const interval = 30;
 
-  disabledRangeTime: DisabledTimeFn = (_value, type?: DisabledTimePartial) => {
-    if (type === 'start') {
-      return {
-        nzDisabledHours: () => [0, 1, 2, 3, 4, 5, 6, 18, 19, 20, 21, 22, 23],
-        nzDisabledMinutes: () => [],
-        nzDisabledSeconds: () => [],
-      };
+    for (let i = startTime; i <= endTime; i += interval) {
+      const hour = Math.floor(i / 60);
+      const minute = i % 60;
+      const formattedTime = `${hour.toString().padStart(2, '0')}:${minute
+        .toString()
+        .padStart(2, '0')}`;
+      this.startTimeOptions.push(formattedTime);
     }
-    return {
-      nzDisabledHours: () => [0, 1, 2, 3, 4, 5, 6, 18, 19, 20, 21, 22, 23],
-      nzDisabledMinutes: () => [],
-      nzDisabledSeconds: () => [],
-    };
+  }
+
+  startDateChange(time: string): void {
+    this.visitForm.get('endvisitTime')?.enable();
+    this.endTimeOptions = [];
+    const selectedStartTime = time;
+
+    const startTime = selectedStartTime.split(':');
+    const startHour = parseInt(startTime[0], 10);
+    const startMinute = parseInt(startTime[1], 10);
+    const endTime = 17 * 60;
+    const interval = 30;
+
+    let currentTime = startHour * 60 + startMinute + interval;
+
+    while (currentTime <= endTime) {
+      const hour = Math.floor(currentTime / 60);
+      const minute = currentTime % 60;
+      const formattedTime = `${hour.toString().padStart(2, '0')}:${minute
+        .toString()
+        .padStart(2, '0')}`;
+      this.endTimeOptions.push(formattedTime);
+      currentTime += interval;
+    }
+  }
+
+  disabledDate = (current: Date): boolean => {
+    if (this.today.getHours() > 17) {
+      return differenceInCalendarDays(current, this.today) <= 1;
+    }
+    return differenceInCalendarDays(current, this.today) <= 0;
   };
 
   submit(): void {
@@ -109,12 +142,24 @@ export class VisitorComponent implements OnInit {
       this.notification.showNotification(
         'warning',
         '#eb2f96',
-        'Please fill all field!'
+        'Please fill all field!',
       );
       // return;
     }
 
     if (!this.validateDate()) return;
+    const selectedDate = dayjs(this.visitForm.value.visitDate);
+    const startTime = dayjs(
+      `${selectedDate.year()}-${selectedDate.month()}-${selectedDate.date()} ${
+        this.visitForm.value.visitTime
+      }:00`,
+    ).toDate();
+
+    const endTime = dayjs(
+      `${selectedDate.year()}-${selectedDate.month()}-${selectedDate.date()} ${
+        this.visitForm.value.endvisitTime
+      }:00`,
+    ).toDate();
 
     const payload: newVisitor = {
       name: `${this.visitForm.value.firstName} ${this.visitForm.value.lastName}`,
@@ -124,17 +169,19 @@ export class VisitorComponent implements OnInit {
       address: this.visitForm.value.address,
       originId: this.visitForm.value.companyOrigin,
       destinationId: this.visitForm.value.companyDestination,
-      startDate: this.visitForm.value.visitDate[0],
-      endDate: this.visitForm.value.visitDate[1],
+      startDate: startTime.toISOString(),
+      endDate: endTime.toISOString(),
       visitReason: this.visitForm.value.visitReason,
     };
+    // console.log(payload);
 
+    localStorage.setItem('visit_detail', JSON.stringify(payload));
     if (!localStorage.getItem('visitToken')) {
       this.VisitorService.getOTP(payload.email).subscribe(
         (r) => {
           this.notification.showNotification('check', '#52c41a', r.message);
           localStorage.setItem('visit_detail', JSON.stringify(payload));
-          localStorage.setItem('expired_at', r.expired_at);
+          localStorage.setItem('expired_at', r.expiredAt);
           this.router.navigate(['visitor/otp']);
         },
         (error) => {
@@ -142,10 +189,12 @@ export class VisitorComponent implements OnInit {
           this.notification.showNotification(
             'warning',
             '#eb2f96',
-            error.error.message
+            error.error.message,
           );
-        }
+          // this.router.navigate(['visitor/otp']);
+        },
       );
+      return;
     }
 
     this.VisitorService.createVisitor(payload).subscribe(
@@ -160,71 +209,26 @@ export class VisitorComponent implements OnInit {
           this.notification.showNotification(
             'warning',
             '#eb2f96',
-            error.error.message
+            error.error.message,
           );
           return;
         }
         localStorage.setItem('visit_detail', JSON.stringify(payload));
-        this.VisitorService.getOTP(payload.email).subscribe(
-          (r) => {
-            this.notification.showNotification('check', '#52c41a', r.message);
-
-            localStorage.setItem('expired_at', r.expired_at);
-            this.router.navigate(['visitor/otp']);
-          },
-          (error) => {
-            console.log(error.error.message);
-            this.notification.showNotification(
-              'warning',
-              '#eb2f96',
-              error.error.message
-            );
-          }
-        );
-      }
+      },
     );
   }
 
   validateDate(): boolean {
-    const startDate = dayjs(this.visitForm.value.visitDate[0]);
-    const endDate = dayjs(this.visitForm.value.visitDate[1]);
-
-    if (
-      startDate.day() === 0 ||
-      startDate.day() === 6 ||
-      endDate.day() === 0 ||
-      endDate.day() === 6
-    ) {
+    const date = dayjs(this.visitForm.value.visitDate);
+    if (date.day() === 0 || date.day() === 6) {
       this.notification.showNotification(
         'info',
         '#FFFF00',
-        'Please visit our company at office hour!'
+        'Please visit our company at office hour!',
       );
-
       return false;
     }
 
-    const visitHour = endDate.diff(startDate, 'hour');
-    const visitMs = endDate.diff(startDate, 'millisecond');
-    if (visitMs <= 0) {
-      this.notification.showNotification(
-        'info',
-        '#FFFF00',
-        'Please input a valid hour'
-      );
-
-      return false;
-    }
-
-    if (visitHour > 12) {
-      this.notification.showNotification(
-        'info',
-        '#FFFF00',
-        `WHAT THE F*CK WHY YOU VISIT US ${visitHour} HOUR?`
-      );
-
-      return false;
-    }
     return true;
   }
 }
