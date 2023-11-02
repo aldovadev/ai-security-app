@@ -131,9 +131,9 @@ export class VisitorComponent implements OnInit {
   }
 
   disabledDate = (current: Date): boolean => {
-    if (this.today.getHours() > 17) {
-      return differenceInCalendarDays(current, this.today) <= 1;
-    }
+    // if (this.today.getHours() > 17) {
+    //   return differenceInCalendarDays(current, this.today) <= 1;
+    // }
     return differenceInCalendarDays(current, this.today) <= 0;
   };
 
@@ -161,6 +161,7 @@ export class VisitorComponent implements OnInit {
       }:00`,
     ).toDate();
 
+    // console.log(startTime, endTime);
     const payload: newVisitor = {
       name: `${this.visitForm.value.firstName} ${this.visitForm.value.lastName}`,
       email: this.visitForm.value.email,

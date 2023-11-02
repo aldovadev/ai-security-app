@@ -158,23 +158,20 @@
               >Company Origin (optional)</nz-form-label
             >
             <nz-form-item>
-              <nz-form-control nzErrorTip="Please input your Company Origin">
-                <input
-                  nz-input
-                  type="text"
-                  placeholder="Company Origin"
-                  style="width: 350px; padding: 5px"
+              <nz-form-control nzErrorTip="Please input your Company Origin!">
+                <nz-select
+                  style="width: 350px"
+                  nzShowSearch
+                  nzAllowClear
+                  nzPlaceHolder="Company Origin"
                   formControlName="companyOrigin"
-                  [nzAutocomplete]="autocompleteOrigin"
-                />
-                <nz-autocomplete nzBackfill #autocompleteOrigin>
-                  <nz-auto-option
-                    *ngFor="let option of companyList"
-                    [nzLabel]="option.companyName"
-                    [nzValue]="option.id"
-                    >{{ option.companyName }}</nz-auto-option
-                  >
-                </nz-autocomplete>
+                >
+                  <nz-option
+                    *ngFor="let item of companyList"
+                    [nzLabel]="item.companyName"
+                    [nzValue]="item.id"
+                  ></nz-option>
+                </nz-select>
               </nz-form-control>
             </nz-form-item>
 
@@ -208,7 +205,7 @@
                   nzFormat="yyyy-MM-dd"
                   formControlName="visitDate"
                   [nzDisabledDate]="disabledDate"
-                  style="width: 100%; margin-top: 10px"
+                  style="width: 350px; margin-top: 10px"
                 ></nz-date-picker>
               </nz-form-control>
             </nz-form-item>
@@ -216,7 +213,7 @@
             <nz-form-label style="font-size: 14px">Visit Time</nz-form-label>
             <nz-form-item>
               <nz-form-control nzErrorTip="Please select your Visit Date!">
-                <div class="d-flex gap-2">
+                <div class="d-flex gap-2" style="width: 350px">
                   <nz-select
                     nzPlaceHolder="Start Time"
                     formControlName="visitTime"

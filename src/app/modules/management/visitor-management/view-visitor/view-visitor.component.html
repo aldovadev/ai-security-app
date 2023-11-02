@@ -75,35 +75,26 @@
         >Company Origin (optional)</nz-form-label
       >
       <nz-form-item>
-        <nz-form-control nzErrorTip="Please input your Company Origin">
-          <input
-            nz-input
-            type="text"
-            placeholder="Company Origin"
-            style="width: 350px; padding: 5px"
+        <nz-form-control nzErrorTip="Please input your Company Origin!">
+          <nz-select
+            nzShowSearch
+            nzAllowClear
+            nzPlaceHolder="Company Origin"
             formControlName="companyOrigin"
-            [nzAutocomplete]="autocompleteOrigin"
-          />
-          <nz-autocomplete nzBackfill #autocompleteOrigin>
-            <nz-auto-option
-              *ngFor="let option of companyList"
-              [nzValue]="option.id"
-              >{{ option.companyName }}</nz-auto-option
-            >
-          </nz-autocomplete>
+            style="width: 350px"
+          >
+            <nz-option
+              *ngFor="let item of companyList"
+              [nzLabel]="item.companyName"
+              [nzValue]="item.id"
+            ></nz-option>
+          </nz-select>
         </nz-form-control>
       </nz-form-item>
 
       <nz-form-label style="font-size: 14px">Company Destination</nz-form-label>
       <nz-form-item>
         <nz-form-control nzErrorTip="Please input your Company Destination!">
-          <!-- <input
-                  nz-input
-                  type="text"
-                  placeholder="Company Destination"
-                  style="width: 350px; padding: 5px"
-                  formControlName="companyDestination"
-                /> -->
           <nz-select
             nzShowSearch
             nzAllowClear
