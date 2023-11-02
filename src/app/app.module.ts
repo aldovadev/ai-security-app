@@ -1,5 +1,4 @@
 import { NgModule, isDevMode, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { NgModule, isDevMode, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -100,7 +99,6 @@ import { VisitorManagementComponent } from './modules/management/visitor-managem
 import { EmployeeManagementComponent } from './modules/management/employee-management/employee-management.component';
 import { CameraManagementComponent } from './modules/management/camera-management/camera-management.component';
 import { TrackVisitComponent } from './modules/visitor/track-visit/track-visit.component';
-import { UserManagementComponent } from './modules/management/user-management/user-management.component';
 import { UserManagementComponent } from './modules/management/user-management/user-management.component';
 import { IncomingComponent } from './modules/management/visitor-management/incoming/incoming.component';
 import { AcceptedComponent } from './modules/management/visitor-management/accepted/accepted.component';
