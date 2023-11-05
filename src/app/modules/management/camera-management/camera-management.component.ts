@@ -11,11 +11,6 @@ import {
 import { recognizedData, employeeResponse, visitorResponse } from 'src/app/models/recognize.model';
 import { Observable, switchMap } from 'rxjs';
 import { NotificationService } from 'src/app/shared/service/notification/notification.service';
-import {
-  dispatchControlEvent,
-  FaceCustomEvent,
-  ControlEventInstruction,
-} from '@innovatrics/dot-face-auto-capture/events';
 
 enum Icon {
   SUCCESS = "check-circle",
@@ -45,7 +40,6 @@ enum Status {
 export class CameraManagementComponent implements OnInit {
   @ViewChild('action') action!: NgxScannerQrcodeComponent;
 
-
   public config: ScannerQRCodeConfig = {
     constraints: {
       video: {
@@ -74,9 +68,7 @@ export class CameraManagementComponent implements OnInit {
   }
 
   async ngOnInit() {
-
     this.now = new Date
-
     this.recognizeData = {
       id: "",
       name: "-",
@@ -91,6 +83,11 @@ export class CameraManagementComponent implements OnInit {
       status: Status.STANDBY,
       icon: Icon.STANDBY
     };
+
+    const savedData = localStorage.getItem('recognizeData');
+    if (savedData) {
+      this.recognizeData = JSON.parse(savedData);
+    }
 
     this.isLoading = true
     this.route.queryParams.subscribe((params) => {
@@ -143,6 +140,7 @@ export class CameraManagementComponent implements OnInit {
             icon: Icon.SUCCESS
           };
         }
+        localStorage.setItem('recognizeData', JSON.stringify(this.recognizeData));
         this.isProcessing = false
       },
       (error) => {
@@ -165,6 +163,7 @@ export class CameraManagementComponent implements OnInit {
           status: Status.FAILED,
           icon: Icon.FAILED
         };
+        localStorage.setItem('recognizeData', JSON.stringify(this.recognizeData));
         this.isProcessing = false;
       }
     );
@@ -216,6 +215,7 @@ export class CameraManagementComponent implements OnInit {
             icon: Icon.SUCCESS
           };
         }
+        localStorage.setItem('recognizeData', JSON.stringify(this.recognizeData));
         this.isProcessing = false
       },
       (error) => {
@@ -238,11 +238,8 @@ export class CameraManagementComponent implements OnInit {
           status: Status.FAILED,
           icon: Icon.FAILED
         };
+        localStorage.setItem('recognizeData', JSON.stringify(this.recognizeData));
         this.isProcessing = false
-        dispatchControlEvent(
-          FaceCustomEvent.CONTROL,
-          ControlEventInstruction.CONTINUE_DETECTION
-        );
       }
     );
   }
@@ -270,20 +267,6 @@ export class CameraManagementComponent implements OnInit {
   }
 
   async onTabClick(tabIndex: number) {
-    this.recognizeData = {
-      id: "",
-      name: "-",
-      gender: "",
-      type: "-",
-      origin: "",
-      destination: "",
-      date: this.now.toISOString(),
-      duration: "00:00:00",
-      url: "../../../../assets/img/avatar.jpg",
-      color: Color.STANDBY,
-      status: Status.STANDBY,
-      icon: Icon.STANDBY
-    };
     this.isLoading = true
     await this.router.navigate([], {
       relativeTo: this.route,
