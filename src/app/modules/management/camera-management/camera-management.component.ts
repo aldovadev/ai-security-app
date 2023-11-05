@@ -11,6 +11,11 @@ import {
 import { recognizedData, employeeResponse, visitorResponse } from 'src/app/models/recognize.model';
 import { Observable, switchMap } from 'rxjs';
 import { NotificationService } from 'src/app/shared/service/notification/notification.service';
+import {
+  dispatchControlEvent,
+  FaceCustomEvent,
+  ControlEventInstruction,
+} from '@innovatrics/dot-face-auto-capture/events';
 
 enum Icon {
   SUCCESS = "check-circle",
@@ -139,7 +144,6 @@ export class CameraManagementComponent implements OnInit {
           };
         }
         this.isProcessing = false
-        console.table(this.recognizeData)
       },
       (error) => {
         this.notification.showNotification(
@@ -235,6 +239,10 @@ export class CameraManagementComponent implements OnInit {
           icon: Icon.FAILED
         };
         this.isProcessing = false
+        dispatchControlEvent(
+          FaceCustomEvent.CONTROL,
+          ControlEventInstruction.CONTINUE_DETECTION
+        );
       }
     );
   }

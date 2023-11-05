@@ -31,7 +31,7 @@ export class FaceAutoCaptureComponent implements OnInit {
         FaceCustomEvent.CONTROL,
         ControlEventInstruction.CONTINUE_DETECTION
       );
-    }, 3000);
+    }, 2000);
   }
 
   handleError(error: Error) {
