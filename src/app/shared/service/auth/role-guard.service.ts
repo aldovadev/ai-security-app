@@ -1,3 +1,5 @@
+/* eslint-disable no-constant-condition */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
@@ -54,7 +56,7 @@ export class RoleGuardService {
     if (role === requiredRole) {
       return true;
     }
-    this.notify.showNotification('close', '#eb2f96', 'Angku Manga kamari?');
+    this.notify.showNotification('close', '#eb2f96', 'You have no permission!');
     this.router.navigate([
       this.route.snapshot.queryParams['returnUrl'] || '/dashboard',
     ]);

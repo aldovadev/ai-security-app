@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NgModule, isDevMode, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -94,6 +95,7 @@ import en from '@angular/common/locales/en';
 import { LoginComponent } from './modules/user/login/login.component';
 import { ForgetPasswordComponent } from './modules/user/forget-password/forget-password.component';
 import { SidenavComponent } from './shared/components/sidenav/sidenav.component';
+import { RecognizedCardComponent } from './modules/management/camera-management/recognized-card/recognized-card.component';
 
 import { VisitorManagementComponent } from './modules/management/visitor-management/visitor-management.component';
 import { EmployeeManagementComponent } from './modules/management/employee-management/employee-management.component';
@@ -109,7 +111,7 @@ import { VisitorComponent } from './modules/visitor/visitor.component';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzNotificationModule } from 'ng-zorro-antd/notification';
 import { NzModalModule } from 'ng-zorro-antd/modal';
-import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
+import { NgxScannerQrcodeModule, LOAD_WASM } from 'ngx-scanner-qrcode';
 
 import { AuthGuardService } from './shared/service/auth/auth-guard.service';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
@@ -133,6 +135,7 @@ import { FaceAutoCaptureComponent } from './shared/components/face-auto-capture/
 import { FaceUiComponent } from './shared/components/face-ui/face-ui.component';
 import { FaceCameraComponent } from './shared/components/face-camera/face-camera.component';
 
+LOAD_WASM().subscribe((res: any) => console.log('LOAD_WASM', res));
 registerLocaleData(en);
 
 @NgModule({
@@ -168,6 +171,7 @@ registerLocaleData(en);
     FaceUiComponent,
     FaceCameraComponent,
     DashboardComponent,
+    RecognizedCardComponent
   ],
   imports: [
     BrowserModule,
@@ -279,4 +283,4 @@ registerLocaleData(en);
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

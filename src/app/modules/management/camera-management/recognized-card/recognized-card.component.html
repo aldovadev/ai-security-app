@@ -1,0 +1,60 @@
+<div style="height: 480px; width: 380px; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;">
+  <nz-card style="width: 100%;">
+    <div class="d-flex align-items-center flex-column gap-2">
+      <div class="border rounded d-flex align-items-center flex-column" style="width: 100%; padding: 5px;">
+        <img [src]="recognizedData.url" alt="Profile QR"
+          style="height: 100px; border-radius: 5px; margin-top: 10px; overflow: hidden;">
+        <h5 style="font-size: 20px; margin-top: 8px">{{ recognizedData.name }}</h5>
+        <h6 style="font-size: 16px; line-height: 5px">{{ recognizedData.type | capitalizeWords }}</h6>
+      </div>
+
+      <div class="border rounded d-flex align-items-center flex-column" style="width: 100%; padding: 5px;">
+        <table class="w-100 mt-2 p-2">
+          <colgroup>
+            <col style="width: 100px">
+            <col>
+          </colgroup>
+          <tr>
+            <td style="padding-left: 10px;"><strong>ID / Number</strong></td>
+            <td>: {{ recognizedData.id }}</td>
+          </tr>
+          <tr>
+            <td style="padding-left: 10px;"><strong>Gender</strong></td>
+            <td>: {{ recognizedData.gender }}</td>
+          </tr>
+          <tr>
+            <td style="padding-left: 10px;"><strong>Origin</strong></td>
+            <td>: {{ recognizedData.origin }}</td>
+          </tr>
+          <tr>
+            <td style="padding-left: 10px;"><strong>Destination</strong></td>
+            <td>: {{ recognizedData.destination }}</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="row mt-2 rounded border overflow-hidden" style="width: 100%">
+        <div class="text-center col-4 border p-2">
+          <h5 style="font-size: 16px; line-height: 10px">Date</h5>
+          <h6 class="text-muted" style="font-size: 14px">{{ recognizedData.date | date : "dd/MM/yyyy" }}</h6>
+        </div>
+        <div class="text-center col-4 border p-2">
+          <h5 style="font-size: 16px; line-height: 10px">Hour</h5>
+          <h6 class="text-muted" style="font-size: 14px">{{ recognizedData.date | date : "HH:mm:ss" : "Etc/UTC" }}</h6>
+        </div>
+        <div class="text-center col-4 border p-2">
+          <h5 style="font-size: 16px; line-height: 10px">Duration</h5>
+          <h6 class="text-muted" style="font-size: 14px">{{ recognizedData.duration }}</h6>
+        </div>
+      </div>
+      <button nz-button nzType="default" [nzSize]="'large'" [ngStyle]="{
+      'margin-top': '10px',
+      'background-color': recognizedData.color,
+      'color': 'white',
+      'border-radius': '5px'
+    }" class="d-flex align-items-center justify-content-center">
+        <span nz-icon [nzType]="recognizedData.icon"></span>{{ recognizedData.status }}
+      </button>
+    </div>
+  </nz-card>
+</div>

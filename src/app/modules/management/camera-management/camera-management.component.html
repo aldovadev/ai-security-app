@@ -1,152 +1,78 @@
-<nz-tabset [nzSelectedIndex]="activeTab" style="padding: 0px 30px 0 30px">
-  <nz-tab [nzTitle]="tab1Title" (nzClick)="onTabClick(0)">
-    <nz-card style="width: 100%; ">
-      <div class="d-flex justify-content-evenly">
-        <div class="rounded overflow-hidden d-flex justify-content-center align-items-center" style="
+<div class="d-flex flex-column h-100 justify-content-between">
+  <nz-tabset [nzSelectedIndex]="activeTab" style="padding: 0px 30px 0 30px">
+    <nz-tab [nzTitle]="tab1Title" (nzClick)="onTabClick(0)" [nzDisabled]="isLoading">
+      <nz-card style="width: 100%; ">
+        <div class="d-flex justify-content-evenly">
+          <div class="rounded overflow-hidden d-flex justify-content-center align-items-center" style="
               height: 480px;
               width: 640px;
               box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
             ">
-          <div *ngIf="camState === 'FACE'">
-            <app-face-auto-capture (onPhotoTaken)="handlePhotoTaken($event)" (onError)="handleError($event)">
-            </app-face-auto-capture>
-          </div>
-        </div>
 
-        <div style="height: 480px; width: 380px">
-          <nz-card style="
-                width: 100%;
-                height: 100%;
-                box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-              ">
-            <div class="d-flex align-items-center flex-column">
-              <div class="border rounded d-flex align-items-center flex-column" style="width: 100%; padding: 20px">
-                <img src='{{visitorProfile.url}}' alt="profile"
-                  style="height: 100px; border-radius: 5px; overflow: hidden;">
-                <h5 style="font-size: 20px; margin-top: 8px">
-                  {{ visitorProfile.data.name }}
-                </h5>
-                <h6 style="font-size: 16px; line-height: 5px">Visitor</h6>
-              </div>
-
-              <div class="row mt-2 rounded border overflow-hidden" style="width: 100%">
-                <div class="text-center col-4 border p-2">
-                  <h5 style="font-size: 16px; line-height: 10px">Date</h5>
-                  <h6 class="text-muted" style="font-size: 14px">
-                    {{ visitorProfile.data.startDate | date : "dd / MM / yy" }}
-                  </h6>
-                </div>
-                <div class="text-center col-4 border p-2">
-                  <h5 style="font-size: 16px; line-height: 10px">Hour</h5>
-                  <h6 class="text-muted" style="font-size: 14px">
-                    {{
-                    visitorProfile.data.startDate
-                    | date : "HH:mm:ss" : "Etc/UTC"
-                    }}
-                  </h6>
-                </div>
-                <div class="text-center col-4 border p-2">
-                  <h5 style="font-size: 16px; line-height: 10px">Duration</h5>
-                  <h6 class="text-muted" style="font-size: 14px">
-                    {{ calculateDuration() }}
-                  </h6>
-                </div>
-              </div>
-              <div class="text-center mt-2 border p-2 rounded" style="max-height: 100px; overflow-y: auto;">
-                {{ visitorProfile.data.visitReason }}
-              </div>
-              <button nz-button nzType="default" [nzSize]="'large'" style="
-                    margin-top: 10px;
-                    background-color: #52c41a;
-                    color: white;
-                    border-radius: 5px;
-                  " class="d-flex align-items-center justify-content-center">
-                <span nz-icon nzType="check"> </span>Welcome
-              </button>
+            <div *ngIf="isProcessing"
+              style="position: absolute; height: 480px; width: 640px; background: white; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 10;">
+              <img style="width: 30px; transform: scaleX(-1);" src="../../../../assets/animation/loading.gif"
+                alt="Process Face">
+              <p style="font-weight: 600; font-family: montserrat; margin-top: 10px;">Processing Input...
+              </p>
             </div>
-          </nz-card>
-        </div>
-      </div>
-    </nz-card>
 
-  </nz-tab>
-  <nz-tab [nzTitle]="tab2Title" (nzClick)="onTabClick(1)">
-    <nz-card style="width: 100%; ">
-      <div class="d-flex justify-content-evenly">
-        <div class="rounded overflow-hidden d-flex justify-content-center align-items-center" style="
+            <div>
+              <app-face-auto-capture (onPhotoTaken)="handlePhotoTaken($event)" (onError)="handleError($event)">
+              </app-face-auto-capture>
+            </div>
+          </div>
+          <app-recognized-card [recognizedData]="recognizeData"></app-recognized-card>
+        </div>
+      </nz-card>
+
+    </nz-tab>
+    <nz-tab [nzTitle]="tab2Title" (nzClick)="onTabClick(1)" [nzDisabled]="isLoading">
+      <nz-card style="width: 100%; ">
+        <div class="d-flex justify-content-evenly">
+          <div class="rounded overflow-hidden d-flex flex-column align-items-center justify-content-center" style="
                   height: 480px;
                   width: 640px;
                   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
                 ">
-          <div>
-            <app-face-auto-capture (onPhotoTaken)="handlePhotoTaken($event)" (onError)="handleError($event)">
-            </app-face-auto-capture>
-          </div>
-        </div>
 
-        <div style="height: 480px; width: 380px">
-          <nz-card style="
-                    width: 100%;
-                    height: 100%;
-                    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-                  ">
-            <div class="d-flex align-items-center flex-column">
-              <div class="border rounded d-flex align-items-center flex-column" style="width: 100%; padding: 20px">
-                <nz-avatar [nzShape]="'square'" [nzSize]="75" [nzIcon]="'user'" class="rounded"></nz-avatar>
-                <h5 style="font-size: 20px; margin-top: 8px">
-                  {{ visitorProfile.data.name }}
-                </h5>
-                <h6 style="font-size: 16px; line-height: 5px">Visitor</h6>
-              </div>
-
-              <div class="row mt-2 rounded border overflow-hidden" style="width: 100%">
-                <div class="text-center col-4 border p-2">
-                  <h5 style="font-size: 16px; line-height: 10px">Date</h5>
-                  <h6 class="text-muted" style="font-size: 14px">
-                    {{ visitorProfile.data.startDate | date : "dd / MM / yy" }}
-                  </h6>
-                </div>
-                <div class="text-center col-4 border p-2">
-                  <h5 style="font-size: 16px; line-height: 10px">Hour</h5>
-                  <h6 class="text-muted" style="font-size: 14px">
-                    {{
-                    visitorProfile.data.startDate
-                    | date : "HH:mm:ss" : "Etc/UTC"
-                    }}
-                  </h6>
-                </div>
-                <div class="text-center col-4 border p-2">
-                  <h5 style="font-size: 16px; line-height: 10px">Duration</h5>
-                  <h6 class="text-muted" style="font-size: 14px">
-                    {{ calculateDuration() }}
-                  </h6>
-                </div>
-              </div>
-              <div class="text-center mt-2 border p-2 rounded" style="font-size: 14px">
-                {{ visitorProfile.data.visitReason }}
-              </div>
-              <button nz-button nzType="default" [nzSize]="'large'" style="
-                        margin-top: 10px;
-                        background-color: #52c41a;
-                        color: white;
-                        border-radius: 5px;
-                      " class="d-flex align-items-center justify-content-center">
-                <span nz-icon nzType="check"> </span>Welcome
-              </button>
+            <div *ngIf="isProcessing"
+              style="position: absolute; height: 480px; width: 640px; background: white; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 10;">
+              <img style="width: 30px; transform: scaleX(-1);" src="../../../../assets/animation/loading.gif"
+                alt="Process QR">
+              <p style="font-weight: 600; font-family: montserrat; margin-top: 10px;">Processing Input...
+              </p>
             </div>
-          </nz-card>
-        </div>
-      </div>
-    </nz-card>
 
-  </nz-tab>
-  <ng-template #tab1Title>
-    <span>Face Camera</span>
-  </ng-template>
-  <ng-template #tab2Title>
-    <span>QR Camera</span>
-  </ng-template>
-</nz-tabset>
-<footer style=" padding: 10px; width: 100%; background: #f0f0f0f0; font-size: 12px; text-align: center;">
-  Copyright &copy; Minang Techno 2023 all right reserved
-</footer>
+            <div *ngIf="isLoading"
+              style="position: absolute; height: 480px; width: 640px; background: white; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 10;">
+              <img style="width: 30px; transform: scaleX(-1);" src="../../../../assets/animation/loading.gif"
+                alt="Loading QR">
+              <p style="font-weight: 600; font-family: montserrat; margin-top: 10px;">Loading. Please wait.
+              </p>
+            </div>
+
+            <div class="d-flex" style="width: 100%; transform: scaleX(-1);">
+              <ngx-scanner-qrcode #action="scanner" [config]="config" (event)="onEvent($event)">
+              </ngx-scanner-qrcode>
+            </div>
+          </div>
+
+          <app-recognized-card [recognizedData]="recognizeData"></app-recognized-card>
+        </div>
+      </nz-card>
+
+    </nz-tab>
+    <ng-template #tab1Title>
+      <span>Face Camera</span>
+    </ng-template>
+    <ng-template #tab2Title>
+      <span>QR Camera</span>
+    </ng-template>
+  </nz-tabset>
+
+
+  <footer style=" padding: 10px; width: 100%; background: #f0f0f0f0; font-size: 12px; text-align: center;">
+    Copyright &copy; Minang Techno 2023 all right reserved
+  </footer>
+</div>

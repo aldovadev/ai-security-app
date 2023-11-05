@@ -1,58 +1,26 @@
-<nav
-  class="navbar navbar-dark navbar-expand-lg bg-body-tertiary"
-  style="background: #232d3f; height: 60px; z-index: 10"
->
+<nav class="navbar navbar-dark navbar-expand-lg bg-body-tertiary"
+  style="background: #232d3f; height: 60px; z-index: 10">
   <div class="container-fluid p-0">
     <div class="px-2 d-flex justify-content-between" style="width: 100%">
-      <a
-        class="navbar-brand d-flex align-items-center"
-        href="/"
-        style="color: white; font-size: 24px"
-      >
-        <img
-          height="25"
-          src="../../../assets/MT.png"
-          style="margin-left: 20px; margin-right: 10px"
-        />
-        ASA - Minang Techno</a
-      >
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarTogglerDemo02"
-        aria-controls="navbarTogglerDemo02"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
+      <a class="navbar-brand d-flex align-items-center" href="/" style="color: white; font-size: 24px">
+        <img height="25" src="../../../assets/MT.png" style="margin-left: 20px; margin-right: 10px" />
+        ASA - Minang Techno</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02"
+        aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon text-white"></span>
       </button>
     </div>
-    <div
-      class="collapse navbar-collapse"
-      id="navbarTogglerDemo02"
-      style="background: #232d3f"
-    >
-      <ul
-        class="navbar-nav ms-auto mb-2 mb-lg-0 d-flex justify-content-end align-items-center"
-        style="background: #232d3f; margin-right: 20px"
-      >
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo02" style="background: #232d3f">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0 d-flex justify-content-end align-items-center"
+        style="background: #232d3f; margin-right: 20px">
         <li class="nav-item mx-2 my-2">
-          <a
-            href="https://api.whatsapp.com/send?phone=6282285106123&text=Hallo! Saya tertarik untuk menggunakan layanan anda"
-            target="_blank"
-            class="btn"
-            style="color: white; background: #0066ff; min-width: 120px"
-          >
+          <a href="https://api.whatsapp.com/send?phone=6282285106123&text=Hallo! Saya tertarik untuk menggunakan layanan anda"
+            target="_blank" class="btn" style="color: white; background: #0066ff; min-width: 120px">
             Join Us
           </a>
         </li>
         <li class="nav-item mx-2 my-2">
-          <a
-            class="btn"
-            style="color: white; background: #0066ff; min-width: 120px"
-            routerLink="login"
-          >
+          <a class="btn" style="color: white; background: #0066ff; min-width: 120px" routerLink="login">
             Login
           </a>
         </li>
@@ -62,22 +30,16 @@
 </nav>
 
 <div class="home" style="width: 100vw; min-height: 100vh; position: relative">
-  <div
-    class="home-wrapper"
-    style="
+  <div class="home-wrapper" style="
       display: flex;
       justify-content: space-evenly;
       align-items: start;
       margin-top: 5%;
       flex-flow: wrap;
-    "
-  >
+    ">
     <div class="left" style="max-width: 480px; margin: 10px auto">
-      <img
-        height="280"
-        src="../../../assets/home-asa.png"
-        style="border-radius: 10px; box-shadow: rgba(0, 0, 0, 0.24)"
-      />
+      <img height="280" src="../../../assets/home-asa.png"
+        style="border-radius: 10px; box-shadow: rgba(0, 0, 0, 0.24)" />
       <h5 style="font-size: 28px; margin: 10px auto">About ASA</h5>
       <p style="margin: 5px auto">
         ASA (AI Security Application) is a website designed to facilitate
@@ -98,11 +60,7 @@
             </p>
           </div>
         </div>
-        <button
-          class="btn py-2"
-          style="color: white; background: #32cd32; min-width: 200px"
-          routerLink="visitor"
-        >
+        <button class="btn py-2" style="color: white; background: #32cd32; min-width: 200px" routerLink="visitor">
           Be a visitor
         </button>
       </div>
@@ -118,11 +76,8 @@
             </p>
           </div>
         </div>
-        <button
-          class="btn py-2"
-          style="color: white; background: #32cd32; min-width: 200px"
-          (click)="modalVisible = true"
-        >
+        <button class="btn py-2" style="color: white; background: #32cd32; min-width: 200px"
+          (click)="modalVisible = true">
           Track Visitation
         </button>
       </div>
@@ -130,61 +85,39 @@
   </div>
 </div>
 
-<footer
-  style="
+<footer style="
     position: relative;
     bottom: 0;
     width: 100%;
     height: 40px;
     background-color: #232d3f;
     padding: 2px;
-  "
->
-  <p
-    style="font-size: 12px; color: white; text-align: center; margin-top: 10px"
-  >
+  ">
+  <p style="font-size: 12px; color: white; text-align: center; margin-top: 10px">
     Copyright © Minang Techno 2023 all right reserved
   </p>
 </footer>
 
-<nz-modal
-  [nzVisible]="modalVisible"
-  [nzTitle]="title"
-  [nzContent]="content"
-  [nzFooter]="footer"
-  (nzOnCancel)="closeModal()"
->
-  <ng-template #title
-    ><h4 style="text-align: center">Track Visitation</h4></ng-template
-  >
+<nz-modal [nzVisible]="modalVisible" [nzTitle]="title" [nzContent]="content" [nzFooter]="footer"
+  (nzOnCancel)="closeModal()">
+  <ng-template #title>
+    <h4 style="text-align: center">Track Visitation</h4>
+  </ng-template>
   <ng-template #content>
     <form [formGroup]="trackingForm">
       <nz-form-label nzFor="visit_id">VISITOR ID</nz-form-label>
       <nz-form-item>
         <nz-form-control>
-          <textarea
-            formControlName="id"
-            rows="4"
-            nz-input
-            placeholder="Input Visitor ID"
-          ></textarea>
-          <span
-            style="color: red; font-size: 12px"
-            *ngIf="this.trackingForm.get('id')?.hasError('required')"
-            >This Field is Required</span
-          >
+          <textarea formControlName="id" rows="4" nz-input placeholder="Input Visitor ID"></textarea>
+          <span style="color: red; font-size: 12px" *ngIf="this.trackingForm.get('id')?.hasError('required')">This Field
+            is Required</span>
         </nz-form-control>
       </nz-form-item>
     </form>
   </ng-template>
   <ng-template #footer>
     <button nz-button nzType="default" (click)="closeModal()">Cancel</button>
-    <button
-      nz-button
-      nzType="primary"
-      [nzLoading]="confirmLoading"
-      (click)="confirmModal()"
-    >
+    <button nz-button nzType="primary" [nzLoading]="confirmLoading" (click)="confirmModal()">
       Search
     </button>
   </ng-template>

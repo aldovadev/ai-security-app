@@ -1,3 +1,5 @@
+/* eslint-disable no-constant-condition */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -8,7 +10,7 @@ import { newVisitor, otp } from 'src/app/models/visitor.model';
 export class VisitorService {
   private baseUrl = environment.baseURL;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   createVisitor(payload: newVisitor): Observable<any> {
     const header = new HttpHeaders({

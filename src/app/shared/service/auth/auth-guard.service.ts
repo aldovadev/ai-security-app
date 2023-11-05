@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
@@ -15,7 +16,7 @@ export class AuthGuardService {
     public jwtHelper: JwtHelperService,
     public router: Router,
     public notify: NotificationService
-  ) {}
+  ) { }
 
   canActivate(
     next: ActivatedRouteSnapshot,
@@ -24,8 +25,8 @@ export class AuthGuardService {
     const jwt = localStorage.getItem('token');
     if (!jwt || this.jwtHelper.isTokenExpired(jwt)) {
       this.notify.showNotification('warning', '#eb2f96', 'Please Sign In');
-      var questionMarkUrl = state.url;
-      var newUrlQuestionMark = questionMarkUrl.split('?');
+      const questionMarkUrl = state.url;
+      const newUrlQuestionMark = questionMarkUrl.split('?');
       newUrlQuestionMark.pop();
       if (newUrlQuestionMark[0] == undefined) {
         this.router.navigate(['/login'], {

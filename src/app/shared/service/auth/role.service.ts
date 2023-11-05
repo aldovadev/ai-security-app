@@ -1,3 +1,5 @@
+/* eslint-disable no-constant-condition */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -5,7 +7,7 @@ import { Injectable } from '@angular/core';
 })
 export class RoleService {
   private userRoles: string[] = [];
-  constructor() {}
+  constructor() { }
 
   setUserRoles(roles: string[]): void {
     this.userRoles = roles;

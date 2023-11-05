@@ -40,9 +40,15 @@ export interface visitorData {
   photoPath: string;
   createdAt: string;
   updatedAt: string;
-  origin: object;
-  destination: object;
-  status: object;
+  origin: {
+    companyName: string
+  };
+  destination: {
+    companyName: string
+  };
+  status: {
+    statusName: string
+  };
 }
 
 export interface visitorStatus {

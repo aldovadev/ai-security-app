@@ -9,7 +9,7 @@ export interface NewEmployee {
   employeeId: string;
 }
 
-export interface employeeProfile {
+export interface employeeData {
   id: string;
   name: string;
   email: string;
@@ -22,4 +22,8 @@ export interface employeeProfile {
   photoPath: string;
   createdAt: string;
   updatedAt: string;
+  company: {
+    companyName: string
+  };
 }
+

@@ -5,7 +5,7 @@ import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { NzUploadXHRArgs, NzUploadFile } from 'ng-zorro-antd/upload';
 import { Observable, Observer, Subscription } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { NewEmployee, employeeProfile } from 'src/app/models/employee.model';
+import { NewEmployee, employeeData } from 'src/app/models/employee.model';
 import { RoleGuardService } from 'src/app/shared/service/auth/role-guard.service';
 import { EmployeeService } from 'src/app/shared/service/employee/employee.service';
 import { NotificationService } from 'src/app/shared/service/notification/notification.service';
@@ -31,7 +31,7 @@ type addEmployeeData = {
   styleUrls: ['./employee-data.component.scss'],
 })
 export class EmployeeDataComponent implements OnInit {
-  tableData: employeeProfile[] = [];
+  tableData: employeeData[] = [];
   listOfColumn = [
     {
       name: 'Action',
@@ -54,7 +54,7 @@ export class EmployeeDataComponent implements OnInit {
       width: '200px',
     },
     {
-      name: 'Postion',
+      name: 'Position',
       width: '200px',
     },
   ];
@@ -69,7 +69,7 @@ export class EmployeeDataComponent implements OnInit {
   editModalVisible!: boolean;
   isEditConfirm!: boolean;
   isEditLoading!: boolean;
-  selectedEmployee!: employeeProfile;
+  selectedEmployee!: employeeData;
   constructor(
     private employeeService: EmployeeService,
     private roleGuardService: RoleGuardService,
@@ -107,7 +107,7 @@ export class EmployeeDataComponent implements OnInit {
     this.employeeService
       .getEmployee(this.roleGuardService.getUserInfo().id)
       .subscribe(
-        (r: { message: string; company: string; data: employeeProfile[] }) => {
+        (r: { message: string; company: string; data: employeeData[] }) => {
           this.tableData = r.data;
         },
         (error) => {
@@ -116,12 +116,12 @@ export class EmployeeDataComponent implements OnInit {
       );
   }
 
-  handleEdit(employee: employeeProfile): void {
+  handleEdit(employee: employeeData): void {
     this.editModalVisible = true;
     this.isEditLoading = true;
     this.selectedEmployee = employee;
     this.employeeService.getEmployeeProfile(employee.id).subscribe(
-      (res: { message: string; data: employeeProfile; url: string }) => {
+      (res: { message: string; data: employeeData; url: string }) => {
         this.isEditLoading = false;
         this.pictureList = [
           {
@@ -161,7 +161,7 @@ export class EmployeeDataComponent implements OnInit {
     this.employeeService
       .editEmployee(this.selectedEmployee.id, payload)
       .subscribe(
-        (res: { message: string; status: string; data: employeeProfile[] }) => {
+        (res: { message: string; status: string; data: employeeData[] }) => {
           this.isEditConfirm = false;
           this.editModalVisible = false;
           this.notification.showNotification('check', '#52c41a', res.message);
@@ -177,7 +177,7 @@ export class EmployeeDataComponent implements OnInit {
       );
   }
 
-  handleDelete(employee: employeeProfile): void {
+  handleDelete(employee: employeeData): void {
     this.confirmModal = this.modal.confirm({
       nzTitle: 'Do you Want to delete these items?',
       nzContent:
@@ -248,10 +248,10 @@ export class EmployeeDataComponent implements OnInit {
           name: string;
           status: number;
         };
+
       }) => {
         this.notification.showNotification('check', '#52c41a', res.message);
         this.modalVisible = false;
-        window.location.reload();
       },
       (error) => {
         this.notification.showNotification(
@@ -280,11 +280,13 @@ export class EmployeeDataComponent implements OnInit {
               name: string;
               status: number;
             };
+
           }) => {
             this.notification.showNotification('check', '#52c41a', res.message);
             this.modalVisible = false;
             this.pictureList = [];
             this.handleEdit(this.selectedEmployee);
+            window.location.reload();
             observer.next();
             observer.complete();
           },

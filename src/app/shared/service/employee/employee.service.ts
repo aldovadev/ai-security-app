@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environment';
 })
 export class EmployeeService {
   private baseUrl = environment.baseURL;
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   private getCustomHeaders(): HttpHeaders {
     const accessToken = localStorage.getItem('token');

@@ -1,23 +1,20 @@
+/* eslint-disable no-constant-condition */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { RoleGuardService } from '../auth/role-guard.service';
 import { Observable } from 'rxjs';
-import { newVisitor, visitorStatus } from 'src/app/models/visitor.model';
 
 @Injectable({
   providedIn: 'root',
 })
-export class VisitorManagementService {
+export class recognizeService {
   private baseUrl = environment.baseURL;
   constructor(
     private http: HttpClient,
     private roleGuardService: RoleGuardService
   ) { }
-
-  incomingData: number = 0;
-  rejectedData: number = 0;
-  acceptedData: number = 0;
 
   private getCustomHeaders(): HttpHeaders {
     const accessToken = localStorage.getItem('token');
@@ -27,52 +24,32 @@ export class VisitorManagementService {
     });
   }
 
-  getVisitor(status: string): Observable<any> {
-    return this.http.get(
-      this.baseUrl + '/visitor?status=' + status,
-
-      { headers: this.getCustomHeaders() }
+  recognizeImage(payload: FormData): Observable<any> {
+    const header = new HttpHeaders({
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    });
+    return this.http.post<any>(
+      this.baseUrl + '/recognize/face/',
+      payload,
+      { headers: header },
     );
   }
 
-  visitorStatus(payload: visitorStatus): Observable<any> {
-    return this.http.put<any>(this.baseUrl + '/visitor/status', payload, {
-      headers: this.getCustomHeaders(),
-    });
+  recognizeQR(companyId: string): Observable<any> {
+    const header = this.getCustomHeaders()
+    return this.http.post<any>(
+      this.baseUrl + '/recognize/qr/' + companyId,
+      null,
+      { headers: header },
+    );
   }
 
-  deleteVisitor(id: string): Observable<any> {
-    return this.http.delete<any>(this.baseUrl + '/visitor/' + id, {
-      headers: this.getCustomHeaders(),
-    });
-  }
-
-  status: { [statusName: string]: number } = {};
-
-  getStatusId(): Observable<any> {
-    return this.http.get<any>(this.baseUrl + '/option/visit-status', {
-      headers: this.getCustomHeaders(),
-    });
-  }
-
-  getVisitorProfile(visitorId: string): Observable<any> {
-    return this.http.get<any>(this.baseUrl + '/visitor/profile/' + visitorId, {
-      headers: this.getCustomHeaders(),
-    });
-  }
-
-  getVisitorImage(url: string): Observable<any> {
-    return this.http.get<any>(url, {
-      headers: this.getCustomHeaders(),
-      responseType: 'blob' as 'json',
-    });
-  }
-
-  updateVisitor(payload: newVisitor, visitorId: string): Observable<any> {
-    return this.http.patch<any>(
-      this.baseUrl + '/visitor/detail/' + visitorId,
-      payload,
-      { headers: this.getCustomHeaders() }
+  recognizeSetup(): Observable<any> {
+    const header = this.getCustomHeaders()
+    return this.http.post<any>(
+      this.baseUrl + '/recognize/setup/',
+      null,
+      { headers: header },
     );
   }
 }

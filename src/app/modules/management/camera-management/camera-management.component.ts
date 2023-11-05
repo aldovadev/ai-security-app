@@ -1,7 +1,34 @@
-import { Component, OnInit } from '@angular/core';
-import { visitorProfile } from 'src/app/models/visitor.model';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { OnPhotoTakenEventValue } from '../../../types';
 import { ActivatedRoute, Router } from '@angular/router';
+import { recognizeService } from 'src/app/shared/service/recognize/recognize.service';
+import {
+  ScannerQRCodeConfig,
+  ScannerQRCodeResult,
+  NgxScannerQrcodeComponent,
+} from 'ngx-scanner-qrcode';
+import { recognizedData, employeeResponse, visitorResponse } from 'src/app/models/recognize.model';
+import { Observable, switchMap } from 'rxjs';
+import { NotificationService } from 'src/app/shared/service/notification/notification.service';
+
+enum Icon {
+  SUCCESS = "check-circle",
+  FAILED = "close-circle",
+  STANDBY = "question-circle"
+}
+
+enum Color {
+  SUCCESS = "green",
+  FAILED = "red",
+  STANDBY = "blue"
+}
+
+enum Status {
+  SUCCESS = "Success",
+  FAILED = "Unknown",
+  STANDBY = "Standby"
+}
 
 @Component({
   selector: 'app-camera-management',
@@ -9,69 +36,220 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./camera-management.component.scss'],
 })
 
+
 export class CameraManagementComponent implements OnInit {
+  @ViewChild('action') action!: NgxScannerQrcodeComponent;
 
-  camState: string = "FACE"
-  activeTab: number = 0;
-  imageUrl = '';
 
-  visitorProfile: visitorProfile = {
-    message: "Get visitor data success",
-    data: {
-      id: "68b9960c-6d96-488e-8519-4807762ed461",
-      name: 'Aldova Guswantri',
-      email: 'aldova811@gmail.com',
-      phoneNumber: '6282386027470',
-      gender: 'Pria',
-      address:
-        'Jln.Tutwuri, Blok IV, no.1, Kel. Surau Gadang, Kec, Nanggalo, Kota. Padang, Sumatera Barat',
-      originId: '68b9960c-6d96-488e-8519-4807762ed461',
-      destinationId: '68b9960c-6d96-488e-8519-4807762ed461',
-      startDate: '2023-10-10T02:00:00.000Z',
-      endDate: '2023-10-10T05:00:00.000Z',
-      visitReason:
-        'Bussiness discussion about ai security development for company needs, we want talk more about requirements with Minang Techno software development solution, and talk about contract also.',
-      visitNumber: '20231017VST00',
-      statusId: 1001,
-      photoPath: 'visitor/23/10/17/20231017VST00/20231017VST00.png',
-      createdAt: '2023-10-17T01:26:20.305Z',
-      updatedAt: '2023-10-17T02:09:50.932Z',
-      origin: {
-        companyName: ''
+  public config: ScannerQRCodeConfig = {
+    constraints: {
+      video: {
+        width: window.innerWidth,
       },
-      destination: {
-        companyName: 'Basitungkin Laboratory'
-      },
-      status: {
-        statusName: 'Accepted'
-      }
     },
-    url: "https://storage.cloud.google.com/asa-file-storage/visitor/15045d6e-f800-44f8-8fbc-d295ff663874/23/10/28/20231028VST01/20231028VST01.png"
   };
 
-  constructor(private route: ActivatedRoute,
+  faceState: boolean = true
+  qrState: boolean = false
+  activeTab: number = 0;
+  imageUrl: string = '';
+  isLoading: boolean = false
+  isProcessing: boolean = false
+  now !: Date
+
+  recognizeData!: recognizedData;
+  visitorResponse!: visitorResponse;
+  employeeResponse!: employeeResponse;
+
+  constructor(
+    private notification: NotificationService,
+    private route: ActivatedRoute,
+    private recognizeService: recognizeService,
     private router: Router) {
   }
 
   async ngOnInit() {
+
+    this.now = new Date
+
+    this.recognizeData = {
+      id: "",
+      name: "-",
+      gender: "",
+      type: "-",
+      origin: "",
+      destination: "",
+      date: this.now.toISOString(),
+      duration: "00:00:00",
+      url: "../../../../assets/img/avatar.jpg",
+      color: Color.STANDBY,
+      status: Status.STANDBY,
+      icon: Icon.STANDBY
+    };
+
+    this.isLoading = true
     this.route.queryParams.subscribe((params) => {
       this.activeTab = params['tab'] || 0;
     });
+
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 2500);
   }
 
+  public async onEvent(e: ScannerQRCodeResult[]) {
+    this.isProcessing = true
+    await this.action.stop()
+    this.now = new Date
+    this.recognizeService.recognizeQR(e[0].value).subscribe(
+      (res) => {
+        this.notification.showNotification('check', '#52c41a', res.message);
+        if (res.type === 'employee') {
+          this.employeeResponse = res
+          this.recognizeData = {
+            id: this.employeeResponse.data.employeeId,
+            name: this.employeeResponse.data.name,
+            gender: this.employeeResponse.data.gender,
+            type: this.employeeResponse.type,
+            origin: this.employeeResponse.data.company.companyName,
+            destination: "-",
+            date: this.now.toISOString(),
+            duration: "00:00:00",
+            url: this.employeeResponse.url,
+            color: Color.SUCCESS,
+            status: Status.SUCCESS,
+            icon: Icon.SUCCESS
+          };
+        }
+        if (res.type === 'visitor') {
+          this.visitorResponse = res
+          this.recognizeData = {
+            id: this.visitorResponse.data.visitNumber,
+            name: this.visitorResponse.data.name,
+            gender: this.visitorResponse.data.gender,
+            type: this.visitorResponse.type,
+            origin: this.visitorResponse.data.origin.companyName,
+            destination: this.visitorResponse.data.destination.companyName,
+            date: this.visitorResponse.data.startDate,
+            duration: this.calculateDuration(this.visitorResponse.data.startDate, this.visitorResponse.data.endDate),
+            url: this.visitorResponse.url,
+            color: Color.SUCCESS,
+            status: Status.SUCCESS,
+            icon: Icon.SUCCESS
+          };
+        }
+        this.isProcessing = false
+        console.table(this.recognizeData)
+      },
+      (error) => {
+        this.notification.showNotification(
+          'warning',
+          '#eb2f96',
+          error.error.message,
+        );
+        this.recognizeData = {
+          id: "Unknown",
+          name: "Unknown",
+          gender: "Unknown",
+          type: "Unknown",
+          origin: "Unknown",
+          destination: "Unknown",
+          date: this.now.toISOString(),
+          duration: "00:00:00",
+          url: "../../../../assets/img/avatar.jpg",
+          color: Color.FAILED,
+          status: Status.FAILED,
+          icon: Icon.FAILED
+        };
+        this.isProcessing = false;
+      }
+    );
+    await this.action.start()
+  }
+
+
   handleError(error: Error) {
-    alert(error);
+    console.log(error);
   }
 
   handlePhotoTaken<T>({ imageData, content }: OnPhotoTakenEventValue<T>) {
-    this.imageUrl = URL.createObjectURL(imageData.image);
-    console.log(this.imageUrl)
-
+    this.isProcessing = true
+    this.now = new Date
+    this.convertImageToFormData(imageData.image).subscribe(
+      (res) => {
+        this.notification.showNotification('check', '#52c41a', res.message);
+        if (res.type === 'employee') {
+          this.employeeResponse = res
+          this.recognizeData = {
+            id: this.employeeResponse.data.employeeId,
+            name: this.employeeResponse.data.name,
+            gender: this.employeeResponse.data.gender,
+            type: this.employeeResponse.type,
+            origin: this.employeeResponse.data.company.companyName,
+            destination: "-",
+            date: this.now.toISOString(),
+            duration: "00:00:00",
+            url: this.employeeResponse.url,
+            color: Color.SUCCESS,
+            status: Status.SUCCESS,
+            icon: Icon.SUCCESS
+          };
+        }
+        if (res.type === 'visitor') {
+          this.visitorResponse = res
+          this.recognizeData = {
+            id: this.visitorResponse.data.visitNumber,
+            name: this.visitorResponse.data.name,
+            gender: this.visitorResponse.data.gender,
+            type: this.visitorResponse.type,
+            origin: this.visitorResponse.data.origin.companyName,
+            destination: this.visitorResponse.data.destination.companyName,
+            date: this.visitorResponse.data.startDate,
+            duration: this.calculateDuration(this.visitorResponse.data.startDate, this.visitorResponse.data.endDate),
+            url: this.visitorResponse.url,
+            color: Color.SUCCESS,
+            status: Status.SUCCESS,
+            icon: Icon.SUCCESS
+          };
+        }
+        this.isProcessing = false
+      },
+      (error) => {
+        this.notification.showNotification(
+          'warning',
+          '#eb2f96',
+          error.error.message,
+        );
+        this.recognizeData = {
+          id: "Unknown",
+          name: "Unknown",
+          gender: "Unknown",
+          type: "Unknown",
+          origin: "Unknown",
+          destination: "Unknown",
+          date: this.now.toISOString(),
+          duration: "00:00:00",
+          url: "../../../../assets/img/avatar.jpg",
+          color: Color.FAILED,
+          status: Status.FAILED,
+          icon: Icon.FAILED
+        };
+        this.isProcessing = false
+      }
+    );
   }
 
-  calculateDuration(): string {
-    const startDate = new Date(this.visitorProfile.data.startDate);
-    const endDate = new Date(this.visitorProfile.data.endDate);
+  convertImageToFormData(imageData: Blob): Observable<any> {
+    const formData = new FormData();
+    formData.append('image', imageData);
+
+    return this.recognizeService.recognizeImage(formData);
+  }
+
+
+  calculateDuration(start: string, end: string): string {
+    const startDate = new Date(start);
+    const endDate = new Date(end);
     const durationMs = endDate.getTime() - startDate.getTime();
 
     const hours = Math.floor(durationMs / 3600000);
@@ -83,15 +261,38 @@ export class CameraManagementComponent implements OnInit {
       .padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
   }
 
-  onTabClick(tabIndex: number): void {
-    this.router.navigate([], {
+  async onTabClick(tabIndex: number) {
+    this.recognizeData = {
+      id: "",
+      name: "-",
+      gender: "",
+      type: "-",
+      origin: "",
+      destination: "",
+      date: this.now.toISOString(),
+      duration: "00:00:00",
+      url: "../../../../assets/img/avatar.jpg",
+      color: Color.STANDBY,
+      status: Status.STANDBY,
+      icon: Icon.STANDBY
+    };
+    this.isLoading = true
+    await this.router.navigate([], {
       relativeTo: this.route,
       queryParams: { tab: tabIndex },
       queryParamsHandling: 'merge',
     });
-  }
+    if (tabIndex === 1) { await this.action.start(); }
+    else await this.action.stop()
 
-  handleRefresh(): void {
-    window.location.reload();
+    if (tabIndex === 0) {
+      setTimeout(() => {
+        window.location.reload()
+      }, 200);
+    }
+
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 2000);
   }
 }
