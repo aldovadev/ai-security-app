@@ -51,7 +51,6 @@ export class CameraManagementComponent implements OnInit {
   faceState: boolean = true
   qrState: boolean = false
   activeTab: number = 0;
-  imageUrl: string = '';
   isLoading: boolean = false
   isProcessing: boolean = false
   now !: Date

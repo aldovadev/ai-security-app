@@ -10,7 +10,7 @@ export interface recognizedData {
   destination?: string
   date: string
   duration: string
-  url: string
+  url?: string
   color: string
   status: string
   icon: string

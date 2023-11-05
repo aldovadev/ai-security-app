@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { NotificationService } from '../../service/notification/notification.service';
 import { VisitorManagementService } from '../../service/visitor/visitor-management.service';
 import { visitorResponse } from 'src/app/models/visitor.model';
+import { recognizeService } from '../../service/recognize/recognize.service';
+
 
 @Component({
   selector: 'app-sidenav',
@@ -17,6 +19,7 @@ export class SidenavComponent implements OnInit {
   isCollapsed = false;
 
   constructor(
+    private recognizeService: recognizeService,
     private roleService: RoleGuardService,
     private router: Router,
     private notification: NotificationService,
@@ -26,6 +29,7 @@ export class SidenavComponent implements OnInit {
     this.userRole = this.roleService.getUserInfo().userRole;
     this.email = this.roleService.getUserInfo().email;
     this.checkVisitor();
+    this.trainVisitor();
   }
 
   checkVisitor(): void {
@@ -41,6 +45,21 @@ export class SidenavComponent implements OnInit {
       );
     }, 20000);
   }
+
+
+  trainVisitor(): void {
+    setInterval(() => {
+      this.recognizeService.recognizeSetup().subscribe(
+        (res) => {
+          console.log(res)
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+    }, 60000);
+  }
+
 
   logout(): void {
     console.log('logout');
