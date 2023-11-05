@@ -16,21 +16,18 @@ export class FaceAutoCaptureComponent implements OnInit {
   @Output() onPhotoTaken = new EventEmitter<OnPhotoTakenEventValue<FaceComponentData>>();
   @Output() onError = new EventEmitter<Error>();
 
-  isButtonDisabled = true;
-
   constructor() { }
 
   ngOnInit(): void { }
 
   handlePhotoTaken({ imageData, content }: OnPhotoTakenEventValue<FaceComponentData>) {
 
-    dispatchControlEvent(
-      FaceCustomEvent.CONTROL,
-      ControlEventInstruction.CONTINUE_DETECTION
-    );
+    // dispatchControlEvent(
+    //   FaceCustomEvent.CONTROL,
+    //   ControlEventInstruction.CONTINUE_DETECTION
+    // );
 
     this.onPhotoTaken.emit({ imageData, content });
-    this.isButtonDisabled = false;
   }
 
   handleError(error: Error) {

@@ -1,5 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { recognizedData } from 'src/app/models/recognize.model';
+import {
+  dispatchControlEvent,
+  FaceCustomEvent,
+  ControlEventInstruction,
+} from '@innovatrics/dot-face-auto-capture/events';
 
 @Component({
   selector: 'app-recognized-card',
@@ -8,4 +13,13 @@ import { recognizedData } from 'src/app/models/recognize.model';
 })
 export class RecognizedCardComponent {
   @Input() recognizedData!: recognizedData;
+
+  handleContinue() {
+    dispatchControlEvent(
+      FaceCustomEvent.CONTROL,
+      ControlEventInstruction.CONTINUE_DETECTION
+    );
+  }
 }
+
+
