@@ -22,10 +22,10 @@ export class FaceAutoCaptureComponent implements OnInit {
 
   handlePhotoTaken({ imageData, content }: OnPhotoTakenEventValue<FaceComponentData>) {
 
-    // dispatchControlEvent(
-    //   FaceCustomEvent.CONTROL,
-    //   ControlEventInstruction.CONTINUE_DETECTION
-    // );
+    dispatchControlEvent(
+      FaceCustomEvent.CONTROL,
+      ControlEventInstruction.CONTINUE_DETECTION
+    );
 
     this.onPhotoTaken.emit({ imageData, content });
   }

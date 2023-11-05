@@ -9,7 +9,7 @@ import {
   NgxScannerQrcodeComponent,
 } from 'ngx-scanner-qrcode';
 import { recognizedData, employeeResponse, visitorResponse } from 'src/app/models/recognize.model';
-import { Observable, switchMap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { NotificationService } from 'src/app/shared/service/notification/notification.service';
 
 enum Icon {
@@ -93,13 +93,14 @@ export class CameraManagementComponent implements OnInit {
     this.route.queryParams.subscribe((params) => {
       this.activeTab = params['tab'] || 0;
     });
-
     setTimeout(() => {
       this.isLoading = false;
-    }, 2500);
+    }, 200);
   }
 
+
   public async onEvent(e: ScannerQRCodeResult[]) {
+    let resultData: recognizedData
     this.isProcessing = true
     await this.action.stop()
     this.now = new Date
@@ -108,7 +109,7 @@ export class CameraManagementComponent implements OnInit {
         this.notification.showNotification('check', '#52c41a', res.message);
         if (res.type === 'employee') {
           this.employeeResponse = res
-          this.recognizeData = {
+          resultData = {
             id: this.employeeResponse.data.employeeId,
             name: this.employeeResponse.data.name,
             gender: this.employeeResponse.data.gender,
@@ -125,7 +126,7 @@ export class CameraManagementComponent implements OnInit {
         }
         if (res.type === 'visitor') {
           this.visitorResponse = res
-          this.recognizeData = {
+          resultData = {
             id: this.visitorResponse.data.visitNumber,
             name: this.visitorResponse.data.name,
             gender: this.visitorResponse.data.gender,
@@ -140,8 +141,13 @@ export class CameraManagementComponent implements OnInit {
             icon: Icon.SUCCESS
           };
         }
-        localStorage.setItem('recognizeData', JSON.stringify(this.recognizeData));
-        this.isProcessing = false
+        this.action.start()
+        setTimeout(() => {
+          this.recognizeData = resultData
+          this.isProcessing = false;
+          localStorage.setItem('recognizeData', JSON.stringify(this.recognizeData));
+        }, 2000);
+
       },
       (error) => {
         this.notification.showNotification(
@@ -149,7 +155,7 @@ export class CameraManagementComponent implements OnInit {
           '#eb2f96',
           error.error.message,
         );
-        this.recognizeData = {
+        resultData = {
           id: "Unknown",
           name: "Unknown",
           gender: "Unknown",
@@ -163,11 +169,14 @@ export class CameraManagementComponent implements OnInit {
           status: Status.FAILED,
           icon: Icon.FAILED
         };
-        localStorage.setItem('recognizeData', JSON.stringify(this.recognizeData));
-        this.isProcessing = false;
+        this.action.start()
+        setTimeout(() => {
+          this.recognizeData = resultData
+          this.isProcessing = false;
+          localStorage.setItem('recognizeData', JSON.stringify(this.recognizeData));
+        }, 2000);
       }
     );
-    await this.action.start()
   }
 
 
@@ -176,6 +185,7 @@ export class CameraManagementComponent implements OnInit {
   }
 
   handlePhotoTaken<T>({ imageData, content }: OnPhotoTakenEventValue<T>) {
+    let resultData: recognizedData
     this.isProcessing = true
     this.now = new Date
     this.convertImageToFormData(imageData.image).subscribe(
@@ -183,7 +193,7 @@ export class CameraManagementComponent implements OnInit {
         this.notification.showNotification('check', '#52c41a', res.message);
         if (res.type === 'employee') {
           this.employeeResponse = res
-          this.recognizeData = {
+          resultData = {
             id: this.employeeResponse.data.employeeId,
             name: this.employeeResponse.data.name,
             gender: this.employeeResponse.data.gender,
@@ -200,7 +210,7 @@ export class CameraManagementComponent implements OnInit {
         }
         if (res.type === 'visitor') {
           this.visitorResponse = res
-          this.recognizeData = {
+          resultData = {
             id: this.visitorResponse.data.visitNumber,
             name: this.visitorResponse.data.name,
             gender: this.visitorResponse.data.gender,
@@ -215,8 +225,8 @@ export class CameraManagementComponent implements OnInit {
             icon: Icon.SUCCESS
           };
         }
-        localStorage.setItem('recognizeData', JSON.stringify(this.recognizeData));
-        this.isProcessing = false
+        localStorage.setItem('recognizeData', JSON.stringify(resultData));
+        window.location.reload()
       },
       (error) => {
         this.notification.showNotification(
@@ -224,7 +234,7 @@ export class CameraManagementComponent implements OnInit {
           '#eb2f96',
           error.error.message,
         );
-        this.recognizeData = {
+        resultData = {
           id: "Unknown",
           name: "Unknown",
           gender: "Unknown",
@@ -238,8 +248,8 @@ export class CameraManagementComponent implements OnInit {
           status: Status.FAILED,
           icon: Icon.FAILED
         };
-        localStorage.setItem('recognizeData', JSON.stringify(this.recognizeData));
-        this.isProcessing = false
+        localStorage.setItem('recognizeData', JSON.stringify(resultData));
+        window.location.reload()
       }
     );
   }

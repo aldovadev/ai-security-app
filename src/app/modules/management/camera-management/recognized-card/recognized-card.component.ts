@@ -14,12 +14,6 @@ import {
 export class RecognizedCardComponent {
   @Input() recognizedData!: recognizedData;
 
-  handleContinue() {
-    dispatchControlEvent(
-      FaceCustomEvent.CONTROL,
-      ControlEventInstruction.CONTINUE_DETECTION
-    );
-  }
 }
 
 
